@@ -1326,7 +1326,7 @@
       }, 100);
     }
 
-    // Enhanced CSV Import with validation
+    // Enhanced CSV Import with better error handling
     function handleCSVImport(event) {
       const file = event.target.files[0];
       if (!file) return;
@@ -1349,13 +1349,15 @@
       reader.onload = function(e) {
         try {
           const csv = e.target.result;
+          console.log('CSV içeriği:', csv.substring(0, 500)); // Debug için ilk 500 karakteri logla
           parseCSV(csv);
         } catch (error) {
-          showNotification('error', 'CSV dosyası okunurken hata oluştu!');
-          console.error(error);
+          console.error('CSV Parse Error:', error);
+          showNotification('error', 'CSV dosyası işlenirken hata: ' + error.message);
         }
       };
-      reader.onerror = function() {
+      reader.onerror = function(error) {
+        console.error('File Read Error:', error);
         showNotification('error', 'Dosya okunamadı!');
       };
       reader.readAsText(file, 'UTF-8');
@@ -1365,109 +1367,133 @@
     }
 
     function parseCSV(csv) {
-      const lines = csv.split('\n').filter(line => line.trim());
-      const newArtists = [];
-      let skippedRows = 0;
-      
-      // Check if first line might be headers (skip if it contains common header words)
-      let startIndex = 0;
-      const firstLine = lines[0] ? lines[0].toLowerCase() : '';
-      if (firstLine.includes('name') || firstLine.includes('isim') || firstLine.includes('sanatçı') || firstLine.includes('artist')) {
-        startIndex = 1; // Skip header row
-        skippedRows++;
-      }
-      
-      for (let i = startIndex; i < lines.length; i++) {
-        const line = lines[i];
-        if (!line.trim()) {
-          skippedRows++;
-          continue;
+      try {
+        // Remove BOM if exists
+        csv = csv.replace(/^\uFEFF/, '');
+        
+        // Split by newlines and filter empty lines
+        let lines = csv.split(/\r?\n/).filter(line => line.trim());
+        
+        if (lines.length === 0) {
+          showNotification('error', 'CSV dosyası boş!');
+          return;
         }
         
-        // Support both pipe (|) and comma (,) separators
-        const separator = line.includes('|') ? '|' : ',';
-        const parts = line.split(separator).map(p => p.trim().replace(/^["']|["']$/g, ''));
+        const newArtists = [];
+        let processedRows = 0;
         
-        // Check if we have at least a name (first column)
-        if (parts.length >= 1 && parts[0]) {
-          const artist = {
-            id: Date.now() + i,
-            name: parts[0],
-            category: parts[1] || 'Sanat',
-            instagram: '',
-            shopLink: '',
-            photos: []
-          };
+        // Process each line
+        for (let i = 0; i < lines.length; i++) {
+          const line = lines[i].trim();
+          if (!line) continue;
           
-          // Check if third column is a link (Instagram or shop)
-          if (parts[2]) {
-            if (parts[2].includes('instagram.com')) {
-              artist.instagram = parts[2];
-            } else if (parts[2].includes('http')) {
-              artist.shopLink = parts[2];
-            } else {
-              // If not a link, treat as Instagram username
-              artist.instagram = parts[2].startsWith('@') ? parts[2] : '@' + parts[2];
-            }
+          // Detect separator - try comma first, then pipe
+          let separator = ',';
+          let parts = line.split(',');
+          
+          // If not enough parts with comma, try pipe
+          if (parts.length < 3) {
+            separator = '|';
+            parts = line.split('|');
           }
           
-          // Add photos - check all remaining columns for URLs
-          for (let j = 3; j < parts.length; j++) {
-            if (parts[j] && (parts[j].includes('http') || parts[j].includes('://') || parts[j].includes('.jpg') || parts[j].includes('.png') || parts[j].includes('.jpeg') || parts[j].includes('.gif') || parts[j].includes('.webp'))) {
-              artist.photos.push({
-                url: parts[j],
-                caption: artist.name
-              });
-            }
+          // If still not enough parts, try tab
+          if (parts.length < 3) {
+            separator = '\t';
+            parts = line.split('\t');
           }
           
-          // If no photos were found in expected positions, check if column 2 or 3 might be photos
-          if (artist.photos.length === 0) {
-            // Recheck all columns for image URLs
+          // Clean each part
+          parts = parts.map(p => p.trim().replace(/^["']|["']$/g, ''));
+          
+          console.log(`Row ${i + 1}: ${parts.length} columns found`);
+          
+          // Create artist if we have at least a name
+          if (parts[0] && parts[0].length > 0) {
+            const artist = {
+              id: Date.now() + i,
+              name: parts[0],
+              category: '',
+              instagram: '',
+              shopLink: '',
+              photos: []
+            };
+            
+            // Process remaining columns
             for (let j = 1; j < parts.length; j++) {
-              if (parts[j] && (parts[j].includes('imagedelivery') || parts[j].includes('cloudinary') || parts[j].includes('imgur') || parts[j].includes('/public') || parts[j].includes('.jpg') || parts[j].includes('.png'))) {
-                artist.photos.push({
-                  url: parts[j],
-                  caption: artist.name
-                });
+              const value = parts[j];
+              if (!value) continue;
+              
+              // Check if it's a URL
+              if (value.includes('http') || value.includes('www.')) {
+                if (value.includes('instagram.com')) {
+                  artist.instagram = value;
+                } else if (value.includes('shopier.com') || value.includes('shop')) {
+                  artist.shopLink = value;
+                } else if (value.includes('imagedelivery') || value.includes('cloudinary') || 
+                          value.includes('.jpg') || value.includes('.png') || 
+                          value.includes('.jpeg') || value.includes('.gif') || 
+                          value.includes('/public')) {
+                  // It's a photo URL
+                  artist.photos.push({
+                    url: value,
+                    caption: artist.name
+                  });
+                }
+              } else {
+                // If it's not a URL and we don't have a category yet, use it as category
+                if (!artist.category && j === 1) {
+                  artist.category = value;
+                }
               }
             }
+            
+            // If no category was set, use default
+            if (!artist.category) {
+              artist.category = 'Sanat';
+            }
+            
+            newArtists.push(artist);
+            processedRows++;
+            
+            console.log(`Artist added: ${artist.name} with ${artist.photos.length} photos`);
+          }
+        }
+        
+        if (newArtists.length > 0) {
+          // Ask user if they want to replace or append
+          const replace = confirm(`${newArtists.length} sanatçı bulundu.\n\nMevcut listeyi silip yenisini mi yüklemek istersiniz?\n\n'Tamam' = Yeni liste\n'İptal' = Mevcut listeye ekle`);
+          
+          if (replace) {
+            artistsData = newArtists;
+          } else {
+            artistsData = [...artistsData, ...newArtists];
           }
           
-          newArtists.push(artist);
+          localStorage.setItem('artistsData', JSON.stringify(artistsData));
+          updateStats();
+          renderArtists();
+          
+          showNotification('success', `✅ ${newArtists.length} sanatçı başarıyla yüklendi!`);
+          
+          // Show photo count
+          const totalPhotos = newArtists.reduce((sum, a) => sum + a.photos.length, 0);
+          if (totalPhotos > 0) {
+            setTimeout(() => {
+              showNotification('info', `📸 Toplam ${totalPhotos} fotoğraf eklendi`);
+            }, 1500);
+          }
+          
+          // Auto switch to artists section
+          showSection('artists');
         } else {
-          skippedRows++;
-        }
-      }
-      
-      if (newArtists.length > 0) {
-        // Ask user if they want to replace or append
-        const replace = confirm(`${newArtists.length} sanatçı bulundu. Mevcut sanatçıları silip yenilerini mi eklemek istersiniz?\n\n'Tamam' = Eskilerini sil, yenilerini ekle\n'İptal' = Mevcut listeye ekle`);
-        
-        if (replace) {
-          artistsData = newArtists;
-        } else {
-          artistsData = [...artistsData, ...newArtists];
+          showNotification('error', 'CSV dosyasında geçerli veri bulunamadı!');
+          console.log('No valid artists found in CSV');
         }
         
-        localStorage.setItem('artistsData', JSON.stringify(artistsData));
-        updateStats();
-        renderArtists();
-        
-        showNotification('success', `✅ ${newArtists.length} sanatçı başarıyla ${replace ? 'yüklendi' : 'eklendi'}!`);
-        
-        // Show details about what was imported
-        const totalPhotos = newArtists.reduce((sum, a) => sum + a.photos.length, 0);
-        if (totalPhotos > 0) {
-          setTimeout(() => {
-            showNotification('info', `📸 Toplam ${totalPhotos} fotoğraf yüklendi`);
-          }, 1500);
-        }
-        
-        // Auto switch to artists section
-        showSection('artists');
-      } else {
-        showNotification('error', 'CSV dosyasında geçerli veri bulunamadı! Lütfen formatı kontrol edin.');
+      } catch (error) {
+        console.error('Parse error details:', error);
+        showNotification('error', 'CSV işleme hatası: ' + error.message);
       }
     }
 
