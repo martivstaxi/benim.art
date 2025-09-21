@@ -305,37 +305,6 @@
       font-size: 0.9rem;
     }
 
-    .tab-container {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-      border-bottom: 2px solid rgba(199, 210, 254, 0.3);
-    }
-
-    .tab-btn {
-      padding: 10px 20px;
-      background: transparent;
-      border: none;
-      border-bottom: 3px solid transparent;
-      color: var(--text-secondary);
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .tab-btn.active {
-      color: var(--accent);
-      border-bottom-color: var(--accent);
-    }
-
-    .tab-content {
-      display: none;
-    }
-
-    .tab-content.active {
-      display: block;
-    }
-
     .instagram-input-group {
       background: rgba(199, 210, 254, 0.1);
       padding: 20px;
@@ -398,7 +367,7 @@
 <body>
   <div class="container">
     <div class="header">
-      <h1>🎨 Benim.art Site Editörü</h1>
+      <h1>Benim.art Site Editörü</h1>
       <p>Sanatçı portfolyo sitesi oluşturun - Tıpkı Benim.art gibi!</p>
       <div class="button-group" style="margin-top: 20px; justify-content: center;">
         <input type="file" id="csvFileTop" accept=".csv" style="display: none;" onchange="handleCSVUpload(event)">
@@ -419,7 +388,7 @@
     </div>
 
     <div class="editor-section">
-      <h2 class="section-title">🎨 Site Ayarları</h2>
+      <h2 class="section-title">Site Ayarları</h2>
       
       <div class="form-group">
         <label for="siteTitle">Site Başlığı</label>
@@ -434,7 +403,7 @@
       <div class="info-box" style="background: linear-gradient(135deg, rgba(199, 210, 254, 0.2), rgba(167, 139, 250, 0.1));">
         <h3>💡 CSV ile Toplu Yükleme</h3>
         <p>CSV formatı: <code>Sanatçı Adı | Kategori | Instagram Link | Foto1 | Foto2 | Foto3 | Foto4 | Foto5 | Foto6</code></p>
-        <p>CSV dosyası yüklemek için aşağıdaki <strong>"📂 CSV Dosyası Seç"</strong> butonunu kullanın.</p>
+        <p>CSV dosyası yüklemek için yukarıdaki <strong>"📂 CSV Dosyası Seç"</strong> butonunu kullanın.</p>
       </div>
       
       <div id="artistsContainer">
@@ -771,7 +740,7 @@
     </div>`;
       }).join('\n\n');
       
-      // Tam HTML
+      // Tam HTML - BURADA EMOJİ YOK, SADECE siteTitle VAR
       return `<!DOCTYPE html>  
 <html lang="tr">
 <head>
@@ -786,15 +755,14 @@
   
   <style>
     :root {
-      /* Sakin Pastel Palet */
-      --primary: #9CA3AF;        /* Soft Grey-Blue */
-      --primary-dark: #6B7280;    /* Deeper Grey */
-      --secondary: #C7D2FE;       /* Lavender */
-      --accent: #A78BFA;          /* Soft Purple */
-      --sage: #9DB88F;            /* Sage Green */
-      --blush: #F9D5E5;           /* Soft Blush Pink */
-      --cream: #FEF6E4;           /* Warm Cream */
-      --sand: #E8DCC4;            /* Warm Sand */
+      --primary: #9CA3AF;
+      --primary-dark: #6B7280;
+      --secondary: #C7D2FE;
+      --accent: #A78BFA;
+      --sage: #9DB88F;
+      --blush: #F9D5E5;
+      --cream: #FEF6E4;
+      --sand: #E8DCC4;
       
       --bg-grad: linear-gradient(135deg, #FAF9F7 0%, #F3F0EA 100%);
       --card-bg: rgba(255, 253, 250, .95);
@@ -835,11 +803,11 @@
       width: 100%;
       height: 100%;
       background: linear-gradient(135deg, 
-        rgba(199, 210, 254, 0.1) 0%,    /* Soft lavender overlay */
-        rgba(167, 139, 250, 0.05) 25%,   /* Light purple */
-        rgba(157, 184, 143, 0.08) 50%,   /* Sage green */
-        rgba(249, 213, 229, 0.1) 75%,    /* Blush pink */
-        rgba(254, 246, 228, 0.15) 100%); /* Cream */
+        rgba(199, 210, 254, 0.1) 0%,
+        rgba(167, 139, 250, 0.05) 25%,
+        rgba(157, 184, 143, 0.08) 50%,
+        rgba(249, 213, 229, 0.1) 75%,
+        rgba(254, 246, 228, 0.15) 100%);
       pointer-events: none;
       z-index: 0;
     }
@@ -848,6 +816,7 @@
       max-width: 1100px;
       margin: 0 auto;
       padding: 0 16px;
+      padding-top: 80px;
       position: relative;
       z-index: 1;
     }
@@ -856,7 +825,6 @@
       position: fixed;
       top: 20px;
       left: 20px;
-      width: auto;
       padding: 12px 24px;
       border-radius: 30px;
       background: linear-gradient(135deg, rgba(254, 246, 228, 0.8), rgba(199, 210, 254, 0.6));
@@ -872,38 +840,15 @@
       z-index: 100;
       border: 2px solid rgba(167, 139, 250, 0.2);
       color: var(--text-primary);
+      white-space: nowrap;
     }
     
     .logo:hover {
       transform: scale(1.1) rotate(3deg);
       box-shadow: var(--shadow-xl);
       background: linear-gradient(135deg, rgba(199, 210, 254, 0.8), rgba(254, 246, 228, 0.6));
-    }
-    
-    h1 { 
-      font-size: clamp(1.2rem, 3vw, 1.8rem);
-      margin: 0;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      z-index: 100;
-      line-height: 50px;
-      height: 50px;
-      display: flex;
-      align-items: center;
-      display: none; /* Hide h1 since we're using it in the logo */
-    }
-    
-    .gradient-text {
-      background: linear-gradient(135deg, #9DB88F 0%, #A78BFA 50%, #C7D2FE 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      filter: drop-shadow(0 2px 8px rgba(167, 139, 250, 0.25));
-      display: inline-block;
-      position: relative;
+      text-decoration: none;
+      color: var(--text-primary);
     }
     
     .city-section {
@@ -973,20 +918,15 @@
 
     /* Mobile Responsive Styles */
     @media (max-width: 768px) {
-      .logo {
-        width: 40px;
-        height: 40px;
-        font-size: 20px;
-        top: 15px;
-        left: 15px;
+      .container {
+        padding-top: 70px;
       }
 
-      h1 {
-        font-size: 1.3rem;
+      .logo {
+        padding: 10px 18px;
+        font-size: 16px;
         top: 15px;
-        left: 65px;
-        line-height: 40px;
-        height: 40px;
+        left: 15px;
       }
 
       .city-section {
@@ -1024,11 +964,6 @@
         margin: 25px auto;
       }
 
-      .promotion-title {
-        font-size: 20px;
-        margin-bottom: 12px;
-      }
-
       .promo-text {
         font-size: 16px;
         margin: 12px 0;
@@ -1055,12 +990,15 @@
     }
 
     @media (max-width: 480px) {
-      h1 {
-        font-size: 1.1rem;
-        top: 15px;
-        left: 60px;
-        line-height: 40px;
-        height: 40px;
+      .container {
+        padding-top: 60px;
+      }
+
+      .logo {
+        padding: 8px 14px;
+        font-size: 14px;
+        top: 12px;
+        left: 12px;
       }
 
       .city-section {
@@ -1103,10 +1041,6 @@
         border-radius: 15px;
       }
 
-      .promotion-title {
-        font-size: 18px;
-      }
-
       .promo-text {
         font-size: 15px;
         line-height: 1.4;
@@ -1121,7 +1055,14 @@
 
     @media (max-width: 375px) {
       .container {
-        padding: 0 12px;
+        padding: 60px 12px 0 12px;
+      }
+
+      .logo {
+        padding: 6px 12px;
+        font-size: 13px;
+        top: 10px;
+        left: 10px;
       }
 
       .photo-card {
@@ -1279,10 +1220,10 @@
     /* Promotion Section */
     .promotion-section {
       background: linear-gradient(135deg, 
-        rgba(249, 213, 229, 0.3) 0%,     /* Blush pink */
-        rgba(254, 246, 228, 0.4) 33%,    /* Cream */
-        rgba(199, 210, 254, 0.3) 66%,    /* Lavender */
-        rgba(157, 184, 143, 0.25) 100%); /* Sage green */
+        rgba(249, 213, 229, 0.3) 0%,
+        rgba(254, 246, 228, 0.4) 33%,
+        rgba(199, 210, 254, 0.3) 66%,
+        rgba(157, 184, 143, 0.25) 100%);
       backdrop-filter: blur(20px);
       color: var(--text-primary);
       padding: 24px;
@@ -1294,15 +1235,6 @@
       box-shadow: var(--shadow-lg);
       position: relative;
       overflow: hidden;
-    }
-
-    .promotion-title {
-      font-size: clamp(20px, 4vw, 28px);
-      font-weight: 800;
-      margin-bottom: 14px;
-      color: var(--primary-dark);
-      position: relative;
-      z-index: 1;
     }
 
     .instagram-btn {
@@ -1341,12 +1273,11 @@
   </style>
 </head>
 <body>
-  <a href="#" class="logo">benim.art</a>
-  <h1><span class="gradient-text">${siteTitle}</span></h1>
+  <a href="#" class="logo">${siteTitle}</a>
   
   <div class="container">
-    <div id="locations-container" style="margin-top: 100px;">
-    
+    <div id="locations-container">
+
 ${artistsHTML}
 
     </div>
