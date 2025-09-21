@@ -1,9 +1,792 @@
-<!DOCTYPE html>  
+<!DOCTYPE html>
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>enim.art</title>
+  <title>Benim.art Editor</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  
+  <style>
+    :root {
+      --primary: #9CA3AF;
+      --primary-dark: #6B7280;
+      --secondary: #C7D2FE;
+      --accent: #A78BFA;
+      --sage: #9DB88F;
+      --blush: #F9D5E5;
+      --cream: #FEF6E4;
+      --sand: #E8DCC4;
+      
+      --bg-grad: linear-gradient(135deg, #FAF9F7 0%, #F3F0EA 100%);
+      --card-bg: rgba(255, 253, 250, .95);
+      --glass-bg: rgba(255, 255, 255, .75);
+      --glass-border: rgba(160, 160, 160, .15);
+      --text-primary: #4A5568;
+      --text-secondary: #718096;
+      --text-muted: #A0AEC0;
+      --shadow-lg: 0 4px 20px rgba(0, 0, 0, .06);
+      --shadow-xl: 0 8px 30px rgba(0, 0, 0, .08);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #FAF9F7 0%, #F5F1EA 50%, #EDE8E2 100%);
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding: 30px 20px;
+      background: linear-gradient(135deg, rgba(254, 246, 228, 0.4), rgba(255, 255, 255, 0.6));
+      backdrop-filter: blur(20px);
+      border: 2px solid rgba(199, 210, 254, 0.3);
+      border-radius: 20px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, #9DB88F 0%, #A78BFA 50%, #C7D2FE 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .header p {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+    }
+
+    .editor-section {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(20px);
+      border: 2px solid rgba(199, 210, 254, 0.3);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: var(--text-primary);
+      border-bottom: 2px solid var(--secondary);
+      padding-bottom: 10px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid rgba(199, 210, 254, 0.3);
+      border-radius: 10px;
+      font-size: 14px;
+      background: rgba(255, 255, 255, 0.8);
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.1);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+      font-family: 'Courier New', monospace;
+    }
+
+    .artist-container {
+      border: 2px dashed rgba(167, 139, 250, 0.3);
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 20px;
+      background: rgba(199, 210, 254, 0.1);
+      position: relative;
+    }
+
+    .artist-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .artist-number {
+      background: var(--accent);
+      color: white;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+
+    .remove-artist {
+      background: #ef4444;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 15px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .remove-artist:hover {
+      background: #dc2626;
+      transform: translateY(-2px);
+    }
+
+    .photo-input-group {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .photo-input {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .photo-input label {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 5px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #C7D2FE 0%, #A78BFA 50%, #9DB88F 100%);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 25px;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 20px rgba(167, 139, 250, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(167, 139, 250, 0.4);
+      background: linear-gradient(135deg, #9DB88F 0%, #A78BFA 50%, #C7D2FE 100%);
+    }
+
+    .btn-secondary {
+      background: linear-gradient(135deg, #6366f1, #4f46e5);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 25px;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      margin-right: 15px;
+      box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
+    }
+
+    .btn-secondary:hover {
+      background: linear-gradient(135deg, #4f46e5, #4338ca);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(99, 102, 241, 0.4);
+    }
+
+    .btn-success {
+      background: linear-gradient(135deg, #10b981, #047857);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 25px;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3);
+    }
+
+    .btn-success:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(16, 185, 129, 0.4);
+    }
+
+    .button-group {
+      display: flex;
+      gap: 15px;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+
+    .preview-section {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(20px);
+      border: 2px solid rgba(199, 210, 254, 0.3);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .preview-iframe {
+      width: 100%;
+      height: 600px;
+      border: 2px solid rgba(199, 210, 254, 0.3);
+      border-radius: 15px;
+      background: white;
+    }
+
+    .info-box {
+      background: linear-gradient(135deg, rgba(249, 213, 229, 0.2), rgba(254, 246, 228, 0.3));
+      border: 2px solid rgba(167, 139, 250, 0.2);
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .info-box h3 {
+      color: var(--primary-dark);
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+    }
+
+    .info-box p {
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 8px;
+    }
+
+    .info-box code {
+      background: rgba(255, 255, 255, 0.8);
+      padding: 3px 8px;
+      border-radius: 5px;
+      font-family: 'Courier New', monospace;
+      color: var(--accent);
+      font-size: 0.9rem;
+    }
+
+    .tab-container {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid rgba(199, 210, 254, 0.3);
+    }
+
+    .tab-btn {
+      padding: 10px 20px;
+      background: transparent;
+      border: none;
+      border-bottom: 3px solid transparent;
+      color: var(--text-secondary);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .tab-btn.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .instagram-input-group {
+      background: rgba(199, 210, 254, 0.1);
+      padding: 20px;
+      border-radius: 15px;
+      margin-top: 20px;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .container {
+        padding: 10px;
+      }
+
+      .header h1 {
+        font-size: 1.8rem;
+      }
+
+      .editor-section {
+        padding: 20px;
+      }
+
+      .photo-input-group {
+        grid-template-columns: 1fr;
+      }
+
+      .button-group {
+        flex-direction: column;
+      }
+
+      .btn-primary,
+      .btn-secondary,
+      .btn-success {
+        width: 100%;
+      }
+
+      .preview-iframe {
+        height: 400px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header h1 {
+        font-size: 1.5rem;
+      }
+
+      .header p {
+        font-size: 0.9rem;
+      }
+
+      .editor-section {
+        padding: 15px;
+      }
+
+      .section-title {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🎨 Benim.art Site Editörü</h1>
+      <p>Sanatçı portfolyo sitesi oluşturun - Tıpkı Benim.art gibi!</p>
+      <div class="button-group" style="margin-top: 20px; justify-content: center;">
+        <input type="file" id="csvFileTop" accept=".csv" style="display: none;" onchange="handleCSVUpload(event)">
+        <label for="csvFileTop" class="btn-secondary" style="cursor: pointer; display: inline-flex; align-items: center; margin: 0;">
+          📂 CSV Dosyası Seç
+        </label>
+        <button class="btn-success" onclick="copyHTML()">📋 HTML Kodu Kopyala</button>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h3>📌 Nasıl Kullanılır?</h3>
+      <p>1. Site başlığını girin (örn: <code>Benim.art</code>)</p>
+      <p>2. Her sanatçı için bilgileri doldurun (isim, Instagram, 6 fotoğraf)</p>
+      <p>3. Alt kısımda Instagram kullanıcı adınızı girin</p>
+      <p>4. "Önizleme Göster" ile sitenizi görün</p>
+      <p>5. "HTML Kodu Kopyala" ile kodunuzu alın</p>
+    </div>
+
+    <div class="editor-section">
+      <h2 class="section-title">🎨 Site Ayarları</h2>
+      
+      <div class="form-group">
+        <label for="siteTitle">Site Başlığı</label>
+        <input type="text" id="siteTitle" placeholder="Örn: Benim.art" value="Benim.art">
+      </div>
+    </div>
+
+    <div class="editor-section">
+      <h2 class="section-title">👨‍🎨 Sanatçılar</h2>
+      
+      <!-- CSV Upload Info -->
+      <div class="info-box" style="background: linear-gradient(135deg, rgba(199, 210, 254, 0.2), rgba(167, 139, 250, 0.1));">
+        <h3>💡 CSV ile Toplu Yükleme</h3>
+        <p>CSV formatı: <code>Sanatçı Adı | Kategori | Instagram Link | Foto1 | Foto2 | Foto3 | Foto4 | Foto5 | Foto6</code></p>
+        <p>CSV dosyası yüklemek için aşağıdaki <strong>"📂 CSV Dosyası Seç"</strong> butonunu kullanın.</p>
+      </div>
+      
+      <div id="artistsContainer">
+        <!-- İlk sanatçı -->
+        <div class="artist-container" data-artist-id="1">
+          <div class="artist-header">
+            <span class="artist-number">1</span>
+            <button class="remove-artist" onclick="removeArtist(1)">❌ Kaldır</button>
+          </div>
+          
+          <div class="form-group">
+            <label>Sanatçı Adı</label>
+            <input type="text" class="artist-name" placeholder="Örn: Hülya Kalaycıoğlu">
+          </div>
+          
+          <div class="form-group">
+            <label>Kategori/Tür</label>
+            <input type="text" class="artist-category" placeholder="Örn: 𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦">
+          </div>
+          
+          <div class="form-group">
+            <label>Instagram Linki (Opsiyonel)</label>
+            <input type="text" class="artist-instagram" placeholder="Örn: https://www.instagram.com/benim.art">
+          </div>
+          
+          <div class="photo-input-group">
+            <div class="photo-input">
+              <label>Fotoğraf 1</label>
+              <input type="text" class="artist-photo" placeholder="Fotoğraf URL'si">
+            </div>
+            <div class="photo-input">
+              <label>Fotoğraf 2</label>
+              <input type="text" class="artist-photo" placeholder="Fotoğraf URL'si">
+            </div>
+            <div class="photo-input">
+              <label>Fotoğraf 3</label>
+              <input type="text" class="artist-photo" placeholder="Fotoğraf URL'si">
+            </div>
+            <div class="photo-input">
+              <label>Fotoğraf 4</label>
+              <input type="text" class="artist-photo" placeholder="Fotoğraf URL'si">
+            </div>
+            <div class="photo-input">
+              <label>Fotoğraf 5</label>
+              <input type="text" class="artist-photo" placeholder="Fotoğraf URL'si">
+            </div>
+            <div class="photo-input">
+              <label>Fotoğraf 6</label>
+              <input type="text" class="artist-photo" placeholder="Fotoğraf URL'si">
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <button class="btn-secondary" onclick="addArtist()">➕ Yeni Sanatçı Ekle</button>
+    </div>
+
+    <div class="editor-section">
+      <h2 class="section-title">📱 İletişim Bilgileri</h2>
+      
+      <div class="instagram-input-group">
+        <div class="form-group">
+          <label for="contactText">İletişim Metni</label>
+          <input type="text" id="contactText" placeholder="Örn: Sorularınız için → Bize ulaşın!" value="Sorularınız için → Bize ulaşın!">
+        </div>
+        
+        <div class="form-group">
+          <label for="instagramUsername">Instagram Kullanıcı Adı</label>
+          <input type="text" id="instagramUsername" placeholder="Örn: benim.arts" value="benim.arts">
+        </div>
+      </div>
+    </div>
+
+    <div class="button-group">
+      <button class="btn-primary" onclick="showPreview()">👁️ Önizleme Göster</button>
+      <button class="btn-secondary" onclick="loadSampleData()">📝 Örnek Veri Yükle</button>
+    </div>
+
+    <div class="preview-section" id="previewSection" style="display: none;">
+      <h2 class="section-title">👁️ Site Önizlemesi</h2>
+      <iframe id="previewFrame" class="preview-iframe"></iframe>
+    </div>
+  </div>
+
+  <!-- PapaParse library for CSV parsing -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  
+  <script>
+    let artistCount = 1;
+
+    function handleCSVUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      
+      // Show file name in a temporary alert
+      alert(`📁 Dosya seçildi: ${file.name}`);
+      
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const csvContent = e.target.result;
+        
+        // Parse CSV with PapaParse
+        Papa.parse(csvContent, {
+          skipEmptyLines: true,
+          dynamicTyping: false,
+          complete: function(results) {
+            processCSVData(results.data);
+          },
+          error: function(error) {
+            alert('CSV okuma hatası: ' + error.message);
+          }
+        });
+      };
+      
+      reader.readAsText(file, 'UTF-8');
+    }
+
+    function processCSVData(data) {
+      // Clear existing artists
+      const container = document.getElementById('artistsContainer');
+      container.innerHTML = '';
+      artistCount = 0;
+      
+      // Process each row
+      data.forEach((row, index) => {
+        // Skip empty rows
+        if (!row || row.length === 0 || !row[0]) return;
+        
+        // Clean and prepare data
+        const cleanRow = row.map(cell => (cell || '').trim());
+        
+        // Extract artist data
+        const artistData = {
+          name: cleanRow[0] || `Sanatçı ${index + 1}`,
+          category: cleanRow[1] || 'Sanat',
+          instagram: cleanRow[2] || '',
+          photos: []
+        };
+        
+        // Get up to 6 photos (columns 3-8)
+        for (let i = 3; i < Math.min(cleanRow.length, 9); i++) {
+          if (cleanRow[i]) {
+            artistData.photos.push(cleanRow[i]);
+          }
+        }
+        
+        // Only add artist if they have a name
+        if (artistData.name) {
+          addArtistFromData(artistData);
+        }
+      });
+      
+      if (artistCount > 0) {
+        alert(`✅ CSV başarıyla yüklendi! ${artistCount} sanatçı eklendi.`);
+      } else {
+        alert('⚠️ CSV dosyasında geçerli veri bulunamadı.');
+        // Add one empty artist
+        addArtist();
+      }
+    }
+
+    function addArtistFromData(data) {
+      artistCount++;
+      const container = document.getElementById('artistsContainer');
+      
+      const artistDiv = document.createElement('div');
+      artistDiv.className = 'artist-container';
+      artistDiv.setAttribute('data-artist-id', artistCount);
+      
+      const photosHTML = [1,2,3,4,5,6].map((i, index) => `
+        <div class="photo-input">
+          <label>Fotoğraf ${i}</label>
+          <input type="text" class="artist-photo" placeholder="Fotoğraf URL'si" value="${data.photos[index] || ''}">
+        </div>
+      `).join('');
+      
+      artistDiv.innerHTML = `
+        <div class="artist-header">
+          <span class="artist-number">${artistCount}</span>
+          <button class="remove-artist" onclick="removeArtist(${artistCount})">❌ Kaldır</button>
+        </div>
+        
+        <div class="form-group">
+          <label>Sanatçı Adı</label>
+          <input type="text" class="artist-name" placeholder="Örn: Mehmet Aksoy" value="${data.name}">
+        </div>
+        
+        <div class="form-group">
+          <label>Kategori/Tür</label>
+          <input type="text" class="artist-category" placeholder="Örn: Modern Heykel" value="${data.category}">
+        </div>
+        
+        <div class="form-group">
+          <label>Instagram Linki (Opsiyonel)</label>
+          <input type="text" class="artist-instagram" placeholder="Örn: https://www.instagram.com/sanatci" value="${data.instagram}">
+        </div>
+        
+        <div class="photo-input-group">
+          ${photosHTML}
+        </div>
+      `;
+      
+      container.appendChild(artistDiv);
+    }
+
+    function addArtist() {
+      artistCount++;
+      const container = document.getElementById('artistsContainer');
+      
+      const artistDiv = document.createElement('div');
+      artistDiv.className = 'artist-container';
+      artistDiv.setAttribute('data-artist-id', artistCount);
+      
+      artistDiv.innerHTML = `
+        <div class="artist-header">
+          <span class="artist-number">${artistCount}</span>
+          <button class="remove-artist" onclick="removeArtist(${artistCount})">❌ Kaldır</button>
+        </div>
+        
+        <div class="form-group">
+          <label>Sanatçı Adı</label>
+          <input type="text" class="artist-name" placeholder="Örn: Mehmet Aksoy">
+        </div>
+        
+        <div class="form-group">
+          <label>Kategori/Tür</label>
+          <input type="text" class="artist-category" placeholder="Örn: Modern Heykel">
+        </div>
+        
+        <div class="form-group">
+          <label>Instagram Linki (Opsiyonel)</label>
+          <input type="text" class="artist-instagram" placeholder="Örn: https://www.instagram.com/sanatci">
+        </div>
+        
+        <div class="photo-input-group">
+          ${[1,2,3,4,5,6].map(i => `
+            <div class="photo-input">
+              <label>Fotoğraf ${i}</label>
+              <input type="text" class="artist-photo" placeholder="Fotoğraf URL'si">
+            </div>
+          `).join('')}
+        </div>
+      `;
+      
+      container.appendChild(artistDiv);
+    }
+
+    function removeArtist(id) {
+      const artist = document.querySelector(`[data-artist-id="${id}"]`);
+      if (artist && document.querySelectorAll('.artist-container').length > 1) {
+        artist.remove();
+      } else if (document.querySelectorAll('.artist-container').length === 1) {
+        alert('En az bir sanatçı olmalıdır!');
+      }
+    }
+
+    function loadSampleData() {
+      // Site başlığı
+      document.getElementById('siteTitle').value = 'Benim.art';
+      
+      // İlk sanatçı verileri
+      const firstArtist = document.querySelector('[data-artist-id="1"]');
+      firstArtist.querySelector('.artist-name').value = 'Hülya Kalaycıoğlu';
+      firstArtist.querySelector('.artist-category').value = '𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦';
+      firstArtist.querySelector('.artist-instagram').value = 'https://www.instagram.com/benim.art';
+      
+      const photos1 = [
+        'https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public',
+        'https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public',
+        'https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public',
+        'https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public',
+        'https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/eabcbf5c-d362-4b13-3601-d37f63eb0c00/public',
+        'https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public'
+      ];
+      
+      firstArtist.querySelectorAll('.artist-photo').forEach((input, index) => {
+        input.value = photos1[index] || '';
+      });
+      
+      // İkinci sanatçı ekle
+      if (!document.querySelector('[data-artist-id="2"]')) {
+        addArtist();
+      }
+      
+      setTimeout(() => {
+        const secondArtist = document.querySelector('[data-artist-id="2"]');
+        secondArtist.querySelector('.artist-name').value = 'Mehmet Aksoy';
+        secondArtist.querySelector('.artist-category').value = 'Modern Heykel';
+        
+        secondArtist.querySelectorAll('.artist-photo').forEach((input, index) => {
+          input.value = `https://via.placeholder.com/260x260/e8e8e8/666?text=Heykel+${index + 1}`;
+        });
+      }, 100);
+      
+      // İletişim bilgileri
+      document.getElementById('contactText').value = 'Sorularınız için → Bize ulaşın!';
+      document.getElementById('instagramUsername').value = 'benim.arts';
+      
+      alert('✅ Örnek veriler yüklendi!');
+    }
+
+    function generateHTML() {
+      const siteTitle = document.getElementById('siteTitle').value || 'Benim.art';
+      const contactText = document.getElementById('contactText').value || 'Sorularınız için → Bize ulaşın!';
+      const instagramUsername = document.getElementById('instagramUsername').value || 'benim.arts';
+      
+      // Sanatçı verilerini topla
+      const artists = [];
+      document.querySelectorAll('.artist-container').forEach(container => {
+        const name = container.querySelector('.artist-name').value;
+        const category = container.querySelector('.artist-category').value || 'Sanat';
+        const instagram = container.querySelector('.artist-instagram').value || '#';
+        const photos = Array.from(container.querySelectorAll('.artist-photo'))
+          .map(input => input.value)
+          .filter(url => url);
+        
+        if (name && photos.length > 0) {
+          artists.push({ name, category, instagram, photos });
+        }
+      });
+      
+      // Sanatçı HTML'lerini oluştur
+      const artistsHTML = artists.map(artist => {
+        const photosHTML = artist.photos.map(photo => 
+          `<div class="photo-card" data-photo="${photo}" data-location="${artist.name}"><img src="${photo}" alt="${artist.name}"></div>`
+        ).join('\n        ');
+        
+        const linkHref = artist.instagram || '#';
+        const linkText = `${artist.name} | ${artist.category}`;
+        
+        return `    <!-- ${artist.name} -->
+    <div class="city-section">
+      <div class="city-header">
+        <h2 class="city-title">
+          <a href="${linkHref}" target="_blank" rel="noopener noreferrer" class="location-link">
+            <span class="click-icon"></span>${linkText}
+          </a>
+        </h2>
+      </div>
+      <div class="city-photos">
+        ${photosHTML}
+      </div>
+    </div>`;
+      }).join('\n\n');
+      
+      // Tam HTML
+      return `<!DOCTYPE html>  
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>${siteTitle}</title>
   
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -82,15 +865,16 @@
       position: fixed;
       top: 20px;
       left: 20px;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
+      width: auto;
+      padding: 12px 24px;
+      border-radius: 30px;
       background: linear-gradient(135deg, rgba(254, 246, 228, 0.8), rgba(199, 210, 254, 0.6));
       backdrop-filter: blur(10px);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 26px;
+      font-size: 18px;
+      font-weight: 700;
       text-decoration: none;
       box-shadow: var(--shadow-lg);
       transition: .3s;
@@ -100,7 +884,7 @@
     }
     
     .logo:hover {
-      transform: scale(1.1) rotate(10deg);
+      transform: scale(1.1) rotate(3deg);
       box-shadow: var(--shadow-xl);
       background: linear-gradient(135deg, rgba(199, 210, 254, 0.8), rgba(254, 246, 228, 0.6));
     }
@@ -112,12 +896,13 @@
       letter-spacing: -0.5px;
       position: fixed;
       top: 20px;
-      left: 80px;
+      left: 20px;
       z-index: 100;
       line-height: 50px;
       height: 50px;
       display: flex;
       align-items: center;
+      display: none; /* Hide h1 since we're using it in the logo */
     }
     
     .gradient-text {
@@ -565,75 +1350,20 @@
   </style>
 </head>
 <body>
-  <a href="#" class="logo">B</a>
-  <h1><span class="gradient-text">enim.art</span></h1>
+  <a href="#" class="logo">🎨</a>
+  <h1><span class="gradient-text">${siteTitle}</span></h1>
   
   <div class="container">
     <div id="locations-container" style="margin-top: 100px;">
     
-    <!-- Hülya Kalaycıoğlu -->
-    <div class="city-section">
-      <div class="city-header">
-        <h2 class="city-title">
-          <a href="https://www.instagram.com/benim.art" target="_blank" rel="noopener noreferrer" class="location-link">
-            <span class="click-icon"></span>Hülya Kalaycıoğlu | Instagram
-          </a>
-        </h2>
-      </div>
-      <div class="city-photos">
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/eabcbf5c-d362-4b13-3601-d37f63eb0c00/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/eabcbf5c-d362-4b13-3601-d37f63eb0c00/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public" alt="Hülya Kalaycıoğlu"></div>
-      </div>
-    </div>
-
-    <!-- Hülya Kalaycıoğlu -->
-    <div class="city-section">
-      <div class="city-header">
-        <h2 class="city-title">
-          <a href="https://www.instagram.com/benim.art" target="_blank" rel="noopener noreferrer" class="location-link">
-            <span class="click-icon"></span>Hülya Kalaycıoğlu | Instagram
-          </a>
-        </h2>
-      </div>
-      <div class="city-photos">
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/eabcbf5c-d362-4b13-3601-d37f63eb0c00/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/eabcbf5c-d362-4b13-3601-d37f63eb0c00/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public" alt="Hülya Kalaycıoğlu"></div>
-      </div>
-    </div>
-
-    <!-- Hülya Kalaycıoğlu -->
-    <div class="city-section">
-      <div class="city-header">
-        <h2 class="city-title">
-          <a href="https://www.instagram.com/benim.art" target="_blank" rel="noopener noreferrer" class="location-link">
-            <span class="click-icon"></span>Hülya Kalaycıoğlu | Instagram
-          </a>
-        </h2>
-      </div>
-      <div class="city-photos">
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/eabcbf5c-d362-4b13-3601-d37f63eb0c00/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/eabcbf5c-d362-4b13-3601-d37f63eb0c00/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public" alt="Hülya Kalaycıoğlu"></div>
-      </div>
-    </div>
+${artistsHTML}
 
     </div>
     
     <div class="promotion-section">
-      <div class="promo-text">Sorularınız için → Bize ulaşın!</div>
+      <div class="promo-text">${contactText}</div>
       
-      <a href="https://www.instagram.com/benim.arts/" target="_blank" class="instagram-btn">📩@benim.arts</a>
+      <a href="https://www.instagram.com/${instagramUsername}/" target="_blank" class="instagram-btn">📩@${instagramUsername}</a>
     </div>
   </div>
 
@@ -695,6 +1425,62 @@
         }
       }
     });
+  <\/script>
+</body>
+</html>`;
+    }
+
+    function showPreview() {
+      const html = generateHTML();
+      const previewSection = document.getElementById('previewSection');
+      const previewFrame = document.getElementById('previewFrame');
+      
+      previewSection.style.display = 'block';
+      
+      // iframe'e HTML içeriği yaz
+      const doc = previewFrame.contentDocument || previewFrame.contentWindow.document;
+      doc.open();
+      doc.write(html);
+      doc.close();
+      
+      // Önizleme bölümüne scroll
+      previewSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function copyHTML() {
+      const html = generateHTML();
+      
+      // Modern clipboard API kullan
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(html).then(() => {
+          alert('✅ HTML kodu başarıyla kopyalandı!\n\nKodu bir .html dosyasına yapıştırıp kaydedebilirsiniz.');
+        }).catch(err => {
+          // Fallback
+          fallbackCopy(html);
+        });
+      } else {
+        // Fallback for older browsers
+        fallbackCopy(html);
+      }
+    }
+
+    function fallbackCopy(text) {
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      
+      try {
+        document.execCommand('copy');
+        alert('✅ HTML kodu başarıyla kopyalandı!\n\nKodu bir .html dosyasına yapıştırıp kaydedebilirsiniz.');
+      } catch (err) {
+        alert('❌ Kopyalama başarısız oldu. Lütfen manuel olarak kopyalayın.');
+      }
+      
+      document.body.removeChild(textarea);
+    }
   </script>
 </body>
 </html>
