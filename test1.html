@@ -1,0 +1,661 @@
+<!DOCTYPE html>  
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Benim.art</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  
+  <style>
+    :root {
+      /* Sakin Pastel Palet */
+      --primary: #9CA3AF;        /* Soft Grey-Blue */
+      --primary-dark: #6B7280;    /* Deeper Grey */
+      --secondary: #C7D2FE;       /* Lavender */
+      --accent: #A78BFA;          /* Soft Purple */
+      --sage: #9DB88F;            /* Sage Green */
+      --blush: #F9D5E5;           /* Soft Blush Pink */
+      --cream: #FEF6E4;           /* Warm Cream */
+      --sand: #E8DCC4;            /* Warm Sand */
+      
+      --bg-grad: linear-gradient(135deg, #FAF9F7 0%, #F3F0EA 100%);
+      --card-bg: rgba(255, 253, 250, .95);
+      --glass-bg: rgba(255, 255, 255, .75);
+      --glass-border: rgba(160, 160, 160, .15);
+      --text-primary: #4A5568;
+      --text-secondary: #718096;
+      --text-muted: #A0AEC0;
+      --shadow-lg: 0 4px 20px rgba(0, 0, 0, .06);
+      --shadow-xl: 0 8px 30px rgba(0, 0, 0, .08);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #FAF9F7 0%, #F5F1EA 50%, #EDE8E2 100%);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, 
+        rgba(199, 210, 254, 0.1) 0%,    /* Soft lavender overlay */
+        rgba(167, 139, 250, 0.05) 25%,   /* Light purple */
+        rgba(157, 184, 143, 0.08) 50%,   /* Sage green */
+        rgba(249, 213, 229, 0.1) 75%,    /* Blush pink */
+        rgba(254, 246, 228, 0.15) 100%); /* Cream */
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .logo {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(254, 246, 228, 0.8), rgba(199, 210, 254, 0.6));
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      text-decoration: none;
+      box-shadow: var(--shadow-lg);
+      transition: .3s;
+      z-index: 100;
+      border: 2px solid rgba(167, 139, 250, 0.2);
+      color: var(--text-primary);
+    }
+    
+    .logo:hover {
+      transform: scale(1.1) rotate(10deg);
+      box-shadow: var(--shadow-xl);
+      background: linear-gradient(135deg, rgba(199, 210, 254, 0.8), rgba(254, 246, 228, 0.6));
+    }
+    
+    h1 { 
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      margin: 0;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      position: fixed;
+      top: 20px;
+      left: 80px;
+      z-index: 100;
+      line-height: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, #9DB88F 0%, #A78BFA 50%, #C7D2FE 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 2px 8px rgba(167, 139, 250, 0.25));
+      display: inline-block;
+      position: relative;
+    }
+    
+    .city-section {
+      margin-bottom: 36px;
+      background: linear-gradient(135deg, rgba(254, 246, 228, 0.4), rgba(255, 255, 255, 0.6));
+      backdrop-filter: blur(20px);
+      border: 2px solid rgba(199, 210, 254, 0.3);
+      border-radius: 20px;
+      padding: 0;
+      box-shadow: var(--shadow-lg);
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
+      overflow: hidden;
+      transition: .3s cubic-bezier(.4, 0, .2, 1);
+    }
+    
+    .city-section:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--secondary);
+      background: linear-gradient(135deg, rgba(254, 246, 228, 0.5), rgba(255, 255, 255, 0.7));
+    }
+    
+    .city-header {
+      padding: 18px 22px 12px 22px;
+      margin: 0;
+      border: none;
+      background: transparent;
+      text-align: left;
+    }
+    
+    .city-title {
+      margin: 0;
+      font-size: clamp(16px, 3.5vw, 20px);
+      color: var(--text-primary);
+      font-weight: 700;
+    }
+    
+    .city-photos {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      padding: 12px 22px 22px 22px;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    .city-photos::-webkit-scrollbar {
+      display: none;
+    }
+    
+    .photo-card {
+      flex: 0 0 auto;
+      width: 260px;
+      height: 260px;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+      scroll-snap-align: start;
+      background-color: white;
+      position: relative;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+    }
+
+    /* Mobile Responsive Styles */
+    @media (max-width: 768px) {
+      .logo {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+        top: 15px;
+        left: 15px;
+      }
+
+      h1 {
+        font-size: 1.3rem;
+        top: 15px;
+        left: 65px;
+        line-height: 40px;
+        height: 40px;
+      }
+
+      .city-section {
+        margin-bottom: 20px;
+        border-radius: 15px;
+      }
+
+      .city-header {
+        padding: 15px 18px 10px 18px;
+      }
+
+      .city-title {
+        font-size: 16px;
+      }
+
+      .location-link {
+        padding: 8px 12px;
+        font-size: 14px;
+        gap: 5px;
+      }
+
+      .city-photos {
+        padding: 10px 18px 18px 18px;
+        gap: 12px;
+      }
+
+      .photo-card {
+        width: 140px;
+        height: 140px;
+        border-radius: 10px;
+      }
+
+      .promotion-section {
+        padding: 20px;
+        margin: 25px auto;
+      }
+
+      .promotion-title {
+        font-size: 20px;
+        margin-bottom: 12px;
+      }
+
+      .promo-text {
+        font-size: 16px;
+        margin: 12px 0;
+      }
+
+      .instagram-btn {
+        padding: 10px 20px;
+        font-size: 16px;
+      }
+
+      .modal-close {
+        width: 35px;
+        height: 35px;
+        font-size: 18px;
+        top: 20px;
+        right: 20px;
+      }
+
+      .modal-info {
+        bottom: 20px;
+        font-size: 12px;
+        padding: 6px 14px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.1rem;
+        top: 15px;
+        left: 60px;
+        line-height: 40px;
+        height: 40px;
+      }
+
+      .city-section {
+        border-width: 1px;
+        margin-bottom: 18px;
+      }
+
+      .city-header {
+        padding: 12px 15px 8px 15px;
+      }
+
+      .city-title {
+        font-size: 15px;
+      }
+
+      .location-link {
+        padding: 7px 10px;
+        font-size: 13px;
+        border-radius: 20px;
+      }
+
+      .city-photos {
+        padding: 8px 15px 15px 15px;
+        gap: 10px;
+      }
+
+      .photo-card {
+        width: 120px;
+        height: 120px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      .photo-card:hover {
+        transform: scale(1.02) translateY(-2px);
+      }
+
+      .promotion-section {
+        padding: 18px 15px;
+        border-radius: 15px;
+      }
+
+      .promotion-title {
+        font-size: 18px;
+      }
+
+      .promo-text {
+        font-size: 15px;
+        line-height: 1.4;
+      }
+
+      .instagram-btn {
+        padding: 9px 18px;
+        font-size: 15px;
+        border-radius: 20px;
+      }
+    }
+
+    @media (max-width: 375px) {
+      .container {
+        padding: 0 12px;
+      }
+
+      .photo-card {
+        width: 110px;
+        height: 110px;
+      }
+
+      .city-photos {
+        gap: 8px;
+      }
+    }
+    
+    .photo-card:hover {
+      transform: scale(1.05) translateY(-6px);
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
+    }
+    
+    .photo-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    
+    .photo-card:hover img {
+      transform: scale(1.1);
+    }
+    
+    .location-link {
+      text-decoration: none;
+      color: var(--text-primary);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 16px;
+      border-radius: 25px;
+      background: linear-gradient(135deg, rgba(167, 139, 250, 0.15), rgba(199, 210, 254, 0.2));
+      transition: all 0.3s ease;
+      font-size: clamp(13px, 2.5vw, 16px);
+      font-weight: 600;
+      max-width: fit-content;
+      border: 2px solid transparent;
+    }
+    
+    .location-link:hover {
+      background: linear-gradient(135deg, rgba(167, 139, 250, 0.25), rgba(199, 210, 254, 0.3));
+      color: var(--primary-dark);
+      text-decoration: none;
+      transform: translateY(-2px);
+      border-color: rgba(167, 139, 250, 0.3);
+      box-shadow: 0 4px 16px rgba(167, 139, 250, 0.2);
+    }
+    
+    .click-icon {
+      color: var(--accent);
+      display: inline-flex;
+    }
+    
+    .click-icon::before {
+      content: "➤";
+      display: inline-block;
+      font-size: 10px;
+    }
+
+    /* MODAL STYLES */
+    .photo-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(10px);
+      z-index: 3000;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+      opacity: 0;
+      transition: opacity 0.3s ease-out;
+    }
+
+    .photo-modal.show {
+      opacity: 1;
+    }
+
+    .modal-content {
+      position: relative;
+      max-width: 90vw;
+      max-height: 90vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transform: scale(0.8);
+      transition: transform 0.3s ease-out;
+    }
+
+    .photo-modal.show .modal-content {
+      transform: scale(1);
+    }
+
+    .modal-image {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      transition: transform 0.3s ease;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: -50px;
+      right: -10px;
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--text-primary);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      z-index: 3001;
+    }
+
+    .modal-close:hover {
+      background: rgba(255, 255, 255, 1);
+      transform: scale(1.1);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-info {
+      position: absolute;
+      bottom: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      color: var(--text-primary);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    /* Promotion Section */
+    .promotion-section {
+      background: linear-gradient(135deg, 
+        rgba(249, 213, 229, 0.3) 0%,     /* Blush pink */
+        rgba(254, 246, 228, 0.4) 33%,    /* Cream */
+        rgba(199, 210, 254, 0.3) 66%,    /* Lavender */
+        rgba(157, 184, 143, 0.25) 100%); /* Sage green */
+      backdrop-filter: blur(20px);
+      color: var(--text-primary);
+      padding: 24px;
+      border-radius: 20px;
+      margin: 36px auto;
+      text-align: center;
+      border: 2px solid rgba(167, 139, 250, 0.2);
+      max-width: 1000px;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .promotion-title {
+      font-size: clamp(20px, 4vw, 28px);
+      font-weight: 800;
+      margin-bottom: 14px;
+      color: var(--primary-dark);
+      position: relative;
+      z-index: 1;
+    }
+
+    .instagram-btn {
+      background: linear-gradient(135deg, #C7D2FE 0%, #A78BFA 50%, #9DB88F 100%);
+      color: white !important;
+      padding: 12px 24px;
+      border-radius: 25px;
+      text-decoration: none !important;
+      display: inline-block;
+      font-weight: 700;
+      font-size: clamp(16px, 2.5vw, 20px);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      margin: 12px 0;
+      box-shadow: 0 4px 20px rgba(167, 139, 250, 0.3);
+      position: relative;
+      z-index: 1;
+      transform: perspective(1000px) rotateX(0deg);
+    }
+
+    .instagram-btn:hover {
+      transform: perspective(1000px) rotateX(-10deg) translateY(-3px);
+      box-shadow: 0 8px 30px rgba(167, 139, 250, 0.4);
+      color: white !important;
+      background: linear-gradient(135deg, #9DB88F 0%, #A78BFA 50%, #C7D2FE 100%);
+    }
+
+    .promo-text {
+      margin: 16px 0;
+      font-size: clamp(17px, 3vw, 22px);
+      color: var(--text-primary);
+      font-weight: 500;
+      position: relative;
+      z-index: 1;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <a href="#" class="logo">🎨</a>
+  <h1><span class="gradient-text">Benim.art</span></h1>
+  
+  <div class="container">
+    <div id="locations-container" style="margin-top: 100px;">
+    
+    <!-- Hülya Kalaycıoğlu -->
+    <div class="city-section">
+      <div class="city-header">
+        <h2 class="city-title">
+          <a href="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" target="_blank" rel="noopener noreferrer" class="location-link">
+            <span class="click-icon"></span>Hülya Kalaycıoğlu | https://www.instagram.com/benim.art
+          </a>
+        </h2>
+      </div>
+      <div class="city-photos">
+        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" alt="Hülya Kalaycıoğlu"></div>
+        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" alt="Hülya Kalaycıoğlu"></div>
+        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" alt="Hülya Kalaycıoğlu"></div>
+        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/eabcbf5c-d362-4b13-3601-d37f63eb0c00/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/eabcbf5c-d362-4b13-3601-d37f63eb0c00/public" alt="Hülya Kalaycıoğlu"></div>
+        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public" alt="Hülya Kalaycıoğlu"></div>
+      </div>
+    </div>
+
+    </div>
+    
+    <div class="promotion-section">
+      <div class="promo-text">Sorularınız için → Bize ulaşın!</div>
+      
+      <a href="https://www.instagram.com/benim.arts/" target="_blank" class="instagram-btn">📩@benim.arts</a>
+    </div>
+  </div>
+
+  <!-- PHOTO MODAL -->
+  <div class="photo-modal" id="photoModal" onclick="closePhotoModal()">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closePhotoModal()" title="Kapat (ESC)">✕</button>
+      <img class="modal-image" id="modalImage" src="" alt="">
+      <div class="modal-info" id="modalInfo">Sanatçı Adı</div>
+    </div>
+  </div>
+
+  <script>
+    // Photo modal functions
+    function openPhotoModal(imageUrl, locationName) {
+      const modal = document.getElementById('photoModal');
+      const modalImage = document.getElementById('modalImage');
+      const modalInfo = document.getElementById('modalInfo');
+      
+      modalImage.src = imageUrl;
+      modalImage.alt = locationName;
+      modalInfo.textContent = locationName;
+      
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      
+      setTimeout(() => {
+        modal.classList.add('show');
+      }, 10);
+    }
+
+    function closePhotoModal() {
+      const modal = document.getElementById('photoModal');
+      
+      modal.classList.remove('show');
+      
+      setTimeout(() => {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }, 300);
+    }
+
+    // ESC tuşu ile modal kapatma
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        closePhotoModal();
+      }
+    });
+
+    // Fotoğraf kartlarına tıklama olayları ekle
+    document.addEventListener('click', function(e) {
+      if (e.target.closest('.photo-card')) {
+        const card = e.target.closest('.photo-card');
+        const img = card.querySelector('img');
+        if (img) {
+          const imageUrl = img.src;
+          const locationName = img.alt;
+          openPhotoModal(imageUrl, locationName);
+        }
+      }
+    });
+  </script>
+</body>
+</html>
