@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Benim.art</title>
   
   <!-- Fonts -->
@@ -12,19 +12,25 @@
   
   <style>
     :root {
-      --primary: #3b82f6;
-      --primary-dark: #1d4ed8;
-      --secondary: #8b5cf6;
-      --accent: #f97316;
-      --bg-grad: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-      --card-bg: rgba(255, 255, 255, .95);
-      --glass-bg: rgba(255, 255, 255, .60);
-      --glass-border: rgba(0, 0, 0, .08);
-      --text-primary: #334155;
-      --text-secondary: #64748b;
-      --text-muted: #94a3b8;
-      --shadow-lg: 0 6px 24px rgba(0, 0, 0, .08);
-      --shadow-xl: 0 12px 40px rgba(0, 0, 0, .12);
+      /* Sakin Pastel Palet */
+      --primary: #9CA3AF;        /* Soft Grey-Blue */
+      --primary-dark: #6B7280;    /* Deeper Grey */
+      --secondary: #C7D2FE;       /* Lavender */
+      --accent: #A78BFA;          /* Soft Purple */
+      --sage: #9DB88F;            /* Sage Green */
+      --blush: #F9D5E5;           /* Soft Blush Pink */
+      --cream: #FEF6E4;           /* Warm Cream */
+      --sand: #E8DCC4;            /* Warm Sand */
+      
+      --bg-grad: linear-gradient(135deg, #FAF9F7 0%, #F3F0EA 100%);
+      --card-bg: rgba(255, 253, 250, .95);
+      --glass-bg: rgba(255, 255, 255, .75);
+      --glass-border: rgba(160, 160, 160, .15);
+      --text-primary: #4A5568;
+      --text-secondary: #718096;
+      --text-muted: #A0AEC0;
+      --shadow-lg: 0 4px 20px rgba(0, 0, 0, .06);
+      --shadow-xl: 0 8px 30px rgba(0, 0, 0, .08);
     }
 
     * {
@@ -35,7 +41,7 @@
 
     body {
       font-family: 'Inter', sans-serif;
-      background-image: url('https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/df156335-417a-4600-a36a-a78c69799c00/public');
+      background: linear-gradient(135deg, #FAF9F7 0%, #F5F1EA 50%, #EDE8E2 100%);
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -45,10 +51,6 @@
       line-height: 1.6;
       overflow-x: hidden;
       position: relative;
-      -webkit-background-size: cover;
-      -moz-background-size: cover;
-      -o-background-size: cover;
-      background-color: #e2e8f0;
     }
 
     body::after {
@@ -58,7 +60,12 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(248, 250, 252, 0.4);
+      background: linear-gradient(135deg, 
+        rgba(199, 210, 254, 0.1) 0%,    /* Soft lavender overlay */
+        rgba(167, 139, 250, 0.05) 25%,   /* Light purple */
+        rgba(157, 184, 143, 0.08) 50%,   /* Sage green */
+        rgba(249, 213, 229, 0.1) 75%,    /* Blush pink */
+        rgba(254, 246, 228, 0.15) 100%); /* Cream */
       pointer-events: none;
       z-index: 0;
     }
@@ -78,7 +85,7 @@
       width: 50px;
       height: 50px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, .2);
+      background: linear-gradient(135deg, rgba(254, 246, 228, 0.8), rgba(199, 210, 254, 0.6));
       backdrop-filter: blur(10px);
       display: flex;
       align-items: center;
@@ -88,14 +95,14 @@
       box-shadow: var(--shadow-lg);
       transition: .3s;
       z-index: 100;
-      border: 1px solid rgba(255, 255, 255, .3);
+      border: 2px solid rgba(167, 139, 250, 0.2);
       color: var(--text-primary);
     }
     
     .logo:hover {
       transform: scale(1.1) rotate(10deg);
       box-shadow: var(--shadow-xl);
-      background: rgba(255, 255, 255, .3);
+      background: linear-gradient(135deg, rgba(199, 210, 254, 0.8), rgba(254, 246, 228, 0.6));
     }
     
     h1 { 
@@ -109,29 +116,29 @@
     }
     
     .gradient-text {
-      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      background: linear-gradient(135deg, #9DB88F 0%, #A78BFA 50%, #C7D2FE 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      filter: drop-shadow(0 2px 8px rgba(16, 185, 129, 0.3));
+      filter: drop-shadow(0 2px 8px rgba(167, 139, 250, 0.25));
       display: inline-block;
       position: relative;
     }
     
     .camera-emoji {
-      color: #10b981;
+      color: #A78BFA;
       background: none;
       -webkit-text-fill-color: initial;
       margin-right: 12px;
-      filter: drop-shadow(0 2px 4px rgba(16, 185, 129, 0.4));
+      filter: drop-shadow(0 2px 4px rgba(167, 139, 250, 0.3));
       font-size: 1.1em;
     }
     
     .city-section {
       margin-bottom: 36px;
-      background: rgba(255, 255, 255, .3);
+      background: linear-gradient(135deg, rgba(254, 246, 228, 0.4), rgba(255, 255, 255, 0.6));
       backdrop-filter: blur(20px);
-      border: 2px solid rgba(255, 255, 255, .4);
+      border: 2px solid rgba(199, 210, 254, 0.3);
       border-radius: 20px;
       padding: 0;
       box-shadow: var(--shadow-lg);
@@ -145,8 +152,8 @@
     .city-section:hover {
       transform: translateY(-3px);
       box-shadow: var(--shadow-xl);
-      border-color: var(--primary);
-      background: rgba(255, 255, 255, .5);
+      border-color: var(--secondary);
+      background: linear-gradient(135deg, rgba(254, 246, 228, 0.5), rgba(255, 255, 255, 0.7));
     }
     
     .city-header {
@@ -191,6 +198,168 @@
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       cursor: pointer;
     }
+
+    /* Mobile Responsive Styles */
+    @media (max-width: 768px) {
+      .logo {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+        top: 15px;
+        left: 15px;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+        margin: 60px 0 30px 0;
+      }
+
+      .camera-emoji {
+        font-size: 1em;
+        margin-right: 8px;
+      }
+
+      .city-section {
+        margin-bottom: 20px;
+        border-radius: 15px;
+      }
+
+      .city-header {
+        padding: 15px 18px 10px 18px;
+      }
+
+      .city-title {
+        font-size: 16px;
+      }
+
+      .location-link {
+        padding: 8px 12px;
+        font-size: 14px;
+        gap: 5px;
+      }
+
+      .city-photos {
+        padding: 10px 18px 18px 18px;
+        gap: 12px;
+      }
+
+      .photo-card {
+        width: 140px;
+        height: 140px;
+        border-radius: 10px;
+      }
+
+      .promotion-section {
+        padding: 20px;
+        margin: 25px auto;
+      }
+
+      .promotion-title {
+        font-size: 20px;
+        margin-bottom: 12px;
+      }
+
+      .promo-text {
+        font-size: 16px;
+        margin: 12px 0;
+      }
+
+      .instagram-btn {
+        padding: 10px 20px;
+        font-size: 16px;
+      }
+
+      .modal-close {
+        width: 35px;
+        height: 35px;
+        font-size: 18px;
+        top: 20px;
+        right: 20px;
+      }
+
+      .modal-info {
+        bottom: 20px;
+        font-size: 12px;
+        padding: 6px 14px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.5rem;
+        margin: 55px 0 25px 0;
+      }
+
+      .city-section {
+        border-width: 1px;
+        margin-bottom: 18px;
+      }
+
+      .city-header {
+        padding: 12px 15px 8px 15px;
+      }
+
+      .city-title {
+        font-size: 15px;
+      }
+
+      .location-link {
+        padding: 7px 10px;
+        font-size: 13px;
+        border-radius: 20px;
+      }
+
+      .city-photos {
+        padding: 8px 15px 15px 15px;
+        gap: 10px;
+      }
+
+      .photo-card {
+        width: 120px;
+        height: 120px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      .photo-card:hover {
+        transform: scale(1.02) translateY(-2px);
+      }
+
+      .promotion-section {
+        padding: 18px 15px;
+        border-radius: 15px;
+      }
+
+      .promotion-title {
+        font-size: 18px;
+      }
+
+      .promo-text {
+        font-size: 15px;
+        line-height: 1.4;
+      }
+
+      .instagram-btn {
+        padding: 9px 18px;
+        font-size: 15px;
+        border-radius: 20px;
+      }
+    }
+
+    @media (max-width: 375px) {
+      .container {
+        padding: 0 12px;
+      }
+
+      .photo-card {
+        width: 110px;
+        height: 110px;
+      }
+
+      .city-photos {
+        gap: 8px;
+      }
+    }
     
     .photo-card:hover {
       transform: scale(1.05) translateY(-6px);
@@ -211,13 +380,13 @@
     
     .location-link {
       text-decoration: none;
-      color: var(--primary);
+      color: var(--text-primary);
       display: inline-flex;
       align-items: center;
       gap: 6px;
       padding: 10px 16px;
       border-radius: 25px;
-      background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+      background: linear-gradient(135deg, rgba(167, 139, 250, 0.15), rgba(199, 210, 254, 0.2));
       transition: all 0.3s ease;
       font-size: clamp(13px, 2.5vw, 16px);
       font-weight: 600;
@@ -226,12 +395,12 @@
     }
     
     .location-link:hover {
-      background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.2));
+      background: linear-gradient(135deg, rgba(167, 139, 250, 0.25), rgba(199, 210, 254, 0.3));
       color: var(--primary-dark);
       text-decoration: none;
       transform: translateY(-2px);
-      border-color: rgba(59, 130, 246, 0.3);
-      box-shadow: 0 6px 20px rgba(59, 130, 246, 0.25);
+      border-color: rgba(167, 139, 250, 0.3);
+      box-shadow: 0 4px 16px rgba(167, 139, 250, 0.2);
     }
     
     .click-icon {
@@ -336,14 +505,18 @@
 
     /* Promotion Section */
     .promotion-section {
-      background: linear-gradient(135deg, rgba(255, 247, 237, 0.3) 0%, rgba(254, 243, 199, 0.3) 50%, rgba(253, 230, 138, 0.3) 100%);
+      background: linear-gradient(135deg, 
+        rgba(249, 213, 229, 0.3) 0%,     /* Blush pink */
+        rgba(254, 246, 228, 0.4) 33%,    /* Cream */
+        rgba(199, 210, 254, 0.3) 66%,    /* Lavender */
+        rgba(157, 184, 143, 0.25) 100%); /* Sage green */
       backdrop-filter: blur(20px);
       color: var(--text-primary);
       padding: 24px;
       border-radius: 20px;
       margin: 36px auto;
       text-align: center;
-      border: 2px solid rgba(245, 158, 11, 0.4);
+      border: 2px solid rgba(167, 139, 250, 0.2);
       max-width: 1000px;
       box-shadow: var(--shadow-lg);
       position: relative;
@@ -354,13 +527,13 @@
       font-size: clamp(20px, 4vw, 28px);
       font-weight: 800;
       margin-bottom: 14px;
-      color: #92400e;
+      color: var(--primary-dark);
       position: relative;
       z-index: 1;
     }
 
     .instagram-btn {
-      background: linear-gradient(135deg, #405de6 0%, #5851db 50%, #833ab4 75%, #c13584 90%, #e1306c 95%, #fd1d1d 100%);
+      background: linear-gradient(135deg, #C7D2FE 0%, #A78BFA 50%, #9DB88F 100%);
       color: white !important;
       padding: 12px 24px;
       border-radius: 25px;
@@ -370,7 +543,7 @@
       font-size: clamp(16px, 2.5vw, 20px);
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       margin: 12px 0;
-      box-shadow: 0 6px 24px rgba(225, 48, 108, 0.4);
+      box-shadow: 0 4px 20px rgba(167, 139, 250, 0.3);
       position: relative;
       z-index: 1;
       transform: perspective(1000px) rotateX(0deg);
@@ -378,58 +551,30 @@
 
     .instagram-btn:hover {
       transform: perspective(1000px) rotateX(-10deg) translateY(-3px);
-      box-shadow: 0 15px 45px rgba(225, 48, 108, 0.6);
+      box-shadow: 0 8px 30px rgba(167, 139, 250, 0.4);
       color: white !important;
-      background: linear-gradient(135deg, #fd1d1d 0%, #e1306c 5%, #c13584 10%, #833ab4 25%, #5851db 50%, #405de6 100%);
+      background: linear-gradient(135deg, #9DB88F 0%, #A78BFA 50%, #C7D2FE 100%);
     }
 
     .promo-text {
       margin: 16px 0;
       font-size: clamp(17px, 3vw, 22px);
-      color: #92400e;
+      color: var(--text-primary);
       font-weight: 500;
       position: relative;
       z-index: 1;
       line-height: 1.6;
     }
-
-    .purchase-btn {
-      width: 100%;
-      max-width: 320px;
-      padding: 16px 24px;
-      background: linear-gradient(135deg, #ffd700 0%, #ffb347 50%, #ff8c00 100%);
-      color: white;
-      text-decoration: none;
-      border-radius: 18px;
-      font-size: clamp(16px, 3vw, 20px);
-      font-weight: 800;
-      display: inline-block;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      margin: 16px 0 24px 0;
-      border: none;
-      box-shadow: 0 8px 32px rgba(255, 215, 0, 0.4);
-      box-sizing: border-box;
-      text-shadow: 0 1px 3px rgba(0,0,0,0.3);
-      position: relative;
-      z-index: 1;
-      transform: perspective(1000px) rotateX(0deg);
-    }
-
-    .purchase-btn:hover {
-      transform: perspective(1000px) rotateX(-5deg) translateY(-4px);
-      box-shadow: 0 15px 45px rgba(255, 215, 0, 0.6);
-      color: white;
-      text-decoration: none;
-      background: linear-gradient(135deg, #ff8c00 0%, #ffb347 50%, #ffd700 100%);
-    }
   </style>
 </head>
 <body>
-  <a href="https://tr81.tr/index.html" class="logo" onclick="window.open(this.href, '_blank'); return false;">❤️</a>
+  <a href="#" class="logo">🎨</a>
   <h1><span class="camera-emoji">🎨</span><span class="gradient-text">Benim.art</span></h1>
   
   <div class="container">
     <div id="locations-container">
+    
+    <!-- Artist 1 - Hülya Kalaycıoğlu -->
     <div class="city-section">
       <div class="city-header">
         <h2 class="city-title">
@@ -447,14 +592,72 @@
         <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public" alt="Hülya Kalaycıoğlu"></div>
       </div>
     </div>
+
+    <!-- Artist 2 -->
+    <div class="city-section">
+      <div class="city-header">
+        <h2 class="city-title">
+          <a href="#" class="location-link">
+            <span class="click-icon"></span>Mehmet Aksoy | Modern Heykel
+          </a>
+        </h2>
+      </div>
+      <div class="city-photos">
+        <div class="photo-card"><img src="https://via.placeholder.com/260x260/e8e8e8/666?text=Heykel+1" alt="Mehmet Aksoy"></div>
+        <div class="photo-card"><img src="https://via.placeholder.com/260x260/e0e0e0/666?text=Heykel+2" alt="Mehmet Aksoy"></div>
+        <div class="photo-card"><img src="https://via.placeholder.com/260x260/d8d8d8/666?text=Heykel+3" alt="Mehmet Aksoy"></div>
+        <div class="photo-card"><img src="https://via.placeholder.com/260x260/d0d0d0/666?text=Heykel+4" alt="Mehmet Aksoy"></div>
+        <div class="photo-card"><img src="https://via.placeholder.com/260x260/c8c8c8/666?text=Heykel+5" alt="Mehmet Aksoy"></div>
+        <div class="photo-card"><img src="https://via.placeholder.com/260x260/c0c0c0/666?text=Heykel+6" alt="Mehmet Aksoy"></div>
+      </div>
+    </div>
+
+    <!-- Artist 3 -->
+    <div class="city-section">
+      <div class="city-header">
+        <h2 class="city-title">
+          <a href="#" class="location-link">
+            <span class="click-icon"></span>Ayşe Demirci | Soyut Ekspresyonizm
+          </a>
+        </h2>
+      </div>
+      <div class="city-photos">
+        <div class="photo-card"><img src="https://via.placeholder.com/260x260/f0f0f0/666?text=Tablo+1" alt="Ayşe Demirci"></div>
+        <div class="photo-card"><img src="https://via.placeholder.com/260x260/e8e8e8/666?text=Tablo+2" alt="Ayşe Demirci"></div>
+        <div class="photo-card"><img src="https://via.placeholder.com/260x260/e0e0e0/666?text=Tablo+3" alt="Ayşe Demirci"></div>
+        <div class="photo-card"><img src="https://via.placeholder.com/260x260/d8d8d8/666?text=Tablo+4" alt="Ayşe Demirci"></div>
+        <div class="photo-card"><img src="https://via.placeholder.com/260x260/d0d0d0/666?text=Tablo+5" alt="Ayşe Demirci"></div>
+        <div class="photo-card"><img src="https://via.placeholder.com/260x260/c8c8c8/666?text=Tablo+6" alt="Ayşe Demirci"></div>
+      </div>
+    </div>
+
+    <!-- Artist 4 -->
+    <div class="city-section">
+      <div class="city-header">
+        <h2 class="city-title">
+          <a href="#" class="location-link">
+            <span class="click-icon"></span>Ali Yılmaz | Çağdaş Resim
+          </a>
+        </h2>
+      </div>
+      <div class="city-photos">
+        <div class="photo-card"><img src="https://via.placeholder.com/260x260/fafafa/666?text=Eser+1" alt="Ali Yılmaz"></div>
+        <div class="photo-card"><img src="https://via.placeholder.com/260x260/f5f5f5/666?text=Eser+2" alt="Ali Yılmaz"></div>
+        <div class="photo-card"><img src="https://via.placeholder.com/260x260/f0f0f0/666?text=Eser+3" alt="Ali Yılmaz"></div>
+        <div class="photo-card"><img src="https://via.placeholder.com/260x260/ebebeb/666?text=Eser+4" alt="Ali Yılmaz"></div>
+        <div class="photo-card"><img src="https://via.placeholder.com/260x260/e6e6e6/666?text=Eser+5" alt="Ali Yılmaz"></div>
+        <div class="photo-card"><img src="https://via.placeholder.com/260x260/e1e1e1/666?text=Eser+6" alt="Ali Yılmaz"></div>
+      </div>
+    </div>
+
     </div>
     
     <div class="promotion-section">
-      <a href="index.html" target="_blank" class="purchase-btn" id="loginBtn">🏠 Main Menu</a>
+      <div class="promotion-title">Premium Sanat Galerisi</div>
       
-      <div class="promo-text" id="questionsText">Questions? → Contact us!</div>
+      <div class="promo-text">Sorularınız için → Bize ulaşın!</div>
       
-      <a href="https://www.instagram.com/benim.arts/" target="_blank" class="instagram-btn" id="instagramBtn">📩@benim.arts</a>
+      <a href="https://www.instagram.com/benim.arts/" target="_blank" class="instagram-btn">📩@benim.arts</a>
     </div>
   </div>
 
@@ -463,163 +666,11 @@
     <div class="modal-content" onclick="event.stopPropagation()">
       <button class="modal-close" onclick="closePhotoModal()" title="Kapat (ESC)">✕</button>
       <img class="modal-image" id="modalImage" src="" alt="">
-      <div class="modal-info" id="modalInfo">Konum Adı</div>
+      <div class="modal-info" id="modalInfo">Sanatçı Adı</div>
     </div>
   </div>
 
   <script>
-    // Dil verileri
-    const translations = {
-    "tr": {
-        "loginBtn": "🏠 Ana Menü",
-        "questionsText": "Sorularınız için → Bize ulaşın!",
-        "instagramBtn": "📩@benim.arts"
-    },
-    "en": {
-        "loginBtn": "🏠 Main Menu",
-        "questionsText": "Questions? → Contact us!",
-        "instagramBtn": "📩@benim.arts"
-    },
-    "de": {
-        "loginBtn": "🏠 Hauptmenü",
-        "questionsText": "Fragen? → Kontaktiere uns!",
-        "instagramBtn": "📩@benim.arts"
-    },
-    "fr": {
-        "loginBtn": "🏠 Menu Principal",
-        "questionsText": "Des questions? → Contactez-nous!",
-        "instagramBtn": "📩@benim.arts"
-    },
-    "es": {
-        "loginBtn": "🏠 Menú Principal",
-        "questionsText": "¿Preguntas? → ¡Contáctanos!",
-        "instagramBtn": "📩@benim.arts"
-    },
-    "it": {
-        "loginBtn": "🏠 Menu Principale",
-        "questionsText": "Domande? → Contattaci!",
-        "instagramBtn": "📩@benim.arts"
-    },
-    "pt": {
-        "loginBtn": "🏠 Menu Principal",
-        "questionsText": "Dúvidas? → Fale conosco!",
-        "instagramBtn": "📩@benim.arts"
-    },
-    "ru": {
-        "loginBtn": "🏠 Главное меню",
-        "questionsText": "Вопросы? → Свяжитесь с нами!",
-        "instagramBtn": "📩@benim.arts"
-    },
-    "ja": {
-        "loginBtn": "🏠 メインメニュー",
-        "questionsText": "ご質問は？→ お問い合わせください！",
-        "instagramBtn": "📩@benim.arts"
-    },
-    "zh": {
-        "loginBtn": "🏠 主菜单",
-        "questionsText": "有问题？→ 联系我们！",
-        "instagramBtn": "📩@benim.arts"
-    },
-    "ar": {
-        "loginBtn": "🏠 القائمة الرئيسية",
-        "questionsText": "أسئلة؟ → اتصل بنا!",
-        "instagramBtn": "📩@benim.arts"
-    },
-    "hi": {
-        "loginBtn": "🏠 मुख्य मेनू",
-        "questionsText": "प्रश्न? → हमसे संपर्क करें!",
-        "instagramBtn": "📩@benim.arts"
-    },
-    "ko": {
-        "loginBtn": "🏠 메인 메뉴",
-        "questionsText": "질문이 있으신가요? → 문의하세요!",
-        "instagramBtn": "📩@benim.arts"
-    },
-    "nl": {
-        "loginBtn": "🏠 Hoofdmenu",
-        "questionsText": "Vragen? → Neem contact op!",
-        "instagramBtn": "📩@benim.arts"
-    },
-    "pl": {
-        "loginBtn": "🏠 Menu Główne",
-        "questionsText": "Pytania? → Skontaktuj się z nami!",
-        "instagramBtn": "📩@benim.arts"
-    },
-    "sv": {
-        "loginBtn": "🏠 Huvudmeny",
-        "questionsText": "Frågor? → Kontakta oss!",
-        "instagramBtn": "📩@benim.arts"
-    },
-    "no": {
-        "loginBtn": "🏠 Hovedmeny",
-        "questionsText": "Spørsmål? → Kontakt oss!",
-        "instagramBtn": "📩@benim.arts"
-    },
-    "da": {
-        "loginBtn": "🏠 Hovedmenu",
-        "questionsText": "Spørgsmål? → Kontakt os!",
-        "instagramBtn": "📩@benim.arts"
-    },
-    "fi": {
-        "loginBtn": "🏠 Päävalikko",
-        "questionsText": "Kysymyksiä? → Ota yhteyttä!",
-        "instagramBtn": "📩@benim.arts"
-    },
-    "cs": {
-        "loginBtn": "🏠 Hlavní menu",
-        "questionsText": "Otázky? → Kontaktujte nás!",
-        "instagramBtn": "📩@benim.arts"
-    }
-};
-
-    // Dil algılama fonksiyonu
-    function detectLanguage() {
-      const savedLang = sessionStorage.getItem('preferred-language');
-      if (savedLang && translations[savedLang]) {
-        return savedLang;
-      }
-      
-      const browserLang = (navigator.language || navigator.userLanguage).toLowerCase();
-      
-      if (browserLang.startsWith('tr')) {
-        return 'tr';
-      }
-      
-      for (const lang in translations) {
-        if (browserLang.startsWith(lang)) {
-          return lang;
-        }
-      }
-      
-      return 'en';
-    }
-
-    // UI güncelleme fonksiyonu
-    function updateLanguageUI(lang) {
-      const t = translations[lang];
-      if (!t) return;
-      
-      const elements = {
-        'loginBtn': t.loginBtn,
-        'questionsText': t.questionsText,
-        'instagramBtn': t.instagramBtn
-      };
-      
-      for (const [id, text] of Object.entries(elements)) {
-        const element = document.getElementById(id);
-        if (element) {
-          if (id === 'loginBtn' || id === 'instagramBtn') {
-            element.innerHTML = text;
-          } else {
-            element.textContent = text;
-          }
-        }
-      }
-      
-      document.documentElement.lang = lang;
-      sessionStorage.setItem('preferred-language', lang);
-    }
-
     // Photo modal functions
     function openPhotoModal(imageUrl, locationName) {
       const modal = document.getElementById('photoModal');
@@ -668,27 +719,6 @@
         }
       }
     });
-
-    // Sayfa yüklendiğinde dil ayarla
-    document.addEventListener('DOMContentLoaded', function() {
-      const detectedLang = detectLanguage();
-      updateLanguageUI(detectedLang);
-    });
-    
-    window.addEventListener('load', function() {
-      const detectedLang = detectLanguage();
-      updateLanguageUI(detectedLang);
-    });
-
-    // Mobil viewport height fix
-    function setViewportHeight() {
-      let vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty('--vh', vh + 'px');
-    }
-    
-    setViewportHeight();
-    window.addEventListener('resize', setViewportHeight);
-    window.addEventListener('orientationchange', setViewportHeight);
   </script>
 </body>
 </html>
