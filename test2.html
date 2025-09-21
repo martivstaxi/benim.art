@@ -740,7 +740,7 @@
     </div>`;
       }).join('\n\n');
       
-      // Tam HTML - BURADA EMOJİ YOK, SADECE siteTitle VAR
+      // Tam HTML - Renkli logo ile
       return `<!DOCTYPE html>  
 <html lang="tr">
 <head>
@@ -839,7 +839,6 @@
       transition: .3s;
       z-index: 100;
       border: 2px solid rgba(167, 139, 250, 0.2);
-      color: var(--text-primary);
       white-space: nowrap;
     }
     
@@ -848,7 +847,16 @@
       box-shadow: var(--shadow-xl);
       background: linear-gradient(135deg, rgba(199, 210, 254, 0.8), rgba(254, 246, 228, 0.6));
       text-decoration: none;
-      color: var(--text-primary);
+    }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, #9DB88F 0%, #A78BFA 50%, #C7D2FE 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 2px 8px rgba(167, 139, 250, 0.25));
+      display: inline-block;
+      position: relative;
     }
     
     .city-section {
@@ -1270,7 +1278,7 @@
   </style>
 </head>
 <body>
-  <a href="#" class="logo">${siteTitle}</a>
+  <a href="#" class="logo"><span class="gradient-text">${siteTitle}</span></a>
   
   <div class="container">
     <div id="locations-container">
