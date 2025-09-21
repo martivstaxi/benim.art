@@ -251,6 +251,26 @@
         font-size: 12px;
         padding: 6px 14px;
       }
+
+      .nav-button {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+      }
+
+      .nav-button.prev {
+        left: 10px;
+      }
+
+      .nav-button.next {
+        right: 10px;
+      }
+
+      .photo-counter {
+        top: 20px;
+        font-size: 12px;
+        padding: 4px 10px;
+      }
     }
 
     @media (max-width: 480px) {
@@ -313,6 +333,20 @@
         padding: 9px 18px;
         font-size: 15px;
         border-radius: 20px;
+      }
+
+      .nav-button {
+        width: 35px;
+        height: 35px;
+        font-size: 16px;
+      }
+
+      .nav-button.prev {
+        left: 5px;
+      }
+
+      .nav-button.next {
+        right: 5px;
       }
     }
 
@@ -434,7 +468,9 @@
       object-fit: contain;
       border-radius: 12px;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-      transition: transform 0.3s ease;
+      transition: opacity 0.3s ease;
+      user-select: none;
+      -webkit-user-drag: none;
     }
 
     .modal-close {
@@ -477,6 +513,76 @@
       font-weight: 600;
       white-space: nowrap;
       text-align: center;
+    }
+
+    /* Carousel Navigation */
+    .nav-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--text-primary);
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      z-index: 3001;
+    }
+
+    .nav-button:hover {
+      background: rgba(255, 255, 255, 1);
+      transform: translateY(-50%) scale(1.1);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .nav-button.prev {
+      left: 20px;
+    }
+
+    .nav-button.next {
+      right: 20px;
+    }
+
+    .nav-button:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .nav-button:disabled:hover {
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    /* Photo Counter */
+    .photo-counter {
+      position: absolute;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      color: var(--text-primary);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      z-index: 3001;
+    }
+
+    /* Touch and Swipe Support */
+    .modal-content.dragging {
+      transition: none;
+    }
+
+    .modal-image.changing {
+      opacity: 0;
     }
 
     /* Promotion Section */
@@ -540,7 +646,7 @@
   <div class="container">
     <div id="locations-container">
 
-    <!-- Hülya Kalaycıoğlu -->
+    <!-- Hülya Kalaycıoğlu 1 -->
     <div class="city-section">
       <div class="city-header">
         <h2 class="city-title">
@@ -549,17 +655,17 @@
           </a>
         </h2>
       </div>
-      <div class="city-photos">
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/eabcbf5c-d362-4b13-3601-d37f63eb0c00/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/eabcbf5c-d362-4b13-3601-d37f63eb0c00/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public" alt="Hülya Kalaycıoğlu"></div>
+      <div class="city-photos" data-section-id="section-1">
+        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" data-location="Hülya Kalaycıoğlu" data-index="0"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" alt="Hülya Kalaycıoğlu"></div>
+        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" data-location="Hülya Kalaycıoğlu" data-index="1"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" alt="Hülya Kalaycıoğlu"></div>
+        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" data-location="Hülya Kalaycıoğlu" data-index="2"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" alt="Hülya Kalaycıoğlu"></div>
+        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" data-location="Hülya Kalaycıoğlu" data-index="3"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" alt="Hülya Kalaycıoğlu"></div>
+        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/eabcbf5c-d362-4b13-3601-d37f63eb0c00/public" data-location="Hülya Kalaycıoğlu" data-index="4"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/eabcbf5c-d362-4b13-3601-d37f63eb0c00/public" alt="Hülya Kalaycıoğlu"></div>
+        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public" data-location="Hülya Kalaycıoğlu" data-index="5"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public" alt="Hülya Kalaycıoğlu"></div>
       </div>
     </div>
 
-    <!-- Hülya Kalaycıoğlu -->
+    <!-- Hülya Kalaycıoğlu 2 -->
     <div class="city-section">
       <div class="city-header">
         <h2 class="city-title">
@@ -568,17 +674,17 @@
           </a>
         </h2>
       </div>
-      <div class="city-photos">
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/eabcbf5c-d362-4b13-3601-d37f63eb0c00/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/eabcbf5c-d362-4b13-3601-d37f63eb0c00/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public" alt="Hülya Kalaycıoğlu"></div>
+      <div class="city-photos" data-section-id="section-2">
+        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" data-location="Hülya Kalaycıoğlu" data-index="0"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" alt="Hülya Kalaycıoğlu"></div>
+        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" data-location="Hülya Kalaycıoğlu" data-index="1"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" alt="Hülya Kalaycıoğlu"></div>
+        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" data-location="Hülya Kalaycıoğlu" data-index="2"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" alt="Hülya Kalaycıoğlu"></div>
+        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" data-location="Hülya Kalaycıoğlu" data-index="3"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" alt="Hülya Kalaycıoğlu"></div>
+        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/eabcbf5c-d362-4b13-3601-d37f63eb0c00/public" data-location="Hülya Kalaycıoğlu" data-index="4"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/eabcbf5c-d362-4b13-3601-d37f63eb0c00/public" alt="Hülya Kalaycıoğlu"></div>
+        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public" data-location="Hülya Kalaycıoğlu" data-index="5"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public" alt="Hülya Kalaycıoğlu"></div>
       </div>
     </div>
 
-    <!-- Hülya Kalaycıoğlu -->
+    <!-- Hülya Kalaycıoğlu 3 -->
     <div class="city-section">
       <div class="city-header">
         <h2 class="city-title">
@@ -587,13 +693,13 @@
           </a>
         </h2>
       </div>
-      <div class="city-photos">
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/eabcbf5c-d362-4b13-3601-d37f63eb0c00/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/eabcbf5c-d362-4b13-3601-d37f63eb0c00/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public" data-location="Hülya Kalaycıoğlu"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public" alt="Hülya Kalaycıoğlu"></div>
+      <div class="city-photos" data-section-id="section-3">
+        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" data-location="Hülya Kalaycıoğlu" data-index="0"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" alt="Hülya Kalaycıoğlu"></div>
+        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" data-location="Hülya Kalaycıoğlu" data-index="1"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" alt="Hülya Kalaycıoğlu"></div>
+        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" data-location="Hülya Kalaycıoğlu" data-index="2"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" alt="Hülya Kalaycıoğlu"></div>
+        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" data-location="Hülya Kalaycıoğlu" data-index="3"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" alt="Hülya Kalaycıoğlu"></div>
+        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/eabcbf5c-d362-4b13-3601-d37f63eb0c00/public" data-location="Hülya Kalaycıoğlu" data-index="4"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/eabcbf5c-d362-4b13-3601-d37f63eb0c00/public" alt="Hülya Kalaycıoğlu"></div>
+        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public" data-location="Hülya Kalaycıoğlu" data-index="5"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public" alt="Hülya Kalaycıoğlu"></div>
       </div>
     </div>
 
@@ -606,25 +712,49 @@
     </div>
   </div>
 
-  <!-- PHOTO MODAL -->
-  <div class="photo-modal" id="photoModal" onclick="closePhotoModal()">
-    <div class="modal-content" onclick="event.stopPropagation()">
+  <!-- PHOTO MODAL WITH CAROUSEL -->
+  <div class="photo-modal" id="photoModal">
+    <div class="modal-content" id="modalContent">
       <button class="modal-close" onclick="closePhotoModal()" title="Kapat (ESC)">✕</button>
+      <button class="nav-button prev" id="prevBtn" onclick="navigatePhoto('prev')" title="Önceki (←)">‹</button>
+      <button class="nav-button next" id="nextBtn" onclick="navigatePhoto('next')" title="Sonraki (→)">›</button>
+      <div class="photo-counter" id="photoCounter">1 / 6</div>
       <img class="modal-image" id="modalImage" src="" alt="">
       <div class="modal-info" id="modalInfo">Sanatçı Adı</div>
     </div>
   </div>
 
   <script>
+    let currentSectionPhotos = [];
+    let currentPhotoIndex = 0;
+    let currentArtistName = '';
+    let touchStartX = 0;
+    let touchEndX = 0;
+    let isDragging = false;
+
     // Photo modal functions
-    function openPhotoModal(imageUrl, locationName) {
+    function openPhotoModal(imageUrl, locationName, sectionId, photoIndex) {
       const modal = document.getElementById('photoModal');
       const modalImage = document.getElementById('modalImage');
       const modalInfo = document.getElementById('modalInfo');
+      const photoCounter = document.getElementById('photoCounter');
       
-      modalImage.src = imageUrl;
-      modalImage.alt = locationName;
-      modalInfo.textContent = locationName;
+      // Get all photos from the same section
+      const section = document.querySelector(`[data-section-id="${sectionId}"]`);
+      const photos = section.querySelectorAll('.photo-card');
+      
+      currentSectionPhotos = [];
+      photos.forEach((card) => {
+        currentSectionPhotos.push({
+          url: card.dataset.photo,
+          name: card.dataset.location
+        });
+      });
+      
+      currentPhotoIndex = parseInt(photoIndex);
+      currentArtistName = locationName;
+      
+      updateModalContent();
       
       modal.style.display = 'flex';
       document.body.style.overflow = 'hidden';
@@ -632,6 +762,40 @@
       setTimeout(() => {
         modal.classList.add('show');
       }, 10);
+    }
+
+    function updateModalContent() {
+      const modalImage = document.getElementById('modalImage');
+      const modalInfo = document.getElementById('modalInfo');
+      const photoCounter = document.getElementById('photoCounter');
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      
+      // Add transition effect
+      modalImage.classList.add('changing');
+      
+      setTimeout(() => {
+        modalImage.src = currentSectionPhotos[currentPhotoIndex].url;
+        modalImage.alt = currentSectionPhotos[currentPhotoIndex].name;
+        modalInfo.textContent = currentSectionPhotos[currentPhotoIndex].name;
+        photoCounter.textContent = `${currentPhotoIndex + 1} / ${currentSectionPhotos.length}`;
+        
+        // Update navigation buttons state
+        prevBtn.disabled = currentPhotoIndex === 0;
+        nextBtn.disabled = currentPhotoIndex === currentSectionPhotos.length - 1;
+        
+        modalImage.classList.remove('changing');
+      }, 150);
+    }
+
+    function navigatePhoto(direction) {
+      if (direction === 'prev' && currentPhotoIndex > 0) {
+        currentPhotoIndex--;
+        updateModalContent();
+      } else if (direction === 'next' && currentPhotoIndex < currentSectionPhotos.length - 1) {
+        currentPhotoIndex++;
+        updateModalContent();
+      }
     }
 
     function closePhotoModal() {
@@ -642,26 +806,91 @@
       setTimeout(() => {
         modal.style.display = 'none';
         document.body.style.overflow = 'auto';
+        currentSectionPhotos = [];
+        currentPhotoIndex = 0;
       }, 300);
     }
 
-    // ESC tuşu ile modal kapatma
+    // Keyboard navigation
     document.addEventListener('keydown', function(event) {
-      if (event.key === 'Escape') {
-        closePhotoModal();
+      if (document.getElementById('photoModal').style.display === 'flex') {
+        if (event.key === 'Escape') {
+          closePhotoModal();
+        } else if (event.key === 'ArrowLeft') {
+          navigatePhoto('prev');
+        } else if (event.key === 'ArrowRight') {
+          navigatePhoto('next');
+        }
       }
     });
 
-    // Fotoğraf kartlarına tıklama olayları ekle
+    // Touch/Swipe support for mobile
+    function handleTouchStart(e) {
+      if (document.getElementById('photoModal').style.display === 'flex') {
+        touchStartX = e.changedTouches[0].screenX;
+        isDragging = true;
+        document.getElementById('modalContent').classList.add('dragging');
+      }
+    }
+
+    function handleTouchMove(e) {
+      if (!isDragging) return;
+      touchEndX = e.changedTouches[0].screenX;
+    }
+
+    function handleTouchEnd() {
+      if (!isDragging) return;
+      
+      isDragging = false;
+      document.getElementById('modalContent').classList.remove('dragging');
+      
+      const swipeThreshold = 50;
+      const diff = touchStartX - touchEndX;
+      
+      if (Math.abs(diff) > swipeThreshold) {
+        if (diff > 0) {
+          // Swipe left - next photo
+          navigatePhoto('next');
+        } else {
+          // Swipe right - previous photo
+          navigatePhoto('prev');
+        }
+      }
+      
+      touchStartX = 0;
+      touchEndX = 0;
+    }
+
+    // Add touch listeners
+    document.addEventListener('touchstart', handleTouchStart);
+    document.addEventListener('touchmove', handleTouchMove);
+    document.addEventListener('touchend', handleTouchEnd);
+
+    // Click event for photo cards
     document.addEventListener('click', function(e) {
       if (e.target.closest('.photo-card')) {
         const card = e.target.closest('.photo-card');
+        const sectionId = card.parentElement.dataset.sectionId;
+        const photoIndex = card.dataset.index;
         const img = card.querySelector('img');
+        
         if (img) {
           const imageUrl = img.src;
           const locationName = img.alt;
-          openPhotoModal(imageUrl, locationName);
+          openPhotoModal(imageUrl, locationName, sectionId, photoIndex);
         }
+      }
+    });
+
+    // Prevent modal close when clicking on image or buttons
+    document.getElementById('modalContent').addEventListener('click', function(e) {
+      e.stopPropagation();
+    });
+
+    // Close modal when clicking outside
+    document.getElementById('photoModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closePhotoModal();
       }
     });
   </script>
