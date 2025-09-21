@@ -1088,12 +1088,16 @@ ${sections}
     // Photo modal functions
     function openPhotoModal(imageUrl, locationName, sectionId, photoIndex) {
       const modal = document.getElementById('photoModal');
-      const modalImage = document.getElementById('modalImage');
-      const modalInfo = document.getElementById('modalInfo');
       
-      // Get all photos from the same section
-      const section = document.querySelector('[data-section-id="' + sectionId + '"]');
-      const photos = section.querySelectorAll('.photo-card');
+      // Get all photos from the same section using template literal correctly
+      const sectionElement = document.querySelector(\`[data-section-id="\${sectionId}"]\`);
+      
+      if (!sectionElement) {
+        console.error('Section not found:', sectionId);
+        return;
+      }
+      
+      const photos = sectionElement.querySelectorAll('.photo-card');
       
       currentSectionPhotos = [];
       photos.forEach((card) => {
@@ -1121,6 +1125,11 @@ ${sections}
       const modalInfo = document.getElementById('modalInfo');
       const prevBtn = document.getElementById('prevBtn');
       const nextBtn = document.getElementById('nextBtn');
+      
+      if (!currentSectionPhotos[currentPhotoIndex]) {
+        console.error('Invalid photo index:', currentPhotoIndex);
+        return;
+      }
       
       // Add transition effect
       modalImage.classList.add('changing');
