@@ -400,6 +400,13 @@
     <div class="header">
       <h1>🎨 Benim.art Site Editörü</h1>
       <p>Sanatçı portfolyo sitesi oluşturun - Tıpkı Benim.art gibi!</p>
+      <div class="button-group" style="margin-top: 20px; justify-content: center;">
+        <input type="file" id="csvFileTop" accept=".csv" style="display: none;" onchange="handleCSVUpload(event)">
+        <label for="csvFileTop" class="btn-secondary" style="cursor: pointer; display: inline-flex; align-items: center; margin: 0;">
+          📂 CSV Dosyası Seç
+        </label>
+        <button class="btn-success" onclick="copyHTML()">📋 HTML Kodu Kopyala</button>
+      </div>
     </div>
 
     <div class="info-box">
@@ -423,22 +430,11 @@
     <div class="editor-section">
       <h2 class="section-title">👨‍🎨 Sanatçılar</h2>
       
-      <!-- CSV Upload Section -->
+      <!-- CSV Upload Info -->
       <div class="info-box" style="background: linear-gradient(135deg, rgba(199, 210, 254, 0.2), rgba(167, 139, 250, 0.1));">
-        <h3>📊 CSV ile Toplu Yükleme</h3>
+        <h3>💡 CSV ile Toplu Yükleme</h3>
         <p>CSV formatı: <code>Sanatçı Adı | Kategori | Instagram Link | Foto1 | Foto2 | Foto3 | Foto4 | Foto5 | Foto6</code></p>
-        <p>Her satır bir sanatçıyı temsil eder. Virgül (,) veya noktalı virgül (;) ayraç olarak kullanılabilir.</p>
-        <div style="margin-top: 15px;">
-          <input type="file" id="csvFile" accept=".csv" style="display: none;" onchange="handleCSVUpload(event)">
-          <label for="csvFile" class="btn-secondary" style="cursor: pointer; display: inline-block; margin: 0;">
-            📂 CSV Dosyası Seç
-          </label>
-          <span id="csvFileName" style="margin-left: 15px; color: var(--text-secondary);"></span>
-        </div>
-      </div>
-      
-      <div style="margin: 20px 0; text-align: center;">
-        <span style="color: var(--text-muted);">— VEYA —</span>
+        <p>CSV dosyası yüklemek için aşağıdaki <strong>"📂 CSV Dosyası Seç"</strong> butonunu kullanın.</p>
       </div>
       
       <div id="artistsContainer">
@@ -514,7 +510,6 @@
 
     <div class="button-group">
       <button class="btn-primary" onclick="showPreview()">👁️ Önizleme Göster</button>
-      <button class="btn-success" onclick="copyHTML()">📋 HTML Kodu Kopyala</button>
       <button class="btn-secondary" onclick="loadSampleData()">📝 Örnek Veri Yükle</button>
     </div>
 
@@ -534,7 +529,8 @@
       const file = event.target.files[0];
       if (!file) return;
       
-      document.getElementById('csvFileName').textContent = file.name;
+      // Show file name in a temporary alert
+      alert(`📁 Dosya seçildi: ${file.name}`);
       
       const reader = new FileReader();
       reader.onload = function(e) {
