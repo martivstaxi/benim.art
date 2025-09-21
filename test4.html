@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Benim.art Advanced Editor</title>
+  <title>Benim.art Site Editörü</title>
   <style>
     * {
       margin: 0;
@@ -29,61 +29,15 @@
 
     h1 {
       color: #2c3e50;
-      margin-bottom: 10px;
-      font-size: 32px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .subtitle {
-      color: #7f8c8d;
       margin-bottom: 30px;
-      font-size: 14px;
+      font-size: 28px;
     }
 
-    .tabs {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 30px;
-      border-bottom: 2px solid #ecf0f1;
-      padding-bottom: 10px;
-    }
-
-    .tab {
-      padding: 10px 20px;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      font-size: 15px;
-      color: #7f8c8d;
-      transition: all 0.3s;
-      border-radius: 8px 8px 0 0;
-      font-weight: 500;
-    }
-
-    .tab.active {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-    }
-
-    .tab:hover:not(.active) {
-      background: #f8f9fa;
-    }
-
-    .tab-content {
-      display: none;
-    }
-
-    .tab-content.active {
-      display: block;
-    }
-
-    .control-panel {
+    .control-buttons {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: 10px;
-      margin-bottom: 25px;
+      margin-bottom: 30px;
       padding: 20px;
       background: #f8f9fa;
       border-radius: 10px;
@@ -97,40 +51,13 @@
       font-size: 14px;
       font-weight: 600;
       transition: all 0.3s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: #667eea;
       color: white;
     }
 
-    .btn-primary:hover {
+    button:hover {
       transform: translateY(-2px);
       box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-    }
-
-    .btn-success {
-      background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-      color: white;
-    }
-
-    .btn-warning {
-      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-      color: white;
-    }
-
-    .btn-info {
-      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-      color: white;
-    }
-
-    .btn-danger {
-      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-      color: white;
     }
 
     .section {
@@ -146,43 +73,20 @@
       font-weight: 700;
       color: #2c3e50;
       margin-bottom: 15px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
     }
 
-    .form-group {
-      margin-bottom: 20px;
-    }
-
-    label {
-      display: block;
-      font-size: 13px;
-      color: #586069;
-      margin-bottom: 6px;
-      font-weight: 600;
-    }
-
-    input[type="text"], 
-    input[type="url"],
-    input[type="color"],
-    select,
-    textarea {
+    input[type="text"], input[type="url"] {
       width: 100%;
-      padding: 10px 12px;
+      padding: 10px;
       border: 2px solid #e1e4e8;
       border-radius: 6px;
       font-size: 14px;
-      transition: all 0.3s;
-      background: white;
+      margin-bottom: 10px;
     }
 
-    input:focus, 
-    select:focus,
-    textarea:focus {
+    input:focus {
       outline: none;
       border-color: #667eea;
-      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
     }
 
     .artist-card {
@@ -191,451 +95,104 @@
       border-radius: 10px;
       margin-bottom: 20px;
       border: 2px solid #e1e4e8;
-      position: relative;
-      transition: all 0.3s;
-    }
-
-    .artist-card:hover {
-      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-      border-color: #667eea;
     }
 
     .artist-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
-      padding-bottom: 15px;
-      border-bottom: 1px solid #e1e4e8;
+      margin-bottom: 15px;
     }
 
     .artist-number {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: #667eea;
       color: white;
-      padding: 8px 16px;
+      padding: 5px 15px;
       border-radius: 20px;
       font-size: 14px;
-      font-weight: 600;
     }
 
-    .artist-controls {
-      display: flex;
-      gap: 8px;
-    }
-
-    .btn-small {
-      padding: 6px 12px;
+    .btn-remove {
+      background: #ff6b6b;
+      padding: 5px 15px;
       font-size: 12px;
     }
 
-    .photo-grid {
+    .photo-inputs {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      grid-template-columns: 1fr 1fr;
       gap: 10px;
-      margin-top: 15px;
+      margin-top: 10px;
     }
 
-    .photo-input-group {
-      position: relative;
-    }
-
-    .photo-preview {
-      width: 100%;
-      height: 100px;
-      background: #f8f9fa;
-      border: 2px dashed #dee2e6;
-      border-radius: 6px;
-      margin-top: 5px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      color: #adb5bd;
-      overflow: hidden;
-    }
-
-    .photo-preview img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .info-box {
-      background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      border-left: 4px solid #667eea;
-    }
-
-    .info-box h3 {
-      color: #667eea;
-      margin-bottom: 10px;
-      font-size: 16px;
-    }
-
-    .info-box ul {
-      list-style: none;
-      padding-left: 0;
-    }
-
-    .info-box li {
-      padding: 5px 0;
-      color: #586069;
+    label {
+      display: block;
       font-size: 13px;
-    }
-
-    .info-box li:before {
-      content: "✓ ";
-      color: #667eea;
-      font-weight: bold;
+      color: #586069;
+      margin-bottom: 5px;
+      font-weight: 600;
     }
 
     #preview {
       width: 100%;
-      height: 700px;
+      height: 600px;
       border: 2px solid #e1e4e8;
       border-radius: 8px;
       background: white;
     }
 
-    .color-picker-group {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
-    }
-
-    .color-input-wrapper {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .color-input-wrapper input[type="color"] {
-      width: 50px;
-      height: 40px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 15px;
-      margin-bottom: 20px;
-    }
-
-    .stat-card {
-      background: white;
+    .info-box {
+      background: #e3f2fd;
       padding: 15px;
       border-radius: 8px;
-      border: 1px solid #e1e4e8;
-      text-align: center;
-    }
-
-    .stat-number {
-      font-size: 24px;
-      font-weight: bold;
-      color: #667eea;
-    }
-
-    .stat-label {
-      font-size: 12px;
-      color: #7f8c8d;
-      margin-top: 5px;
-    }
-
-    .toggle-switch {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .toggle-switch input[type="checkbox"] {
-      width: 40px;
-      height: 20px;
-      -webkit-appearance: none;
-      appearance: none;
-      background: #ddd;
-      border-radius: 20px;
-      position: relative;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .toggle-switch input[type="checkbox"]:checked {
-      background: #667eea;
-    }
-
-    .toggle-switch input[type="checkbox"]:before {
-      content: '';
-      position: absolute;
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      background: white;
-      top: 2px;
-      left: 2px;
-      transition: 0.3s;
-    }
-
-    .toggle-switch input[type="checkbox"]:checked:before {
-      left: 22px;
-    }
-
-    @media (max-width: 768px) {
-      .container {
-        padding: 15px;
-      }
-      
-      .control-panel {
-        grid-template-columns: 1fr;
-      }
-      
-      .photo-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    .loading {
-      display: inline-block;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    .success-message {
-      background: #d4edda;
-      color: #155724;
-      padding: 12px;
-      border-radius: 6px;
-      margin: 10px 0;
-      display: none;
-    }
-
-    .error-message {
-      background: #f8d7da;
-      color: #721c24;
-      padding: 12px;
-      border-radius: 6px;
-      margin: 10px 0;
-      display: none;
+      margin-bottom: 20px;
+      color: #1565C0;
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>✨ Benim.art Site Editörü</h1>
-    <p class="subtitle">Profesyonel sanat galerisi sitenizi kolayca oluşturun</p>
     
-    <div class="tabs">
-      <button class="tab active" onclick="switchTab('editor')">📝 Editör</button>
-      <button class="tab" onclick="switchTab('settings')">⚙️ Ayarlar</button>
-      <button class="tab" onclick="switchTab('preview')">👁 Önizleme</button>
+    <div class="info-box">
+      <strong>CSV Formatı:</strong> Sanatçı Adı, Kategori, Link, Foto1, Foto2, Foto3, Foto4, Foto5, Foto6
     </div>
 
-    <div class="success-message" id="successMsg"></div>
-    <div class="error-message" id="errorMsg"></div>
-
-    <!-- EDITOR TAB -->
-    <div id="editor-tab" class="tab-content active">
-      <div class="control-panel">
-        <input type="file" id="csvFile" accept=".csv" style="display: none;" onchange="handleCSV(event)">
-        <button class="btn-success" onclick="document.getElementById('csvFile').click()">
-          📂 CSV Yükle
-        </button>
-        <button class="btn-primary" onclick="generateAndCopyHTML()">
-          📋 HTML Kopyala
-        </button>
-        <button class="btn-info" onclick="exportData()">
-          💾 Veriyi Kaydet
-        </button>
-        <button class="btn-warning" onclick="loadSampleData()">
-          🎨 Örnek Veri
-        </button>
-        <button class="btn-danger" onclick="clearAll()">
-          🗑️ Temizle
-        </button>
-      </div>
-
-      <div class="stats">
-        <div class="stat-card">
-          <div class="stat-number" id="artistCount">0</div>
-          <div class="stat-label">Sanatçı</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number" id="photoCount">0</div>
-          <div class="stat-label">Fotoğraf</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number" id="sectionCount">0</div>
-          <div class="stat-label">Bölüm</div>
-        </div>
-      </div>
-
-      <div class="section">
-        <div class="section-title">
-          <span>🎨</span> Sanatçılar
-        </div>
-        <div id="artistsContainer"></div>
-        <button class="btn-primary" onclick="addArtist()">+ Yeni Sanatçı Ekle</button>
-      </div>
+    <div class="control-buttons">
+      <input type="file" id="csvFile" accept=".csv" style="display: none;" onchange="handleCSV(event)">
+      <button onclick="document.getElementById('csvFile').click()">📂 CSV Yükle</button>
+      <button onclick="generateAndCopy()">📋 HTML Kopyala</button>
+      <button onclick="showPreview()">👁 Önizleme</button>
+      <button onclick="loadExample()">🎨 Örnek Veri</button>
+      <button onclick="clearAll()">🗑️ Temizle</button>
     </div>
 
-    <!-- SETTINGS TAB -->
-    <div id="settings-tab" class="tab-content">
-      <div class="section">
-        <div class="section-title">
-          <span>🎨</span> Site Ayarları
-        </div>
-        
-        <div class="form-group">
-          <label>Site Başlığı</label>
-          <input type="text" id="siteTitle" value="Benim.art" placeholder="Site başlığı">
-        </div>
-
-        <div class="form-group">
-          <label>Logo Metni</label>
-          <input type="text" id="logoText" value="Benim.art" placeholder="Logo metni">
-        </div>
-
-        <div class="form-group">
-          <label>İletişim Başlığı</label>
-          <input type="text" id="contactText" value="Sorularınız için → Bize ulaşın!" placeholder="İletişim metni">
-        </div>
-
-        <div class="form-group">
-          <label>Instagram Kullanıcı Adı</label>
-          <input type="text" id="instagramUsername" value="benim.arts" placeholder="Sadece kullanıcı adı (@ olmadan)">
-        </div>
-
-        <div class="form-group">
-          <label>Instagram Buton Metni</label>
-          <input type="text" id="instagramBtnText" value="📩@benim.arts" placeholder="Buton metni">
-        </div>
-      </div>
-
-      <div class="section">
-        <div class="section-title">
-          <span>🎨</span> Renk Temaları
-        </div>
-        
-        <div class="color-picker-group">
-          <div class="color-input-wrapper">
-            <input type="color" id="primaryColor" value="#A78BFA">
-            <label>Ana Renk</label>
-          </div>
-          <div class="color-input-wrapper">
-            <input type="color" id="secondaryColor" value="#C7D2FE">
-            <label>İkincil Renk</label>
-          </div>
-          <div class="color-input-wrapper">
-            <input type="color" id="accentColor" value="#9DB88F">
-            <label>Vurgu Rengi</label>
-          </div>
-        </div>
-      </div>
-
-      <div class="section">
-        <div class="section-title">
-          <span>⚙️</span> Gelişmiş Ayarlar
-        </div>
-        
-        <div class="form-group">
-          <div class="toggle-switch">
-            <input type="checkbox" id="enableAnimations" checked>
-            <label for="enableAnimations">Animasyonları Etkinleştir</label>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <div class="toggle-switch">
-            <input type="checkbox" id="enableModal" checked>
-            <label for="enableModal">Fotoğraf Modalını Etkinleştir</label>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <div class="toggle-switch">
-            <input type="checkbox" id="enableSwipe" checked>
-            <label for="enableSwipe">Mobil Kaydırma Desteği</label>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Fotoğraf Boyutu (px)</label>
-          <input type="text" id="photoSize" value="260" placeholder="260">
-        </div>
-
-        <div class="form-group">
-          <label>Mobil Fotoğraf Boyutu (px)</label>
-          <input type="text" id="mobilePhotoSize" value="140" placeholder="140">
-        </div>
-      </div>
+    <div class="section">
+      <div class="section-title">Site Ayarları</div>
+      <label>Site Başlığı</label>
+      <input type="text" id="siteTitle" value="Benim.art">
+      
+      <label>İletişim Metni</label>
+      <input type="text" id="contactText" value="Sorularınız için → Bize ulaşın!">
+      
+      <label>Instagram Kullanıcı Adı (@ olmadan)</label>
+      <input type="text" id="instagramUser" value="benim.arts">
     </div>
 
-    <!-- PREVIEW TAB -->
-    <div id="preview-tab" class="tab-content">
-      <div class="section">
-        <div class="section-title">
-          <span>👁</span> Canlı Önizleme
-        </div>
-        <iframe id="preview"></iframe>
-      </div>
+    <div class="section">
+      <div class="section-title">Sanatçılar</div>
+      <div id="artistsContainer"></div>
+      <button onclick="addArtist()">+ Sanatçı Ekle</button>
+    </div>
+
+    <div class="section" id="previewSection" style="display: none;">
+      <div class="section-title">Önizleme</div>
+      <iframe id="preview"></iframe>
     </div>
   </div>
 
   <script>
     let artistCount = 0;
-    let globalArtistCounter = 0;
-
-    function switchTab(tabName) {
-      // Hide all tabs
-      document.querySelectorAll('.tab-content').forEach(tab => {
-        tab.classList.remove('active');
-      });
-      document.querySelectorAll('.tab').forEach(tab => {
-        tab.classList.remove('active');
-      });
-      
-      // Show selected tab
-      document.getElementById(`${tabName}-tab`).classList.add('active');
-      event.target.classList.add('active');
-      
-      // Generate preview if preview tab is selected
-      if (tabName === 'preview') {
-        generatePreview();
-      }
-      
-      updateStats();
-    }
-
-    function updateStats() {
-      const artists = document.querySelectorAll('.artist-card');
-      let totalPhotos = 0;
-      
-      artists.forEach(artist => {
-        const photos = artist.querySelectorAll('.artist-photo');
-        photos.forEach(photo => {
-          if (photo.value.trim()) totalPhotos++;
-        });
-      });
-      
-      document.getElementById('artistCount').textContent = artists.length;
-      document.getElementById('photoCount').textContent = totalPhotos;
-      document.getElementById('sectionCount').textContent = artists.length;
-    }
-
-    function showMessage(type, message) {
-      const msgEl = type === 'success' ? document.getElementById('successMsg') : document.getElementById('errorMsg');
-      msgEl.textContent = message;
-      msgEl.style.display = 'block';
-      setTimeout(() => {
-        msgEl.style.display = 'none';
-      }, 3000);
-    }
 
     function handleCSV(event) {
       const file = event.target.files[0];
@@ -643,12 +200,8 @@
       
       const reader = new FileReader();
       reader.onload = function(e) {
-        try {
-          parseCSV(e.target.result);
-          showMessage('success', '✅ CSV dosyası başarıyla yüklendi!');
-        } catch (error) {
-          showMessage('error', '❌ CSV yükleme hatası: ' + error.message);
-        }
+        const text = e.target.result;
+        parseCSV(text);
       };
       reader.readAsText(file);
     }
@@ -657,210 +210,110 @@
       document.getElementById('artistsContainer').innerHTML = '';
       artistCount = 0;
       
-      const lines = text.split(/\r?\n/).filter(line => line.trim());
+      const lines = text.split(/\r?\n/);
       
-      lines.forEach((line, index) => {
-        // Handle CSV with potential commas in values
-        const parts = [];
-        let current = '';
-        let inQuotes = false;
+      lines.forEach(line => {
+        if (!line.trim()) return;
         
-        for (let char of line) {
-          if (char === '"') {
-            inQuotes = !inQuotes;
-          } else if (char === ',' && !inQuotes) {
-            parts.push(current.trim());
-            current = '';
-          } else {
-            current += char;
-          }
-        }
-        parts.push(current.trim());
+        const parts = line.split(',').map(p => p.trim().replace(/^"|"$/g, ''));
         
         if (parts[0]) {
           const artist = {
-            name: parts[0].replace(/^"|"$/g, ''),
-            category: parts[1]?.replace(/^"|"$/g, '') || 'Shopier',
-            link: parts[2]?.replace(/^"|"$/g, '') || 'https://www.shopier.com/BenimArt',
+            name: parts[0] || 'Hülya Kalaycıoğlu',
+            category: parts[1] || 'Shopier',
+            link: parts[2] || 'https://www.shopier.com/BenimArt',
             photos: []
           };
           
-          for (let i = 3; i < parts.length && i < 9; i++) {
-            const photo = parts[i]?.replace(/^"|"$/g, '');
-            if (photo) {
-              artist.photos.push(photo);
-            }
+          for (let i = 3; i < 9 && i < parts.length; i++) {
+            if (parts[i]) artist.photos.push(parts[i]);
           }
           
-          if (artist.photos.length > 0) {
-            addArtistWithData(artist);
-          }
+          addArtistWithData(artist);
         }
       });
       
-      updateStats();
+      alert('CSV yüklendi! ' + artistCount + ' sanatçı eklendi.');
     }
 
     function addArtist() {
       artistCount++;
-      globalArtistCounter++;
       const container = document.getElementById('artistsContainer');
       
-      const artistDiv = document.createElement('div');
-      artistDiv.className = 'artist-card';
-      artistDiv.id = `artist-${globalArtistCounter}`;
+      const div = document.createElement('div');
+      div.className = 'artist-card';
+      div.id = 'artist-' + artistCount;
       
-      artistDiv.innerHTML = `
+      div.innerHTML = `
         <div class="artist-header">
           <span class="artist-number">Sanatçı #${artistCount}</span>
-          <div class="artist-controls">
-            <button class="btn-primary btn-small" onclick="duplicateArtist(${globalArtistCounter})">📑 Çoğalt</button>
-            <button class="btn-danger btn-small" onclick="removeArtist(${globalArtistCounter})">🗑️ Sil</button>
-          </div>
+          <button class="btn-remove" onclick="removeArtist(${artistCount})">Sil</button>
         </div>
-        
-        <div class="form-group">
-          <label>Sanatçı Adı</label>
-          <input type="text" class="artist-name" placeholder="Örn: Hülya Kalaycıoğlu" onchange="updateStats()">
-        </div>
-        
-        <div class="form-group">
-          <label>Kategori/Platform</label>
-          <input type="text" class="artist-category" placeholder="Örn: Shopier" value="Shopier" onchange="updateStats()">
-        </div>
-        
-        <div class="form-group">
-          <label>Link (Mağaza veya Instagram)</label>
-          <input type="url" class="artist-link" placeholder="https://..." value="https://www.shopier.com/BenimArt" onchange="updateStats()">
-        </div>
-        
-        <div class="form-group">
-          <label>Fotoğraflar (URL'ler)</label>
-          <div class="photo-grid">
-            ${[1,2,3,4,5,6].map(i => `
-              <div class="photo-input-group">
-                <input type="text" class="artist-photo" placeholder="Fotoğraf ${i}" onchange="updatePhotoPreview(this); updateStats()">
-                <div class="photo-preview">Önizleme ${i}</div>
-              </div>
-            `).join('')}
-          </div>
+        <label>Sanatçı Adı</label>
+        <input type="text" class="artist-name" placeholder="Hülya Kalaycıoğlu">
+        <label>Kategori</label>
+        <input type="text" class="artist-category" placeholder="Shopier" value="Shopier">
+        <label>Link</label>
+        <input type="url" class="artist-link" placeholder="https://www.shopier.com/BenimArt" value="https://www.shopier.com/BenimArt">
+        <label>Fotoğraf URL'leri</label>
+        <div class="photo-inputs">
+          <input type="text" class="photo-url" placeholder="Foto 1">
+          <input type="text" class="photo-url" placeholder="Foto 2">
+          <input type="text" class="photo-url" placeholder="Foto 3">
+          <input type="text" class="photo-url" placeholder="Foto 4">
+          <input type="text" class="photo-url" placeholder="Foto 5">
+          <input type="text" class="photo-url" placeholder="Foto 6">
         </div>
       `;
       
-      container.appendChild(artistDiv);
-      updateStats();
+      container.appendChild(div);
     }
 
     function addArtistWithData(data) {
       artistCount++;
-      globalArtistCounter++;
       const container = document.getElementById('artistsContainer');
       
-      const artistDiv = document.createElement('div');
-      artistDiv.className = 'artist-card';
-      artistDiv.id = `artist-${globalArtistCounter}`;
+      const div = document.createElement('div');
+      div.className = 'artist-card';
+      div.id = 'artist-' + artistCount;
       
-      artistDiv.innerHTML = `
+      div.innerHTML = `
         <div class="artist-header">
           <span class="artist-number">Sanatçı #${artistCount}</span>
-          <div class="artist-controls">
-            <button class="btn-primary btn-small" onclick="duplicateArtist(${globalArtistCounter})">📑 Çoğalt</button>
-            <button class="btn-danger btn-small" onclick="removeArtist(${globalArtistCounter})">🗑️ Sil</button>
-          </div>
+          <button class="btn-remove" onclick="removeArtist(${artistCount})">Sil</button>
         </div>
-        
-        <div class="form-group">
-          <label>Sanatçı Adı</label>
-          <input type="text" class="artist-name" value="${data.name}" placeholder="Örn: Hülya Kalaycıoğlu" onchange="updateStats()">
-        </div>
-        
-        <div class="form-group">
-          <label>Kategori/Platform</label>
-          <input type="text" class="artist-category" value="${data.category}" placeholder="Örn: Shopier" onchange="updateStats()">
-        </div>
-        
-        <div class="form-group">
-          <label>Link (Mağaza veya Instagram)</label>
-          <input type="url" class="artist-link" value="${data.link}" placeholder="https://..." onchange="updateStats()">
-        </div>
-        
-        <div class="form-group">
-          <label>Fotoğraflar (URL'ler)</label>
-          <div class="photo-grid">
-            ${[0,1,2,3,4,5].map(i => `
-              <div class="photo-input-group">
-                <input type="text" class="artist-photo" value="${data.photos[i] || ''}" placeholder="Fotoğraf ${i+1}" onchange="updatePhotoPreview(this); updateStats()">
-                <div class="photo-preview">${data.photos[i] ? `<img src="${data.photos[i]}" alt="Preview">` : `Önizleme ${i+1}`}</div>
-              </div>
-            `).join('')}
-          </div>
+        <label>Sanatçı Adı</label>
+        <input type="text" class="artist-name" value="${data.name}">
+        <label>Kategori</label>
+        <input type="text" class="artist-category" value="${data.category}">
+        <label>Link</label>
+        <input type="url" class="artist-link" value="${data.link}">
+        <label>Fotoğraf URL'leri</label>
+        <div class="photo-inputs">
+          ${[0,1,2,3,4,5].map(i => 
+            `<input type="text" class="photo-url" value="${data.photos[i] || ''}" placeholder="Foto ${i+1}">`
+          ).join('')}
         </div>
       `;
       
-      container.appendChild(artistDiv);
-      updateStats();
-    }
-
-    function updatePhotoPreview(input) {
-      const preview = input.nextElementSibling;
-      if (input.value) {
-        preview.innerHTML = `<img src="${input.value}" alt="Preview" onerror="this.parentElement.innerHTML='❌ Geçersiz URL'">`;
-      } else {
-        const index = Array.from(input.parentElement.parentElement.children).indexOf(input.parentElement) + 1;
-        preview.innerHTML = `Önizleme ${index}`;
-      }
-    }
-
-    function duplicateArtist(id) {
-      const original = document.getElementById(`artist-${id}`);
-      if (!original) return;
-      
-      const data = {
-        name: original.querySelector('.artist-name').value + ' (Kopya)',
-        category: original.querySelector('.artist-category').value,
-        link: original.querySelector('.artist-link').value,
-        photos: []
-      };
-      
-      original.querySelectorAll('.artist-photo').forEach(photo => {
-        if (photo.value) data.photos.push(photo.value);
-      });
-      
-      addArtistWithData(data);
-      showMessage('success', '✅ Sanatçı kopyalandı!');
+      container.appendChild(div);
     }
 
     function removeArtist(id) {
-      const artist = document.getElementById(`artist-${id}`);
-      if (artist && confirm('Bu sanatçıyı silmek istediğinize emin misiniz?')) {
-        artist.remove();
-        renumberArtists();
-        updateStats();
-        showMessage('success', '✅ Sanatçı silindi!');
-      }
-    }
-
-    function renumberArtists() {
-      artistCount = 0;
-      document.querySelectorAll('.artist-card').forEach(card => {
-        artistCount++;
-        card.querySelector('.artist-number').textContent = `Sanatçı #${artistCount}`;
-      });
+      const el = document.getElementById('artist-' + id);
+      if (el) el.remove();
     }
 
     function clearAll() {
       if (confirm('Tüm verileri silmek istediğinize emin misiniz?')) {
         document.getElementById('artistsContainer').innerHTML = '';
         artistCount = 0;
-        globalArtistCounter = 0;
-        updateStats();
-        showMessage('success', '✅ Tüm veriler temizlendi!');
       }
     }
 
-    function loadSampleData() {
+    function loadExample() {
       clearAll();
-      const sampleData = {
+      const example = {
         name: 'Hülya Kalaycıoğlu',
         category: 'Shopier',
         link: 'https://www.shopier.com/BenimArt',
@@ -874,55 +327,30 @@
         ]
       };
       
-      // Add 3 sample artists
       for (let i = 0; i < 3; i++) {
-        addArtistWithData(sampleData);
+        addArtistWithData(example);
       }
       
-      showMessage('success', '✅ Örnek veriler yüklendi!');
-    }
-
-    function exportData() {
-      const data = collectData();
-      const csv = [];
-      
-      data.artists.forEach(artist => {
-        const row = [
-          artist.name,
-          artist.category,
-          artist.link,
-          ...artist.photos
-        ];
-        csv.push(row.map(cell => `"${cell}"`).join(','));
-      });
-      
-      const blob = new Blob([csv.join('\n')], { type: 'text/csv' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'benim-art-data.csv';
-      a.click();
-      
-      showMessage('success', '✅ Veri CSV olarak kaydedildi!');
+      alert('Örnek veriler yüklendi!');
     }
 
     function collectData() {
       const data = {
         title: document.getElementById('siteTitle').value || 'Benim.art',
-        logoText: document.getElementById('logoText')?.value || 'Benim.art',
-        contactText: document.getElementById('contactText').value || 'Sorularınız için → Bize ulaşın!',
-        instagram: document.getElementById('instagramUsername').value || 'benim.arts',
-        instagramBtnText: document.getElementById('instagramBtnText')?.value || '📩@benim.arts',
+        contact: document.getElementById('contactText').value || 'Sorularınız için → Bize ulaşın!',
+        instagram: document.getElementById('instagramUser').value || 'benim.arts',
         artists: []
       };
       
       document.querySelectorAll('.artist-card').forEach(card => {
         const name = card.querySelector('.artist-name').value;
-        const category = card.querySelector('.artist-category').value || 'Shopier';
-        const link = card.querySelector('.artist-link').value || 'https://www.shopier.com/BenimArt';
-        const photos = Array.from(card.querySelectorAll('.artist-photo'))
-          .map(input => input.value)
-          .filter(url => url);
+        const category = card.querySelector('.artist-category').value;
+        const link = card.querySelector('.artist-link').value;
+        const photos = [];
+        
+        card.querySelectorAll('.photo-url').forEach(input => {
+          if (input.value) photos.push(input.value);
+        });
         
         if (name && photos.length > 0) {
           data.artists.push({ name, category, link, photos });
@@ -932,49 +360,20 @@
       return data;
     }
 
-    function generatePreview() {
-      const html = generateHTML();
-      if (!html) return;
-      
-      const preview = document.getElementById('preview');
-      const doc = preview.contentDocument || preview.contentWindow.document;
-      doc.open();
-      doc.write(html);
-      doc.close();
-    }
-
-    function generateAndCopyHTML() {
-      const html = generateHTML();
-      if (!html) return;
-      
-      navigator.clipboard.writeText(html).then(() => {
-        showMessage('success', '✅ HTML kodu kopyalandı!');
-      }).catch(() => {
-        const textarea = document.createElement('textarea');
-        textarea.value = html;
-        document.body.appendChild(textarea);
-        textarea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textarea);
-        showMessage('success', '✅ HTML kodu kopyalandı!');
-      });
-    }
-
     function generateHTML() {
       const data = collectData();
       
       if (data.artists.length === 0) {
-        showMessage('error', '❌ En az bir sanatçı eklemelisiniz!');
+        alert('En az bir sanatçı eklemelisiniz!');
         return '';
       }
       
-      // Generate sections HTML - exactly matching the original format
-      const sectionsHTML = data.artists.map((artist, index) => {
-        const photosHTML = artist.photos.map((photo, photoIndex) => 
-          `        <div class="photo-card" data-photo="${photo}" data-location="${artist.name}" data-index="${photoIndex}"><img src="${photo}" alt="${artist.name}"></div>`
+      const sections = data.artists.map((artist, idx) => {
+        const photos = artist.photos.map((photo, i) => 
+          `        <div class="photo-card" data-photo="${photo}" data-location="${artist.name}" data-index="${i}"><img src="${photo}" alt="${artist.name}"></div>`
         ).join('\n');
         
-        return `    <!-- ${artist.name} ${index + 1} -->
+        return `    <!-- ${artist.name} ${idx + 1} -->
     <div class="city-section">
       <div class="city-header">
         <h2 class="city-title">
@@ -983,13 +382,13 @@
           </a>
         </h2>
       </div>
-      <div class="city-photos" data-section-id="section-${index + 1}">
-${photosHTML}
+      <div class="city-photos" data-section-id="section-${idx + 1}">
+${photos}
       </div>
     </div>`;
       }).join('\n\n');
 
-      // Return the full HTML - exactly matching the original structure
+      // Full HTML template - matching paste 1 exactly
       return `<!DOCTYPE html>  
 <html lang="tr">
 <head>
@@ -1003,6 +402,7 @@ ${photosHTML}
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
   
   <style>
+    /* Paste 1'den alınan tam CSS kodları */
     :root {
       --primary: #9CA3AF;
       --primary-dark: #6B7280;
@@ -1012,7 +412,6 @@ ${photosHTML}
       --blush: #F9D5E5;
       --cream: #FEF6E4;
       --sand: #E8DCC4;
-      
       --bg-grad: linear-gradient(135deg, #FAF9F7 0%, #F3F0EA 100%);
       --card-bg: rgba(255, 253, 250, .95);
       --glass-bg: rgba(255, 255, 255, .75);
@@ -1264,223 +663,6 @@ ${photosHTML}
     .photo-card:hover img {
       transform: scale(1.08);
     }
-
-    /* Mobile Responsive Styles */
-    @media (max-width: 768px) {
-      .container {
-        padding-top: 110px;
-      }
-
-      .logo {
-        padding: 10px 20px;
-        font-size: 16px;
-        top: 20px;
-      }
-      
-      .logo::before {
-        left: 10px;
-        font-size: 12px;
-      }
-
-      .city-section {
-        margin-bottom: 20px;
-        border-radius: 15px;
-      }
-
-      .city-header {
-        padding: 15px 18px 10px 18px;
-      }
-
-      .city-title {
-        font-size: 16px;
-      }
-
-      .location-link {
-        padding: 8px 12px;
-        font-size: 14px;
-        gap: 5px;
-      }
-
-      .city-photos {
-        padding: 10px 18px 18px 18px;
-        gap: 12px;
-      }
-
-      .photo-card {
-        width: 140px;
-        height: 140px;
-        border-radius: 10px;
-      }
-
-      .promotion-section {
-        padding: 20px;
-        margin: 25px auto;
-      }
-
-      .promo-text {
-        font-size: 16px;
-        margin: 12px 0;
-      }
-
-      .instagram-btn {
-        padding: 10px 20px;
-        font-size: 16px;
-      }
-
-      .modal-close {
-        width: 35px;
-        height: 35px;
-        font-size: 18px;
-        top: 20px;
-        right: 20px;
-      }
-
-      .modal-info {
-        bottom: 20px;
-        font-size: 12px;
-        padding: 6px 14px;
-      }
-
-      .nav-button {
-        width: 30px;
-        height: 30px;
-        font-size: 16px;
-        bottom: 15px;
-      }
-
-      .nav-button.prev {
-        left: calc(50% - 100px);
-      }
-
-      .nav-button.next {
-        right: calc(50% - 100px);
-      }
-    }
-
-    @media (max-width: 480px) {
-      .container {
-        padding-top: 100px;
-      }
-
-      .logo {
-        padding: 8px 16px;
-        font-size: 14px;
-        top: 20px;
-      }
-      
-      .logo::before {
-        left: 8px;
-        font-size: 10px;
-      }
-
-      .city-section {
-        border-width: 1px;
-        margin-bottom: 18px;
-      }
-
-      .city-header {
-        padding: 12px 15px 8px 15px;
-      }
-
-      .city-title {
-        font-size: 15px;
-      }
-
-      .location-link {
-        padding: 7px 10px;
-        font-size: 13px;
-        border-radius: 20px;
-      }
-
-      .city-photos {
-        padding: 8px 15px 15px 15px;
-        gap: 10px;
-      }
-
-      .photo-card {
-        width: 120px;
-        height: 120px;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      }
-
-      .photo-card:hover {
-        transform: scale(1.02) translateY(-2px);
-      }
-
-      .promotion-section {
-        padding: 18px 15px;
-        border-radius: 15px;
-      }
-
-      .promo-text {
-        font-size: 15px;
-        line-height: 1.4;
-      }
-
-      .instagram-btn {
-        padding: 9px 18px;
-        font-size: 15px;
-        border-radius: 20px;
-      }
-
-      .nav-button {
-        width: 30px;
-        height: 30px;
-        font-size: 14px;
-        bottom: 10px;
-      }
-
-      .nav-button.prev {
-        left: calc(50% - 90px);
-      }
-
-      .nav-button.next {
-        right: calc(50% - 90px);
-      }
-    }
-
-    @media (max-width: 375px) {
-      .container {
-        padding: 90px 12px 0 12px;
-      }
-
-      .logo {
-        padding: 6px 14px;
-        font-size: 13px;
-        top: 15px;
-      }
-      
-      .logo::before {
-        display: none;
-      }
-
-      .photo-card {
-        width: 110px;
-        height: 110px;
-      }
-
-      .city-photos {
-        gap: 8px;
-      }
-    }
-    
-    .photo-card:hover {
-      transform: scale(1.05) translateY(-6px);
-      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
-    }
-    
-    .photo-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.4s ease;
-    }
-    
-    .photo-card:hover img {
-      transform: scale(1.1);
-    }
     
     .location-link {
       text-decoration: none;
@@ -1549,7 +731,7 @@ ${photosHTML}
       font-weight: 700;
     }
 
-    /* MODAL STYLES */
+    /* Modal Styles */
     .photo-modal {
       position: fixed;
       top: 0;
@@ -1575,19 +757,12 @@ ${photosHTML}
     .modal-content {
       position: relative;
       max-width: 90vw;
-      max-height: 75vh; /* Desktop için yükseklik sınırı */
+      max-height: 75vh;
       display: flex;
       justify-content: center;
       align-items: center;
       transform: scale(0.8);
       transition: transform 0.3s ease-out;
-    }
-    
-    @media (min-width: 769px) {
-      .modal-content {
-        max-width: 70vw; /* Desktop için genişlik sınırı */
-        max-height: 70vh; /* Desktop için yükseklik sınırı */
-      }
     }
 
     .photo-modal.show .modal-content {
@@ -1606,11 +781,9 @@ ${photosHTML}
       user-select: none;
       -webkit-user-drag: none;
     }
-    
-    @media (min-width: 769px) {
-      .modal-image {
-        max-height: calc(70vh - 20px); /* Alt boşluk için margin */
-      }
+
+    .modal-image.changing {
+      opacity: 0;
     }
 
     .modal-close {
@@ -1654,16 +827,7 @@ ${photosHTML}
       white-space: nowrap;
       text-align: center;
     }
-    
-    @media (min-width: 769px) {
-      .modal-info {
-        bottom: -50px; /* Desktop için ayarlama */
-        font-size: 15px;
-        padding: 10px 20px;
-      }
-    }
 
-    /* Carousel Navigation */
     .nav-button {
       position: absolute;
       bottom: -60px;
@@ -1682,15 +846,6 @@ ${photosHTML}
       backdrop-filter: blur(10px);
       z-index: 3001;
     }
-    
-    @media (min-width: 769px) {
-      .nav-button {
-        bottom: -50px; /* Desktop için daha yakın */
-        width: 40px;
-        height: 40px;
-        font-size: 20px;
-      }
-    }
 
     .nav-button:hover {
       background: rgba(255, 255, 255, 1);
@@ -1705,16 +860,6 @@ ${photosHTML}
     .nav-button.next {
       right: calc(50% - 120px);
     }
-    
-    @media (min-width: 769px) {
-      .nav-button.prev {
-        left: calc(50% - 140px);
-      }
-
-      .nav-button.next {
-        right: calc(50% - 140px);
-      }
-    }
 
     .nav-button:disabled {
       opacity: 0.3;
@@ -1725,15 +870,6 @@ ${photosHTML}
       transform: none;
       background: rgba(255, 255, 255, 0.9);
       box-shadow: none;
-    }
-
-    /* Touch and Swipe Support */
-    .modal-content.dragging {
-      transition: none;
-    }
-
-    .modal-image.changing {
-      opacity: 0;
     }
 
     /* Promotion Section */
@@ -1832,22 +968,101 @@ ${photosHTML}
       line-height: 1.6;
       letter-spacing: -0.5px;
     }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .container {
+        padding-top: 110px;
+      }
+
+      .logo {
+        padding: 10px 20px;
+        font-size: 16px;
+        top: 20px;
+      }
+      
+      .logo::before {
+        left: 10px;
+        font-size: 12px;
+      }
+
+      .city-section {
+        margin-bottom: 20px;
+        border-radius: 15px;
+      }
+
+      .city-header {
+        padding: 15px 18px 10px 18px;
+      }
+
+      .city-title {
+        font-size: 16px;
+      }
+
+      .location-link {
+        padding: 8px 12px;
+        font-size: 14px;
+        gap: 5px;
+      }
+
+      .city-photos {
+        padding: 10px 18px 18px 18px;
+        gap: 12px;
+      }
+
+      .photo-card {
+        width: 140px;
+        height: 140px;
+        border-radius: 10px;
+      }
+
+      .promotion-section {
+        padding: 20px;
+        margin: 25px auto;
+      }
+
+      .promo-text {
+        font-size: 16px;
+        margin: 12px 0;
+      }
+
+      .instagram-btn {
+        padding: 10px 20px;
+        font-size: 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding-top: 100px;
+      }
+
+      .logo {
+        padding: 8px 16px;
+        font-size: 14px;
+      }
+
+      .photo-card {
+        width: 120px;
+        height: 120px;
+      }
+    }
   </style>
 </head>
 <body>
-  <a href="#" class="logo"><span class="gradient-text">${data.logoText}</span></a>
+  <a href="#" class="logo"><span class="gradient-text">${data.title}</span></a>
   
   <div class="container">
     <div id="locations-container">
 
-${sectionsHTML}
+${sections}
 
     </div>
     
     <div class="promotion-section">
-      <div class="promo-text">${data.contactText}</div>
+      <div class="promo-text">${data.contact}</div>
       
-      <a href="https://www.instagram.com/${data.instagram}/" target="_blank" class="instagram-btn">${data.instagramBtnText}</a>
+      <a href="https://www.instagram.com/${data.instagram}/" target="_blank" class="instagram-btn">📩@${data.instagram}</a>
     </div>
   </div>
 
@@ -1877,7 +1092,7 @@ ${sectionsHTML}
       const modalInfo = document.getElementById('modalInfo');
       
       // Get all photos from the same section
-      const section = document.querySelector(\`[data-section-id="\${sectionId}"]\`);
+      const section = document.querySelector('[data-section-id="' + sectionId + '"]');
       const photos = section.querySelectorAll('.photo-card');
       
       currentSectionPhotos = [];
@@ -2034,3 +1249,46 @@ ${sectionsHTML}
   <\/script>
 </body>
 </html>`;
+    }
+
+    function generateAndCopy() {
+      const html = generateHTML();
+      if (!html) return;
+      
+      navigator.clipboard.writeText(html).then(() => {
+        alert('HTML kodu kopyalandı! Artık yapıştırabilirsiniz.');
+      }).catch(() => {
+        const textarea = document.createElement('textarea');
+        textarea.value = html;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        alert('HTML kodu kopyalandı!');
+      });
+    }
+
+    function showPreview() {
+      const html = generateHTML();
+      if (!html) return;
+      
+      const section = document.getElementById('previewSection');
+      const preview = document.getElementById('preview');
+      
+      section.style.display = 'block';
+      
+      const doc = preview.contentDocument || preview.contentWindow.document;
+      doc.open();
+      doc.write(html);
+      doc.close();
+      
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Start with one artist
+    window.onload = function() {
+      addArtist();
+    };
+  </script>
+</body>
+</html>
