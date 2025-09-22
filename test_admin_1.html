@@ -247,9 +247,11 @@
     
     <div class="csv-format">
       <strong>📋 CSV Formatı:</strong> 
-      <code>Sanatçı Adı, Link, Foto1, Foto2, Foto3, Foto4</code>
+      <code>Sanatçı Adı, Kategori, Link, Foto1, Foto2, Foto3, Foto4</code>
       <br>
       <small>Not: Artık sadece 4 fotoğraf destekleniyor (2x2 grid)</small>
+      <br>
+      <small>⚠️ CSV dosyanızda başlık satırı olmamalı, direkt veri ile başlamalı</small>
     </div>
 
     <div class="control-buttons">
@@ -339,28 +341,44 @@
       
       const lines = text.split(/\r?\n/);
       
-      lines.forEach(line => {
+      lines.forEach((line, index) => {
         if (!line.trim()) return;
         
-        const parts = line.split(',').map(p => p.trim().replace(/^"|"$/g, ''));
+        // CSV'yi virgül veya tab ile ayır
+        let parts = [];
+        if (line.includes('\t')) {
+          parts = line.split('\t').map(p => p.trim().replace(/^"|"$/g, ''));
+        } else {
+          parts = line.split(',').map(p => p.trim().replace(/^"|"$/g, ''));
+        }
         
-        if (parts[0]) {
+        // En az 3 parça varsa (isim, link, en az 1 fotoğraf)
+        if (parts.length >= 3 && parts[0]) {
           const artist = {
-            name: parts[0] || 'Hülya Kalaycıoğlu',
-            link: parts[1] || 'https://www.shopier.com/BenimArt',
+            name: parts[0],
+            link: parts[2], // Link artık 3. sütunda
             photos: []
           };
           
-          // Sadece 4 fotoğraf al (index 2-5)
-          for (let i = 2; i < 6 && i < parts.length; i++) {
-            if (parts[i]) artist.photos.push(parts[i]);
+          // Fotoğrafları al (index 3-6, maksimum 4 fotoğraf)
+          for (let i = 3; i < 7 && i < parts.length; i++) {
+            if (parts[i] && parts[i].startsWith('http')) {
+              artist.photos.push(parts[i]);
+            }
           }
           
-          addArtistWithData(artist);
+          // En az 1 fotoğraf varsa ekle
+          if (artist.photos.length > 0) {
+            addArtistWithData(artist);
+          }
         }
       });
       
-      alert('CSV yüklendi! ' + artistCount + ' sanatçı eklendi.');
+      if (artistCount === 0) {
+        alert('CSV dosyası okunamadı. Lütfen formatı kontrol edin:\nSanatçı Adı, Kategori, Link, Foto1, Foto2, Foto3, Foto4');
+      } else {
+        alert('CSV yüklendi! ' + artistCount + ' sanatçı eklendi.');
+      }
     }
 
     function addArtist() {
