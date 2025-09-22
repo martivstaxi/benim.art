@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
   
   <style>
-    /* Paste 1'den alınan tam CSS kodları */
+    /* Theme Variables */
     :root {
       --primary: #9CA3AF;
       --primary-dark: #6B7280;
@@ -30,6 +30,12 @@
       --text-muted: #A0AEC0;
       --shadow-lg: 0 4px 20px rgba(0, 0, 0, .06);
       --shadow-xl: 0 8px 30px rgba(0, 0, 0, .08);
+      --theme-overlay: linear-gradient(135deg, 
+        rgba(199, 210, 254, 0.1) 0%,
+        rgba(167, 139, 250, 0.05) 25%,
+        rgba(157, 184, 143, 0.08) 50%,
+        rgba(249, 213, 229, 0.1) 75%,
+        rgba(254, 246, 228, 0.15) 100%);
     }
 
     * {
@@ -40,7 +46,7 @@
 
     body {
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #FAF9F7 0%, #F5F1EA 50%, #EDE8E2 100%);
+      background: var(--bg-grad);
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -50,6 +56,7 @@
       line-height: 1.6;
       overflow-x: hidden;
       position: relative;
+      transition: background 0.5s ease;
     }
 
     body::after {
@@ -59,61 +66,76 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, 
-        rgba(199, 210, 254, 0.1) 0%,
-        rgba(167, 139, 250, 0.05) 25%,
-        rgba(157, 184, 143, 0.08) 50%,
-        rgba(249, 213, 229, 0.1) 75%,
-        rgba(254, 246, 228, 0.15) 100%);
+      background: var(--theme-overlay);
       pointer-events: none;
       z-index: 0;
+      transition: background 0.5s ease;
     }
 
     .container {
       max-width: 1100px;
       margin: 0 auto;
       padding: 0 16px;
-      padding-top: 80px;
+      padding-top: 115px;
       position: relative;
       z-index: 1;
     }
 
-    .logo {
+    /* Header Bar */
+    .header-bar {
       position: fixed;
-      top: 30px;
+      top: 15px;
       left: 50%;
       transform: translateX(-50%);
-      padding: 14px 32px;
-      border-radius: 50px;
+      width: 90%;
+      max-width: 1000px;
+      height: 60px;
       background: linear-gradient(135deg, 
-        rgba(255, 255, 255, 0.95) 0%, 
-        rgba(254, 246, 228, 0.9) 50%, 
-        rgba(199, 210, 254, 0.9) 100%);
+        rgba(255, 255, 255, 0.9) 0%,
+        rgba(254, 246, 228, 0.4) 30%,
+        rgba(199, 210, 254, 0.3) 70%,
+        rgba(255, 255, 255, 0.9) 100%);
       backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 0 6px 20px rgba(167, 139, 250, 0.08),
+                  0 2px 6px rgba(0, 0, 0, 0.04);
+      z-index: 90;
+      border-radius: 30px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 20px;
+    }
+
+    .logo {
+      position: fixed;
+      top: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 24px;
+      border-radius: 50px;
+      background: transparent;
+      backdrop-filter: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
       font-weight: 700;
       text-decoration: none;
-      box-shadow: 0 8px 32px rgba(167, 139, 250, 0.15),
-                  0 2px 8px rgba(0, 0, 0, 0.05);
+      box-shadow: none;
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       z-index: 100;
-      border: 1px solid rgba(255, 255, 255, 0.5);
+      border: none;
       white-space: nowrap;
       letter-spacing: 0.5px;
     }
     
     .logo:hover {
-      transform: translateX(-50%) translateY(-2px);
-      box-shadow: 0 12px 40px rgba(167, 139, 250, 0.25),
-                  0 4px 12px rgba(0, 0, 0, 0.08);
-      background: linear-gradient(135deg, 
-        rgba(255, 255, 255, 1) 0%,
-        rgba(199, 210, 254, 0.95) 50%, 
-        rgba(254, 246, 228, 0.95) 100%);
+      transform: translateX(-50%) scale(1.08);
       text-decoration: none;
+    }
+    
+    .logo:hover .gradient-text {
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
     }
     
     .logo::before {
@@ -130,16 +152,114 @@
     }
     
     .gradient-text {
-      background: linear-gradient(135deg, #9DB88F 0%, #A78BFA 40%, #C7D2FE 100%);
+      background: linear-gradient(135deg, var(--sage, #9DB88F) 0%, var(--accent) 40%, var(--secondary) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      filter: drop-shadow(0 2px 4px rgba(167, 139, 250, 0.2));
+      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.15));
       display: inline-block;
       position: relative;
-      font-weight: 800;
+      font-weight: 900;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
+      font-size: 1.1em;
+    }
+    
+    /* Category Navigation */
+    .category-nav {
+      position: fixed;
+      top: 29px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      justify-content: space-between;
+      z-index: 99;
+      width: 500px;
+      max-width: 500px;
+      pointer-events: none;
+    }
+
+    .category-nav-left,
+    .category-nav-right {
+      display: flex;
+      justify-content: space-between;
+      width: 140px;
+      pointer-events: auto;
+    }
+
+    .category-nav-left {
+      position: absolute;
+      left: 0;
+    }
+
+    .category-nav-right {
+      position: absolute;
+      right: 0;
+    }
+
+    .category-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.7);
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .category-btn:hover {
+      transform: scale(1.15) translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      border-color: rgba(255, 255, 255, 0.9);
+    }
+
+    .category-btn.active {
+      transform: scale(1.1);
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.4),
+                  0 3px 15px rgba(0, 0, 0, 0.2);
+      border-color: rgba(255, 255, 255, 0.95);
+    }
+
+    .category-btn.active::after {
+      content: '✓';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-weight: bold;
+      font-size: 14px;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    .category-btn.cat-1 {
+      background: linear-gradient(135deg, #C7D2FE 0%, #A78BFA 100%);
+    }
+
+    .category-btn.cat-2 {
+      background: linear-gradient(135deg, #DCC9E8 0%, #C9B2D9 100%);
+    }
+
+    .category-btn.cat-3 {
+      background: linear-gradient(135deg, #F3F4F6 0%, #6B7280 100%);
+    }
+
+    .category-btn.cat-4 {
+      background: linear-gradient(135deg, #E8DCC4 0%, #D4B896 100%);
+    }
+
+    .category-btn.cat-5 {
+      background: linear-gradient(135deg, #C9E4F5 0%, #A8D0E6 100%);
+    }
+
+    .category-btn.cat-6 {
+      background: linear-gradient(135deg, #E8E2E7 0%, #D4C5D0 100%);
     }
     
     .city-section {
@@ -192,11 +312,14 @@
     }
     
     .city-header {
-      padding: 18px 22px 12px 22px;
+      padding: 18px 22px 16px 22px;
       margin: 0;
       border: none;
       background: transparent;
-      text-align: left;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
     
     .city-title {
@@ -204,39 +327,36 @@
       font-size: clamp(16px, 3.5vw, 20px);
       color: var(--text-primary);
       font-weight: 700;
+      text-align: center;
     }
     
-    .city-photos {
-      display: flex;
-      gap: 16px;
-      overflow-x: auto;
-      padding: 12px 22px 22px 22px;
-      scroll-snap-type: x mandatory;
-      scrollbar-width: none;
-      -webkit-overflow-scrolling: touch;
+    /* New Grid Layout for Photos */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 12px;
+      padding: 0 22px 22px 22px;
+      max-width: 500px;
+      margin: 0 auto;
+      aspect-ratio: 1;
     }
     
-    .city-photos::-webkit-scrollbar {
-      display: none;
-    }
-    
-    .photo-card {
-      flex: 0 0 auto;
-      width: 260px;
-      height: 260px;
+    .photo-grid-item {
+      position: relative;
+      width: 100%;
+      height: 100%;
       border-radius: 16px;
       overflow: hidden;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08),
                   0 2px 8px rgba(0, 0, 0, 0.04);
-      scroll-snap-align: start;
       background: linear-gradient(135deg, #ffffff, #fafafa);
-      position: relative;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       cursor: pointer;
       border: 1px solid rgba(255, 255, 255, 0.8);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
-    .photo-card::after {
+    .photo-grid-item::after {
       content: '';
       position: absolute;
       top: 0;
@@ -251,17 +371,18 @@
       pointer-events: none;
     }
     
-    .photo-card:hover {
-      transform: scale(1.03) translateY(-8px);
+    .photo-grid-item:hover {
+      transform: scale(1.05);
       box-shadow: 0 20px 40px rgba(167, 139, 250, 0.15),
                   0 10px 20px rgba(0, 0, 0, 0.08);
+      z-index: 10;
     }
     
-    .photo-card:hover::after {
+    .photo-grid-item:hover::after {
       opacity: 1;
     }
     
-    .photo-card img {
+    .photo-grid-item img {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -269,9 +390,15 @@
       transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
-    .photo-card:hover img {
-      transform: scale(1.08);
+    .photo-grid-item:hover img {
+      transform: scale(1.1);
     }
+
+    /* Position indicators for grid items */
+    .photo-grid-item:nth-child(1) { grid-area: 1 / 1 / 2 / 2; } /* Top Left */
+    .photo-grid-item:nth-child(2) { grid-area: 1 / 2 / 2 / 3; } /* Top Right */
+    .photo-grid-item:nth-child(3) { grid-area: 2 / 1 / 3 / 2; } /* Bottom Left */
+    .photo-grid-item:nth-child(4) { grid-area: 2 / 2 / 3 / 3; } /* Bottom Right */
     
     .location-link {
       text-decoration: none;
@@ -422,6 +549,7 @@
     }
 
     .modal-info {
+      display: none; /* Sanatçı ismi artık görünmeyecek */
       position: absolute;
       bottom: -60px;
       left: 50%;
@@ -440,13 +568,13 @@
     .nav-button {
       position: absolute;
       bottom: -60px;
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.95);
       color: var(--text-primary);
       border: none;
       border-radius: 50%;
-      width: 35px;
-      height: 35px;
-      font-size: 18px;
+      width: 42px;
+      height: 42px;
+      font-size: 20px;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -454,20 +582,21 @@
       transition: all 0.3s ease;
       backdrop-filter: blur(10px);
       z-index: 3001;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
     }
 
     .nav-button:hover {
       background: rgba(255, 255, 255, 1);
-      transform: scale(1.1);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transform: scale(1.12);
+      box-shadow: 0 5px 18px rgba(0, 0, 0, 0.2);
     }
 
     .nav-button.prev {
-      left: calc(50% - 120px);
+      left: calc(50% - 80px);
     }
 
     .nav-button.next {
-      right: calc(50% - 120px);
+      right: calc(50% - 80px);
     }
 
     .nav-button:disabled {
@@ -477,8 +606,8 @@
 
     .nav-button:disabled:hover {
       transform: none;
-      background: rgba(255, 255, 255, 0.9);
-      box-shadow: none;
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
     }
 
     /* Promotion Section */
@@ -522,7 +651,7 @@
     }
 
     .instagram-btn {
-      background: linear-gradient(135deg, #C7D2FE 0%, #A78BFA 50%, #9DB88F 100%);
+      background: linear-gradient(135deg, var(--secondary) 0%, var(--accent) 50%, var(--sage, #9DB88F) 100%);
       color: white !important;
       padding: 14px 28px;
       border-radius: 30px;
@@ -560,7 +689,7 @@
       box-shadow: 0 10px 35px rgba(167, 139, 250, 0.4),
                   inset 0 1px 0 rgba(255, 255, 255, 0.3);
       color: white !important;
-      background: linear-gradient(135deg, #9DB88F 0%, #A78BFA 50%, #C7D2FE 100%);
+      background: linear-gradient(135deg, var(--sage, #9DB88F) 0%, var(--accent) 50%, var(--secondary) 100%);
     }
     
     .instagram-btn:hover::before {
@@ -581,18 +710,42 @@
     /* Mobile Responsive */
     @media (max-width: 768px) {
       .container {
-        padding-top: 110px;
+        padding-top: 100px;
+      }
+
+      .header-bar {
+        top: 15px;
+        height: 50px;
       }
 
       .logo {
         padding: 10px 20px;
         font-size: 16px;
-        top: 20px;
+        top: 23px;
       }
       
       .logo::before {
         left: 10px;
         font-size: 12px;
+      }
+
+      .category-nav {
+        top: 31px;
+        width: 400px;
+      }
+
+      .category-nav-left,
+      .category-nav-right {
+        gap: 10px;
+      }
+
+      .category-btn {
+        width: 30px;
+        height: 30px;
+      }
+
+      .category-btn.active::after {
+        font-size: 14px;
       }
 
       .city-section {
@@ -601,7 +754,7 @@
       }
 
       .city-header {
-        padding: 15px 18px 10px 18px;
+        padding: 15px 18px 14px 18px;
       }
 
       .city-title {
@@ -614,15 +767,14 @@
         gap: 5px;
       }
 
-      .city-photos {
-        padding: 10px 18px 18px 18px;
-        gap: 12px;
+      .photo-grid {
+        gap: 10px;
+        padding: 0 18px 18px 18px;
+        max-width: 400px;
       }
 
-      .photo-card {
-        width: 140px;
-        height: 140px;
-        border-radius: 10px;
+      .photo-grid-item {
+        border-radius: 12px;
       }
 
       .promotion-section {
@@ -643,23 +795,65 @@
 
     @media (max-width: 480px) {
       .container {
-        padding-top: 100px;
+        padding-top: 85px;
+      }
+
+      .header-bar {
+        top: 8px;
+        width: 90%;
+        height: 45px;
+        border-radius: 22px;
       }
 
       .logo {
-        padding: 8px 16px;
-        font-size: 14px;
+        padding: 6px 14px;
+        font-size: 13px;
+        top: 16px;
       }
 
-      .photo-card {
-        width: 120px;
-        height: 120px;
+      .category-nav {
+        width: 320px;
+        top: 19px;
+      }
+
+      .category-nav-left,
+      .category-nav-right {
+        width: 90px;
+      }
+
+      .category-btn {
+        width: 24px;
+        height: 24px;
+      }
+
+      .photo-grid {
+        gap: 8px;
+        max-width: 320px;
+      }
+
+      .photo-grid-item {
+        border-radius: 10px;
       }
     }
   </style>
 </head>
 <body>
+  <div class="header-bar"></div>
   <a href="#" class="logo"><span class="gradient-text">Benim.art</span></a>
+  
+  <!-- Category Navigation -->
+  <div class="category-nav">
+    <div class="category-nav-left">
+      <a href="index.html" class="category-btn cat-1 active" title="Kategori 1"></a>
+      <a href="category_2.html" class="category-btn cat-2" title="Kategori 2"></a>
+      <a href="category_3.html" class="category-btn cat-3" title="Kategori 3"></a>
+    </div>
+    <div class="category-nav-right">
+      <a href="category_4.html" class="category-btn cat-4" title="Kategori 4"></a>
+      <a href="category_5.html" class="category-btn cat-5" title="Kategori 5"></a>
+      <a href="category_6.html" class="category-btn cat-6" title="Kategori 6"></a>
+    </div>
+  </div>
   
   <div class="container">
     <div id="locations-container">
@@ -673,13 +867,19 @@
           </a>
         </h2>
       </div>
-      <div class="city-photos" data-section-id="section-1">
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" data-location="Hülya Kalaycıoğlu" data-index="0"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" data-location="Hülya Kalaycıoğlu" data-index="1"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" data-location="Hülya Kalaycıoğlu" data-index="2"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" data-location="Hülya Kalaycıoğlu" data-index="3"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/eabcbf5c-d362-4b13-3601-d37f63eb0c00/public" data-location="Hülya Kalaycıoğlu" data-index="4"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/eabcbf5c-d362-4b13-3601-d37f63eb0c00/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public" data-location="Hülya Kalaycıoğlu" data-index="5"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public" alt="Hülya Kalaycıoğlu"></div>
+      <div class="photo-grid" data-section-id="section-1">
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 1" data-index="0">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" alt="Hülya Kalaycıoğlu - Fotoğraf 1">
+        </div>
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 2" data-index="1">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" alt="Hülya Kalaycıoğlu - Fotoğraf 2">
+        </div>
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 3" data-index="2">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" alt="Hülya Kalaycıoğlu - Fotoğraf 3">
+        </div>
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 4" data-index="3">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" alt="Hülya Kalaycıoğlu - Fotoğraf 4">
+        </div>
       </div>
     </div>
 
@@ -692,13 +892,19 @@
           </a>
         </h2>
       </div>
-      <div class="city-photos" data-section-id="section-2">
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" data-location="Hülya Kalaycıoğlu" data-index="0"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" data-location="Hülya Kalaycıoğlu" data-index="1"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" data-location="Hülya Kalaycıoğlu" data-index="2"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" data-location="Hülya Kalaycıoğlu" data-index="3"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/eabcbf5c-d362-4b13-3601-d37f63eb0c00/public" data-location="Hülya Kalaycıoğlu" data-index="4"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/eabcbf5c-d362-4b13-3601-d37f63eb0c00/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public" data-location="Hülya Kalaycıoğlu" data-index="5"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public" alt="Hülya Kalaycıoğlu"></div>
+      <div class="photo-grid" data-section-id="section-2">
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/eabcbf5c-d362-4b13-3601-d37f63eb0c00/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 5" data-index="0">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/eabcbf5c-d362-4b13-3601-d37f63eb0c00/public" alt="Hülya Kalaycıoğlu - Fotoğraf 5">
+        </div>
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 6" data-index="1">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public" alt="Hülya Kalaycıoğlu - Fotoğraf 6">
+        </div>
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 1" data-index="2">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" alt="Hülya Kalaycıoğlu - Fotoğraf 1">
+        </div>
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 2" data-index="3">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" alt="Hülya Kalaycıoğlu - Fotoğraf 2">
+        </div>
       </div>
     </div>
 
@@ -711,13 +917,19 @@
           </a>
         </h2>
       </div>
-      <div class="city-photos" data-section-id="section-3">
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" data-location="Hülya Kalaycıoğlu" data-index="0"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" data-location="Hülya Kalaycıoğlu" data-index="1"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" data-location="Hülya Kalaycıoğlu" data-index="2"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" data-location="Hülya Kalaycıoğlu" data-index="3"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/eabcbf5c-d362-4b13-3601-d37f63eb0c00/public" data-location="Hülya Kalaycıoğlu" data-index="4"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/eabcbf5c-d362-4b13-3601-d37f63eb0c00/public" alt="Hülya Kalaycıoğlu"></div>
-        <div class="photo-card" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public" data-location="Hülya Kalaycıoğlu" data-index="5"><img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public" alt="Hülya Kalaycıoğlu"></div>
+      <div class="photo-grid" data-section-id="section-3">
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 3" data-index="0">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" alt="Hülya Kalaycıoğlu - Fotoğraf 3">
+        </div>
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 4" data-index="1">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" alt="Hülya Kalaycıoğlu - Fotoğraf 4">
+        </div>
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/eabcbf5c-d362-4b13-3601-d37f63eb0c00/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 5" data-index="2">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/eabcbf5c-d362-4b13-3601-d37f63eb0c00/public" alt="Hülya Kalaycıoğlu - Fotoğraf 5">
+        </div>
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 6" data-index="3">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public" alt="Hülya Kalaycıoğlu - Fotoğraf 6">
+        </div>
       </div>
     </div>
 
@@ -734,8 +946,8 @@
   <div class="photo-modal" id="photoModal">
     <div class="modal-content" id="modalContent">
       <button class="modal-close" onclick="closePhotoModal()" title="Kapat (ESC)">✕</button>
-      <button class="nav-button prev" id="prevBtn" onclick="event.stopPropagation(); navigatePhoto('prev')" title="Önceki (←)">‹</button>
-      <button class="nav-button next" id="nextBtn" onclick="event.stopPropagation(); navigatePhoto('next')" title="Sonraki (→)">›</button>
+      <button class="nav-button prev" id="prevBtn" onclick="navigatePhoto('prev')" title="Önceki (←)">‹</button>
+      <button class="nav-button next" id="nextBtn" onclick="navigatePhoto('next')" title="Sonraki (→)">›</button>
       <img class="modal-image" id="modalImage" src="" alt="">
       <div class="modal-info" id="modalInfo">Sanatçı Adı</div>
     </div>
@@ -747,13 +959,47 @@
     let currentArtistName = '';
     let touchStartX = 0;
     let touchEndX = 0;
-    let isDragging = false;
+
+    // Get current page name
+    function getCurrentPage() {
+      const path = window.location.pathname;
+      const filename = path.substring(path.lastIndexOf('/') + 1) || 'index.html';
+      return filename;
+    }
+
+    // Set active category button based on current page
+    function setActiveCategory() {
+      const currentPage = getCurrentPage();
+      const categoryButtons = document.querySelectorAll('.category-btn');
+      
+      // Remove all active classes
+      categoryButtons.forEach(btn => btn.classList.remove('active'));
+      
+      // Map pages to button classes
+      const pageMap = {
+        'index.html': 'cat-1',
+        'category_2.html': 'cat-2',
+        'category_3.html': 'cat-3',
+        'category_4.html': 'cat-4',
+        'category_5.html': 'cat-5',
+        'category_6.html': 'cat-6'
+      };
+      
+      // Set active class for current page
+      const activeClass = pageMap[currentPage];
+      if (activeClass) {
+        const activeBtn = document.querySelector(`.${activeClass}`);
+        if (activeBtn) {
+          activeBtn.classList.add('active');
+        }
+      }
+    }
 
     // Photo modal functions
     function openPhotoModal(imageUrl, locationName, sectionId, photoIndex) {
       const modal = document.getElementById('photoModal');
       
-      // Get all photos from the same section using template literal correctly
+      // Get all photos from the same section
       const sectionElement = document.querySelector(`[data-section-id="${sectionId}"]`);
       
       if (!sectionElement) {
@@ -761,7 +1007,7 @@
         return;
       }
       
-      const photos = sectionElement.querySelectorAll('.photo-card');
+      const photos = sectionElement.querySelectorAll('.photo-grid-item');
       
       currentSectionPhotos = [];
       photos.forEach((card) => {
@@ -784,14 +1030,27 @@
       }, 10);
     }
 
+    function navigatePhoto(direction) {
+      if (!currentSectionPhotos || currentSectionPhotos.length === 0) {
+        return;
+      }
+      
+      if (direction === 'prev' && currentPhotoIndex > 0) {
+        currentPhotoIndex--;
+        updateModalContent();
+      } else if (direction === 'next' && currentPhotoIndex < currentSectionPhotos.length - 1) {
+        currentPhotoIndex++;
+        updateModalContent();
+      }
+    }
+
     function updateModalContent() {
       const modalImage = document.getElementById('modalImage');
       const modalInfo = document.getElementById('modalInfo');
       const prevBtn = document.getElementById('prevBtn');
       const nextBtn = document.getElementById('nextBtn');
       
-      if (!currentSectionPhotos[currentPhotoIndex]) {
-        console.error('Invalid photo index:', currentPhotoIndex);
+      if (!currentSectionPhotos || !currentSectionPhotos[currentPhotoIndex]) {
         return;
       }
       
@@ -807,18 +1066,25 @@
         prevBtn.disabled = currentPhotoIndex === 0;
         nextBtn.disabled = currentPhotoIndex === currentSectionPhotos.length - 1;
         
+        // Update button opacity for disabled state
+        if (prevBtn.disabled) {
+          prevBtn.style.opacity = '0.3';
+          prevBtn.style.cursor = 'not-allowed';
+        } else {
+          prevBtn.style.opacity = '1';
+          prevBtn.style.cursor = 'pointer';
+        }
+        
+        if (nextBtn.disabled) {
+          nextBtn.style.opacity = '0.3';
+          nextBtn.style.cursor = 'not-allowed';
+        } else {
+          nextBtn.style.opacity = '1';
+          nextBtn.style.cursor = 'pointer';
+        }
+        
         modalImage.classList.remove('changing');
       }, 150);
-    }
-
-    function navigatePhoto(direction) {
-      if (direction === 'prev' && currentPhotoIndex > 0) {
-        currentPhotoIndex--;
-        updateModalContent();
-      } else if (direction === 'next' && currentPhotoIndex < currentSectionPhotos.length - 1) {
-        currentPhotoIndex++;
-        updateModalContent();
-      }
     }
 
     function closePhotoModal() {
@@ -851,35 +1117,35 @@
     });
 
     // Touch/Swipe support for mobile
+    let touchStartTime = 0;
+    
     function handleTouchStart(e) {
       if (document.getElementById('photoModal').style.display === 'flex') {
         touchStartX = e.changedTouches[0].screenX;
-        isDragging = true;
-        document.getElementById('modalContent').classList.add('dragging');
+        touchStartTime = Date.now();
       }
     }
 
-    function handleTouchMove(e) {
-      if (!isDragging) return;
+    function handleTouchEnd(e) {
+      if (document.getElementById('photoModal').style.display !== 'flex') return;
+      
       touchEndX = e.changedTouches[0].screenX;
-    }
-
-    function handleTouchEnd() {
-      if (!isDragging) return;
+      const touchEndTime = Date.now();
+      const touchDuration = touchEndTime - touchStartTime;
       
-      isDragging = false;
-      document.getElementById('modalContent').classList.remove('dragging');
-      
-      const swipeThreshold = 50;
-      const diff = touchStartX - touchEndX;
-      
-      if (Math.abs(diff) > swipeThreshold) {
-        if (diff > 0) {
-          // Swipe left - next photo
-          navigatePhoto('next');
-        } else {
-          // Swipe right - previous photo
-          navigatePhoto('prev');
+      // Only process swipe if it's quick (under 500ms) to avoid conflicts with taps
+      if (touchDuration < 500) {
+        const swipeThreshold = 50;
+        const diff = touchStartX - touchEndX;
+        
+        if (Math.abs(diff) > swipeThreshold) {
+          if (diff > 0) {
+            // Swipe left - next photo
+            navigatePhoto('next');
+          } else {
+            // Swipe right - previous photo
+            navigatePhoto('prev');
+          }
         }
       }
       
@@ -888,35 +1154,64 @@
     }
 
     // Add touch listeners
-    document.addEventListener('touchstart', handleTouchStart);
-    document.addEventListener('touchmove', handleTouchMove);
-    document.addEventListener('touchend', handleTouchEnd);
+    document.addEventListener('touchstart', handleTouchStart, { passive: true });
+    document.addEventListener('touchend', handleTouchEnd, { passive: true });
 
-    // Click event for photo cards
-    document.addEventListener('click', function(e) {
-      if (e.target.closest('.photo-card')) {
-        const card = e.target.closest('.photo-card');
-        const sectionId = card.parentElement.dataset.sectionId;
-        const photoIndex = card.dataset.index;
-        const img = card.querySelector('img');
-        
-        if (img) {
-          const imageUrl = img.src;
-          const locationName = img.alt;
-          openPhotoModal(imageUrl, locationName, sectionId, photoIndex);
-        }
+    // Initialize when DOM is ready
+    document.addEventListener('DOMContentLoaded', function() {
+      setActiveCategory();
+      
+      // Click event for photo cards
+      document.querySelectorAll('.photo-grid-item').forEach(card => {
+        card.addEventListener('click', function() {
+          const sectionId = this.parentElement.dataset.sectionId;
+          const photoIndex = this.dataset.index;
+          const img = this.querySelector('img');
+          
+          if (img) {
+            const imageUrl = img.src;
+            const locationName = img.alt;
+            openPhotoModal(imageUrl, locationName, sectionId, photoIndex);
+          }
+        });
+      });
+      
+      // Prevent modal close when clicking on content
+      const modalContent = document.getElementById('modalContent');
+      if (modalContent) {
+        modalContent.addEventListener('click', function(e) {
+          e.stopPropagation();
+        });
       }
-    });
-
-    // Prevent modal close when clicking on image or buttons
-    document.getElementById('modalContent').addEventListener('click', function(e) {
-      e.stopPropagation();
-    });
-
-    // Close modal when clicking outside
-    document.getElementById('photoModal').addEventListener('click', function(e) {
-      if (e.target === this) {
-        closePhotoModal();
+      
+      // Close modal when clicking outside
+      const photoModal = document.getElementById('photoModal');
+      if (photoModal) {
+        photoModal.addEventListener('click', function(e) {
+          if (e.target === this) {
+            closePhotoModal();
+          }
+        });
+      }
+      
+      // Navigation button event listeners
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      
+      if (prevBtn) {
+        prevBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          navigatePhoto('prev');
+        });
+      }
+      
+      if (nextBtn) {
+        nextBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          navigatePhoto('next');
+        });
       }
     });
   </script>
