@@ -946,8 +946,8 @@
   <div class="photo-modal" id="photoModal">
     <div class="modal-content" id="modalContent">
       <button class="modal-close" onclick="closePhotoModal()" title="Kapat (ESC)">✕</button>
-      <button class="nav-button prev" id="prevBtn" onclick="event.stopPropagation(); navigatePhoto('prev')" title="Önceki (←)">‹</button>
-      <button class="nav-button next" id="nextBtn" onclick="event.stopPropagation(); navigatePhoto('next')" title="Sonraki (→)">›</button>
+      <button class="nav-button prev" id="prevBtn" onclick="navigatePhoto('prev')" title="Önceki (←)">‹</button>
+      <button class="nav-button next" id="nextBtn" onclick="navigatePhoto('next')" title="Sonraki (→)">›</button>
       <img class="modal-image" id="modalImage" src="" alt="">
       <div class="modal-info" id="modalInfo">Sanatçı Adı</div>
     </div>
@@ -1036,13 +1036,28 @@
       }, 10);
     }
 
+    function navigatePhoto(direction) {
+      if (!currentSectionPhotos || currentSectionPhotos.length === 0) {
+        console.error('No photos available');
+        return;
+      }
+      
+      if (direction === 'prev' && currentPhotoIndex > 0) {
+        currentPhotoIndex--;
+        updateModalContent();
+      } else if (direction === 'next' && currentPhotoIndex < currentSectionPhotos.length - 1) {
+        currentPhotoIndex++;
+        updateModalContent();
+      }
+    }
+
     function updateModalContent() {
       const modalImage = document.getElementById('modalImage');
       const modalInfo = document.getElementById('modalInfo');
       const prevBtn = document.getElementById('prevBtn');
       const nextBtn = document.getElementById('nextBtn');
       
-      if (!currentSectionPhotos[currentPhotoIndex]) {
+      if (!currentSectionPhotos || !currentSectionPhotos[currentPhotoIndex]) {
         console.error('Invalid photo index:', currentPhotoIndex);
         return;
       }
@@ -1059,18 +1074,25 @@
         prevBtn.disabled = currentPhotoIndex === 0;
         nextBtn.disabled = currentPhotoIndex === currentSectionPhotos.length - 1;
         
+        // Update button opacity for disabled state
+        if (prevBtn.disabled) {
+          prevBtn.style.opacity = '0.3';
+          prevBtn.style.cursor = 'not-allowed';
+        } else {
+          prevBtn.style.opacity = '1';
+          prevBtn.style.cursor = 'pointer';
+        }
+        
+        if (nextBtn.disabled) {
+          nextBtn.style.opacity = '0.3';
+          nextBtn.style.cursor = 'not-allowed';
+        } else {
+          nextBtn.style.opacity = '1';
+          nextBtn.style.cursor = 'pointer';
+        }
+        
         modalImage.classList.remove('changing');
       }, 150);
-    }
-
-    function navigatePhoto(direction) {
-      if (direction === 'prev' && currentPhotoIndex > 0) {
-        currentPhotoIndex--;
-        updateModalContent();
-      } else if (direction === 'next' && currentPhotoIndex < currentSectionPhotos.length - 1) {
-        currentPhotoIndex++;
-        updateModalContent();
-      }
     }
 
     function closePhotoModal() {
@@ -1162,6 +1184,15 @@
 
     // Prevent modal close when clicking on image or buttons
     document.getElementById('modalContent').addEventListener('click', function(e) {
+      e.stopPropagation();
+    });
+    
+    // Prevent event bubbling on navigation buttons
+    document.getElementById('prevBtn').addEventListener('click', function(e) {
+      e.stopPropagation();
+    });
+    
+    document.getElementById('nextBtn').addEventListener('click', function(e) {
       e.stopPropagation();
     });
 
