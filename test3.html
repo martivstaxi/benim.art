@@ -1,449 +1,119 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Benim.art Editor</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-      background: #f5f5f5;
-      padding: 20px;
-    }
-
-    .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      background: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-
-    h1 {
-      color: #333;
-      margin-bottom: 20px;
-      font-size: 28px;
-    }
-
-    .top-buttons {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 30px;
-      padding: 15px;
-      background: #f8f8f8;
-      border-radius: 8px;
-    }
-
-    button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: 600;
-      transition: all 0.3s;
-    }
-
-    .btn-csv {
-      background: #4CAF50;
-      color: white;
-    }
-
-    .btn-csv:hover {
-      background: #45a049;
-    }
-
-    .btn-copy {
-      background: #2196F3;
-      color: white;
-    }
-
-    .btn-copy:hover {
-      background: #1976D2;
-    }
-
-    .btn-preview {
-      background: #FF9800;
-      color: white;
-    }
-
-    .btn-preview:hover {
-      background: #F57C00;
-    }
-
-    .btn-add {
-      background: #9C27B0;
-      color: white;
-    }
-
-    .btn-add:hover {
-      background: #7B1FA2;
-    }
-
-    .section {
-      margin-bottom: 25px;
-      padding: 20px;
-      background: #fafafa;
-      border-radius: 8px;
-    }
-
-    .section-title {
-      font-size: 18px;
-      font-weight: 600;
-      color: #555;
-      margin-bottom: 15px;
-    }
-
-    input[type="text"] {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      font-size: 14px;
-      margin-bottom: 10px;
-    }
-
-    input[type="text"]:focus {
-      outline: none;
-      border-color: #2196F3;
-    }
-
-    .artist-box {
-      background: white;
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 15px;
-      border: 1px solid #e0e0e0;
-    }
-
-    .artist-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
-    .artist-number {
-      background: #666;
-      color: white;
-      padding: 5px 10px;
-      border-radius: 5px;
-      font-size: 14px;
-    }
-
-    .btn-remove {
-      background: #f44336;
-      color: white;
-      padding: 5px 10px;
-      font-size: 12px;
-    }
-
-    .btn-remove:hover {
-      background: #d32f2f;
-    }
-
-    .photo-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 10px;
-    }
-
-    label {
-      display: block;
-      font-size: 13px;
-      color: #666;
-      margin-bottom: 5px;
-    }
-
-    #preview {
-      width: 100%;
-      height: 600px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      background: white;
-    }
-
-    .info {
-      background: #e3f2fd;
-      padding: 15px;
-      border-radius: 5px;
-      margin-bottom: 20px;
-      color: #1565C0;
-      font-size: 14px;
-    }
-
-    @media (max-width: 768px) {
-      .container {
-        padding: 15px;
-      }
-      
-      .top-buttons {
-        flex-direction: column;
-      }
-      
-      button {
-        width: 100%;
-      }
-      
-      .photo-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>Benim.art Site Editörü</h1>
-    
-    <div class="top-buttons">
-      <input type="file" id="csvFile" accept=".csv" style="display: none;" onchange="handleCSV(event)">
-      <button class="btn-csv" onclick="document.getElementById('csvFile').click()">📂 CSV Dosyası Yükle</button>
-      <button class="btn-copy" onclick="copyHTML()">📋 HTML Kodu Kopyala</button>
-      <button class="btn-preview" onclick="showPreview()">👁 Önizleme</button>
-    </div>
-
-    <div class="info">
-      CSV Formatı: Sanatçı Adı, Kategori, Link, Foto1, Foto2, Foto3, Foto4, Foto5, Foto6
-    </div>
-
-    <div class="section">
-      <div class="section-title">Site Ayarları</div>
-      <label>Site Başlığı</label>
-      <input type="text" id="siteTitle" value="Benim.art" placeholder="Site başlığı">
-    </div>
-
-    <div class="section">
-      <div class="section-title">Sanatçılar</div>
-      <div id="artistsContainer">
-        <!-- Artists will be added here -->
-      </div>
-      <button class="btn-add" onclick="addArtist()">+ Sanatçı Ekle</button>
-    </div>
-
-    <div class="section">
-      <div class="section-title">İletişim</div>
-      <label>İletişim Metni</label>
-      <input type="text" id="contactText" value="Sorularınız için → Bize ulaşın!" placeholder="İletişim metni">
-      <label>Instagram Kullanıcı Adı</label>
-      <input type="text" id="instagramUsername" value="benim.arts" placeholder="Instagram kullanıcı adı">
-    </div>
-
-    <div class="section" id="previewSection" style="display: none;">
-      <div class="section-title">Önizleme</div>
-      <iframe id="preview"></iframe>
-    </div>
-  </div>
-
-  <script>
-    let artistCount = 0;
-    let artists = [];
-
-    // Initialize with one empty artist
-    window.onload = function() {
-      addArtist();
-    };
-
-    function handleCSV(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-      
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const text = e.target.result;
-        parseCSV(text);
-      };
-      reader.readAsText(file);
-    }
-
-    function parseCSV(text) {
-      // Clear existing artists
-      document.getElementById('artistsContainer').innerHTML = '';
-      artistCount = 0;
-      artists = [];
-      
-      const lines = text.split(/\r?\n/).filter(line => line.trim());
-      
-      lines.forEach(line => {
-        const parts = line.split(',').map(p => p.trim());
-        
-        if (parts[0]) {
-          const artist = {
-            name: parts[0],
-            category: parts[1] || 'Sanat',
-            link: parts[2] || '',
-            photos: []
-          };
-          
-          // Add photos (parts 3-8)
-          for (let i = 3; i < 9 && i < parts.length; i++) {
-            if (parts[i]) {
-              artist.photos.push(parts[i]);
-            }
-          }
-          
-          addArtistWithData(artist);
-        }
-      });
-      
-      if (artistCount === 0) {
-        addArtist();
-      }
-      
-      alert(`✅ ${artistCount} sanatçı yüklendi!`);
-    }
-
-    function addArtist() {
-      artistCount++;
-      const container = document.getElementById('artistsContainer');
-      
-      const artistDiv = document.createElement('div');
-      artistDiv.className = 'artist-box';
-      artistDiv.id = `artist-${artistCount}`;
-      
-      artistDiv.innerHTML = `
-        <div class="artist-header">
-          <span class="artist-number">Sanatçı ${artistCount}</span>
-          <button class="btn-remove" onclick="removeArtist(${artistCount})">Sil</button>
-        </div>
-        <label>Ad</label>
-        <input type="text" class="artist-name" placeholder="Sanatçı adı">
-        <label>Kategori</label>
-        <input type="text" class="artist-category" placeholder="Kategori" value="Sanat">
-        <label>Link (Instagram veya Mağaza)</label>
-        <input type="text" class="artist-link" placeholder="https://...">
-        <label>Fotoğraflar (URL)</label>
-        <div class="photo-grid">
-          ${[1,2,3,4,5,6].map(i => `
-            <input type="text" class="artist-photo" placeholder="Foto ${i} URL">
-          `).join('')}
-        </div>
-      `;
-      
-      container.appendChild(artistDiv);
-    }
-
-    function addArtistWithData(data) {
-      artistCount++;
-      const container = document.getElementById('artistsContainer');
-      
-      const artistDiv = document.createElement('div');
-      artistDiv.className = 'artist-box';
-      artistDiv.id = `artist-${artistCount}`;
-      
-      artistDiv.innerHTML = `
-        <div class="artist-header">
-          <span class="artist-number">Sanatçı ${artistCount}</span>
-          <button class="btn-remove" onclick="removeArtist(${artistCount})">Sil</button>
-        </div>
-        <label>Ad</label>
-        <input type="text" class="artist-name" value="${data.name}" placeholder="Sanatçı adı">
-        <label>Kategori</label>
-        <input type="text" class="artist-category" value="${data.category}" placeholder="Kategori">
-        <label>Link (Instagram veya Mağaza)</label>
-        <input type="text" class="artist-link" value="${data.link}" placeholder="https://...">
-        <label>Fotoğraflar (URL)</label>
-        <div class="photo-grid">
-          ${[0,1,2,3,4,5].map(i => `
-            <input type="text" class="artist-photo" value="${data.photos[i] || ''}" placeholder="Foto ${i+1} URL">
-          `).join('')}
-        </div>
-      `;
-      
-      container.appendChild(artistDiv);
-    }
-
-    function removeArtist(id) {
-      const artist = document.getElementById(`artist-${id}`);
-      if (artist) {
-        artist.remove();
-      }
-    }
-
-    function collectData() {
-      const data = {
-        title: document.getElementById('siteTitle').value || 'Benim.art',
-        contactText: document.getElementById('contactText').value || 'Sorularınız için → Bize ulaşın!',
-        instagram: document.getElementById('instagramUsername').value || 'benim.arts',
-        artists: []
-      };
-      
-      document.querySelectorAll('.artist-box').forEach(box => {
-        const name = box.querySelector('.artist-name').value;
-        const category = box.querySelector('.artist-category').value || 'Sanat';
-        const link = box.querySelector('.artist-link').value || '#';
-        const photos = Array.from(box.querySelectorAll('.artist-photo'))
-          .map(input => input.value)
-          .filter(url => url);
-        
-        if (name && photos.length > 0) {
-          data.artists.push({ name, category, link, photos });
-        }
-      });
-      
-      return data;
-    }
-
-    function generateHTML() {
-      const data = collectData();
-      
-      if (data.artists.length === 0) {
-        alert('En az bir sanatçı eklemelisiniz!');
-        return '';
-      }
-      
-      const artistsHTML = data.artists.map((artist, index) => {
-        const photos = artist.photos.map((photo, photoIndex) => 
-          `<div class="photo-card" data-photo="${photo}" data-location="${artist.name}" data-index="${photoIndex}">
-            <img src="${photo}" alt="${artist.name}" loading="lazy">
-          </div>`
-        ).join('\n        ');
-        
-        return `
-    <!-- ${artist.name} -->
-    <div class="city-section">
-      <div class="city-header">
-        <h2 class="city-title">
-          <a href="${artist.link}" target="_blank" rel="noopener noreferrer" class="location-link">
-            <span class="click-icon"></span>${artist.name} | ${artist.category}
-          </a>
-        </h2>
-      </div>
-      <div class="city-photos" data-section-id="section-${index + 1}">
-        ${photos}
-      </div>
-    </div>`;
-      }).join('\n\n');
-      
-      return `<!DOCTYPE html>
+<!DOCTYPE html>  
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>${data.title}</title>
+  <title>Benim.art</title>
   
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
   
   <style>
+    /* Theme Variables */
     :root {
       --primary: #9CA3AF;
       --primary-dark: #6B7280;
       --secondary: #C7D2FE;
       --accent: #A78BFA;
       --sage: #9DB88F;
+      --blush: #F9D5E5;
+      --cream: #FEF6E4;
+      --sand: #E8DCC4;
+      --bg-grad: linear-gradient(135deg, #FAF9F7 0%, #F3F0EA 100%);
+      --card-bg: rgba(255, 253, 250, .95);
+      --glass-bg: rgba(255, 255, 255, .75);
+      --glass-border: rgba(160, 160, 160, .15);
       --text-primary: #4A5568;
       --text-secondary: #718096;
+      --text-muted: #A0AEC0;
       --shadow-lg: 0 4px 20px rgba(0, 0, 0, .06);
       --shadow-xl: 0 8px 30px rgba(0, 0, 0, .08);
+    }
+
+    [data-theme="lavender"] {
+      --primary: #9CA3AF;
+      --primary-dark: #6B7280;
+      --secondary: #C7D2FE;
+      --accent: #A78BFA;
+      --bg-grad: linear-gradient(135deg, #FAF9F7 0%, #F3F0EA 100%);
+      --theme-overlay: linear-gradient(135deg, 
+        rgba(199, 210, 254, 0.1) 0%,
+        rgba(167, 139, 250, 0.05) 25%,
+        rgba(157, 184, 143, 0.08) 50%,
+        rgba(249, 213, 229, 0.1) 75%,
+        rgba(254, 246, 228, 0.15) 100%);
+    }
+
+    [data-theme="sage"] {
+      --primary: #B8A5C6;
+      --primary-dark: #9B85AD;
+      --secondary: #DCC9E8;
+      --accent: #C9B2D9;
+      --bg-grad: linear-gradient(135deg, #FAF8FC 0%, #F2EDF7 100%);
+      --theme-overlay: linear-gradient(135deg, 
+        rgba(220, 201, 232, 0.1) 0%,
+        rgba(201, 178, 217, 0.08) 25%,
+        rgba(184, 165, 198, 0.05) 50%,
+        rgba(242, 237, 247, 0.1) 75%,
+        rgba(250, 248, 252, 0.15) 100%);
+    }
+
+    [data-theme="rose"] {
+      --primary: #6B7280;
+      --primary-dark: #4B5563;
+      --secondary: #E5E7EB;
+      --accent: #9CA3AF;
+      --bg-grad: linear-gradient(135deg, #FFFFFF 0%, #F9FAFB 100%);
+      --theme-overlay: linear-gradient(135deg, 
+        rgba(229, 231, 235, 0.08) 0%,
+        rgba(156, 163, 175, 0.05) 25%,
+        rgba(107, 114, 128, 0.03) 50%,
+        rgba(249, 250, 251, 0.1) 75%,
+        rgba(255, 255, 255, 0.12) 100%);
+    }
+
+    [data-theme="sand"] {
+      --primary: #B8A08A;
+      --primary-dark: #9C826A;
+      --secondary: #E8DCC4;
+      --accent: #D4B896;
+      --bg-grad: linear-gradient(135deg, #FDFAF7 0%, #F5EDE4 100%);
+      --theme-overlay: linear-gradient(135deg, 
+        rgba(232, 220, 196, 0.1) 0%,
+        rgba(212, 184, 150, 0.06) 25%,
+        rgba(184, 160, 138, 0.05) 50%,
+        rgba(245, 237, 228, 0.1) 75%,
+        rgba(253, 250, 247, 0.15) 100%);
+    }
+
+    [data-theme="sky"] {
+      --primary: #93B5C6;
+      --primary-dark: #6B8FA3;
+      --secondary: #C9E4F5;
+      --accent: #A8D0E6;
+      --bg-grad: linear-gradient(135deg, #F7FBFE 0%, #E6F3FA 100%);
+      --theme-overlay: linear-gradient(135deg, 
+        rgba(201, 228, 245, 0.1) 0%,
+        rgba(168, 208, 230, 0.08) 25%,
+        rgba(147, 181, 198, 0.05) 50%,
+        rgba(230, 243, 250, 0.1) 75%,
+        rgba(247, 251, 254, 0.15) 100%);
+    }
+
+    [data-theme="pearl"] {
+      --primary: #B3A9B0;
+      --primary-dark: #8C8289;
+      --secondary: #E8E2E7;
+      --accent: #D4C5D0;
+      --bg-grad: linear-gradient(135deg, #FDFCFD 0%, #F5F2F4 100%);
+      --theme-overlay: linear-gradient(135deg, 
+        rgba(232, 226, 231, 0.1) 0%,
+        rgba(212, 197, 208, 0.06) 25%,
+        rgba(179, 169, 176, 0.05) 50%,
+        rgba(245, 242, 244, 0.1) 75%,
+        rgba(253, 252, 253, 0.15) 100%);
     }
 
     * {
@@ -454,13 +124,17 @@
 
     body {
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #FAF9F7 0%, #F5F1EA 50%, #EDE8E2 100%);
+      background: var(--bg-grad);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
       background-attachment: fixed;
       color: var(--text-primary);
       min-height: 100vh;
       line-height: 1.6;
       overflow-x: hidden;
       position: relative;
+      transition: background 0.5s ease;
     }
 
     body::after {
@@ -470,53 +144,76 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, 
-        rgba(199, 210, 254, 0.1) 0%,
-        rgba(167, 139, 250, 0.05) 25%,
-        rgba(157, 184, 143, 0.08) 50%,
-        rgba(249, 213, 229, 0.1) 75%,
-        rgba(254, 246, 228, 0.15) 100%);
+      background: var(--theme-overlay);
       pointer-events: none;
       z-index: 0;
+      transition: background 0.5s ease;
     }
 
     .container {
       max-width: 1100px;
       margin: 0 auto;
       padding: 0 16px;
-      padding-top: 80px;
+      padding-top: 115px;
       position: relative;
       z-index: 1;
     }
 
-    .logo {
+    /* Header Bar */
+    .header-bar {
       position: fixed;
-      top: 30px;
+      top: 15px;
       left: 50%;
       transform: translateX(-50%);
-      padding: 14px 32px;
-      border-radius: 50px;
+      width: 90%;
+      max-width: 1000px;
+      height: 60px;
       background: linear-gradient(135deg, 
-        rgba(255, 255, 255, 0.95) 0%, 
-        rgba(254, 246, 228, 0.9) 50%, 
-        rgba(199, 210, 254, 0.9) 100%);
+        rgba(255, 255, 255, 0.9) 0%,
+        rgba(254, 246, 228, 0.4) 30%,
+        rgba(199, 210, 254, 0.3) 70%,
+        rgba(255, 255, 255, 0.9) 100%);
       backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 0 6px 20px rgba(167, 139, 250, 0.08),
+                  0 2px 6px rgba(0, 0, 0, 0.04);
+      z-index: 90;
+      border-radius: 30px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 20px;
+    }
+
+    .logo {
+      position: fixed;
+      top: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 24px;
+      border-radius: 50px;
+      background: transparent;
+      backdrop-filter: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
       font-weight: 700;
       text-decoration: none;
-      box-shadow: 0 8px 32px rgba(167, 139, 250, 0.15);
+      box-shadow: none;
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       z-index: 100;
-      border: 1px solid rgba(255, 255, 255, 0.5);
+      border: none;
+      white-space: nowrap;
       letter-spacing: 0.5px;
     }
     
     .logo:hover {
-      transform: translateX(-50%) translateY(-2px);
-      box-shadow: 0 12px 40px rgba(167, 139, 250, 0.25);
+      transform: translateX(-50%) scale(1.08);
+      text-decoration: none;
+    }
+    
+    .logo:hover .gradient-text {
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
     }
     
     .logo::before {
@@ -533,15 +230,110 @@
     }
     
     .gradient-text {
-      background: linear-gradient(135deg, #9DB88F 0%, #A78BFA 40%, #C7D2FE 100%);
+      background: linear-gradient(135deg, var(--sage, #9DB88F) 0%, var(--accent) 40%, var(--secondary) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      filter: drop-shadow(0 2px 4px rgba(167, 139, 250, 0.2));
+      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.15));
       display: inline-block;
-      font-weight: 800;
+      position: relative;
+      font-weight: 900;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
+      font-size: 1.1em;
+    }
+    
+    /* Theme Switcher */
+    .theme-switcher {
+      position: fixed;
+      top: 29px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      justify-content: space-between;
+      z-index: 99;
+      width: 500px;
+      max-width: 500px;
+      pointer-events: none;
+    }
+
+    .theme-switcher-left,
+    .theme-switcher-right {
+      display: flex;
+      justify-content: space-between;
+      width: 140px;
+      pointer-events: auto;
+    }
+
+    .theme-switcher-left {
+      position: absolute;
+      left: 0;
+    }
+
+    .theme-switcher-right {
+      position: absolute;
+      right: 0;
+    }
+
+    .theme-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.7);
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .theme-btn:hover {
+      transform: scale(1.15) translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      border-color: rgba(255, 255, 255, 0.9);
+    }
+
+    .theme-btn.active {
+      transform: scale(1.1);
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.4),
+                  0 3px 15px rgba(0, 0, 0, 0.2);
+      border-color: rgba(255, 255, 255, 0.95);
+    }
+
+    .theme-btn.active::after {
+      content: '✓';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-weight: bold;
+      font-size: 14px;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    .theme-btn[data-theme="lavender"] {
+      background: linear-gradient(135deg, #C7D2FE 0%, #A78BFA 100%);
+    }
+
+    .theme-btn[data-theme="sage"] {
+      background: linear-gradient(135deg, #DCC9E8 0%, #C9B2D9 100%);
+    }
+
+    .theme-btn[data-theme="rose"] {
+      background: linear-gradient(135deg, #F3F4F6 0%, #6B7280 100%);
+    }
+
+    .theme-btn[data-theme="sand"] {
+      background: linear-gradient(135deg, #E8DCC4 0%, #D4B896 100%);
+    }
+
+    .theme-btn[data-theme="sky"] {
+      background: linear-gradient(135deg, #C9E4F5 0%, #A8D0E6 100%);
+    }
+
+    .theme-btn[data-theme="pearl"] {
+      background: linear-gradient(135deg, #E8E2E7 0%, #D4C5D0 100%);
     }
     
     .city-section {
@@ -554,7 +346,11 @@
       border: 1px solid rgba(255, 255, 255, 0.6);
       border-radius: 24px;
       padding: 0;
-      box-shadow: var(--shadow-lg);
+      box-shadow: 0 10px 40px rgba(167, 139, 250, 0.08),
+                  0 2px 10px rgba(0, 0, 0, 0.04);
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
       overflow: hidden;
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
@@ -577,7 +373,12 @@
     
     .city-section:hover {
       transform: translateY(-4px);
-      box-shadow: var(--shadow-xl);
+      box-shadow: 0 16px 50px rgba(167, 139, 250, 0.12),
+                  0 4px 15px rgba(0, 0, 0, 0.06);
+      background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.9) 0%,
+        rgba(254, 246, 228, 0.4) 50%,
+        rgba(199, 210, 254, 0.3) 100%);
     }
     
     .city-section:hover::before {
@@ -585,45 +386,51 @@
     }
     
     .city-header {
-      padding: 18px 22px 12px 22px;
+      padding: 18px 22px 16px 22px;
+      margin: 0;
+      border: none;
+      background: transparent;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
     
     .city-title {
       margin: 0;
-      font-size: 20px;
+      font-size: clamp(16px, 3.5vw, 20px);
       color: var(--text-primary);
       font-weight: 700;
+      text-align: center;
     }
     
-    .city-photos {
-      display: flex;
-      gap: 16px;
-      overflow-x: auto;
-      padding: 12px 22px 22px 22px;
-      scroll-snap-type: x mandatory;
-      scrollbar-width: none;
+    /* New Grid Layout for Photos */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 12px;
+      padding: 0 22px 22px 22px;
+      max-width: 500px;
+      margin: 0 auto;
+      aspect-ratio: 1;
     }
     
-    .city-photos::-webkit-scrollbar {
-      display: none;
-    }
-    
-    .photo-card {
-      flex: 0 0 auto;
-      width: 260px;
-      height: 260px;
+    .photo-grid-item {
+      position: relative;
+      width: 100%;
+      height: 100%;
       border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-      scroll-snap-align: start;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08),
+                  0 2px 8px rgba(0, 0, 0, 0.04);
       background: linear-gradient(135deg, #ffffff, #fafafa);
-      position: relative;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       cursor: pointer;
       border: 1px solid rgba(255, 255, 255, 0.8);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
-    .photo-card::after {
+    .photo-grid-item::after {
       content: '';
       position: absolute;
       top: 0;
@@ -638,16 +445,18 @@
       pointer-events: none;
     }
     
-    .photo-card:hover {
-      transform: scale(1.03) translateY(-8px);
-      box-shadow: 0 20px 40px rgba(167, 139, 250, 0.15);
+    .photo-grid-item:hover {
+      transform: scale(1.05);
+      box-shadow: 0 20px 40px rgba(167, 139, 250, 0.15),
+                  0 10px 20px rgba(0, 0, 0, 0.08);
+      z-index: 10;
     }
     
-    .photo-card:hover::after {
+    .photo-grid-item:hover::after {
       opacity: 1;
     }
     
-    .photo-card img {
+    .photo-grid-item img {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -655,9 +464,15 @@
       transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
-    .photo-card:hover img {
-      transform: scale(1.08);
+    .photo-grid-item:hover img {
+      transform: scale(1.1);
     }
+
+    /* Position indicators for grid items */
+    .photo-grid-item:nth-child(1) { grid-area: 1 / 1 / 2 / 2; } /* Top Left */
+    .photo-grid-item:nth-child(2) { grid-area: 1 / 2 / 2 / 3; } /* Top Right */
+    .photo-grid-item:nth-child(3) { grid-area: 2 / 1 / 3 / 2; } /* Bottom Left */
+    .photo-grid-item:nth-child(4) { grid-area: 2 / 2 / 3 / 3; } /* Bottom Right */
     
     .location-link {
       text-decoration: none;
@@ -671,26 +486,62 @@
         rgba(255, 255, 255, 0.9) 0%,
         rgba(167, 139, 250, 0.1) 100%);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      font-size: 16px;
+      font-size: clamp(14px, 2.5vw, 16px);
       font-weight: 600;
+      max-width: fit-content;
       border: 1px solid rgba(167, 139, 250, 0.2);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .location-link::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, 
+        transparent 0%,
+        rgba(167, 139, 250, 0.2) 50%,
+        transparent 100%);
+      transition: left 0.5s ease;
     }
     
     .location-link:hover {
       background: linear-gradient(135deg, 
         rgba(255, 255, 255, 1) 0%,
         rgba(167, 139, 250, 0.15) 100%);
+      color: var(--primary-dark);
+      text-decoration: none;
       transform: translateY(-2px);
+      border-color: rgba(167, 139, 250, 0.4);
       box-shadow: 0 6px 20px rgba(167, 139, 250, 0.15);
+    }
+    
+    .location-link:hover::before {
+      left: 100%;
+    }
+    
+    .click-icon {
+      color: var(--accent);
+      display: inline-flex;
+      transition: transform 0.3s ease;
+    }
+    
+    .location-link:hover .click-icon {
+      transform: translateX(2px);
     }
     
     .click-icon::before {
       content: "→";
-      color: var(--accent);
+      display: inline-block;
+      font-size: 14px;
       font-weight: 700;
     }
 
-    /* Modal */
+    /* Modal Styles */
     .photo-modal {
       position: fixed;
       top: 0;
@@ -704,6 +555,7 @@
       justify-content: center;
       align-items: center;
       padding: 20px;
+      box-sizing: border-box;
       opacity: 0;
       transition: opacity 0.3s ease-out;
     }
@@ -736,6 +588,12 @@
       border-radius: 12px;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
       transition: opacity 0.3s ease;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    .modal-image.changing {
+      opacity: 0;
     }
 
     .modal-close {
@@ -754,11 +612,12 @@
       align-items: center;
       justify-content: center;
       transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
       z-index: 3001;
     }
 
     .modal-close:hover {
-      background: white;
+      background: rgba(255, 255, 255, 1);
       transform: scale(1.1);
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
@@ -775,6 +634,7 @@
       border-radius: 20px;
       font-size: 14px;
       font-weight: 600;
+      white-space: nowrap;
       text-align: center;
     }
 
@@ -793,11 +653,12 @@
       align-items: center;
       justify-content: center;
       transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
       z-index: 3001;
     }
 
     .nav-button:hover {
-      background: white;
+      background: rgba(255, 255, 255, 1);
       transform: scale(1.1);
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
@@ -815,7 +676,13 @@
       cursor: not-allowed;
     }
 
-    /* Contact Section */
+    .nav-button:disabled:hover {
+      transform: none;
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: none;
+    }
+
+    /* Promotion Section */
     .promotion-section {
       background: linear-gradient(135deg, 
         rgba(255, 255, 255, 0.95) 0%,
@@ -830,104 +697,366 @@
       margin: 40px auto;
       text-align: center;
       border: 1px solid rgba(255, 255, 255, 0.6);
-      box-shadow: var(--shadow-lg);
+      max-width: 1000px;
+      box-shadow: 0 10px 40px rgba(167, 139, 250, 0.08),
+                  0 2px 10px rgba(0, 0, 0, 0.04);
+      position: relative;
+      overflow: hidden;
     }
-
-    .promo-text {
-      margin: 16px 0;
-      font-size: 22px;
-      color: var(--text-primary);
-      font-weight: 600;
+    
+    .promotion-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, 
+        rgba(167, 139, 250, 0.1) 0%,
+        transparent 70%);
+      animation: rotate 20s linear infinite;
+    }
+    
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
     .instagram-btn {
-      background: linear-gradient(135deg, #C7D2FE 0%, #A78BFA 50%, #9DB88F 100%);
+      background: linear-gradient(135deg, var(--secondary) 0%, var(--accent) 50%, var(--sage, #9DB88F) 100%);
       color: white !important;
       padding: 14px 28px;
       border-radius: 30px;
       text-decoration: none !important;
       display: inline-block;
       font-weight: 700;
-      font-size: 18px;
+      font-size: clamp(16px, 2.5vw, 18px);
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      margin: 12px;
-      box-shadow: 0 6px 25px rgba(167, 139, 250, 0.3);
+      margin: 12px 0;
+      box-shadow: 0 6px 25px rgba(167, 139, 250, 0.3),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .instagram-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, 
+        transparent 0%,
+        rgba(255, 255, 255, 0.2) 50%,
+        transparent 100%);
+      transition: left 0.6s ease;
     }
 
     .instagram-btn:hover {
       transform: translateY(-3px) scale(1.02);
-      box-shadow: 0 10px 35px rgba(167, 139, 250, 0.4);
+      box-shadow: 0 10px 35px rgba(167, 139, 250, 0.4),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      color: white !important;
+      background: linear-gradient(135deg, var(--sage, #9DB88F) 0%, var(--accent) 50%, var(--secondary) 100%);
+    }
+    
+    .instagram-btn:hover::before {
+      left: 100%;
     }
 
-    /* Mobile */
+    .promo-text {
+      margin: 16px 0;
+      font-size: clamp(18px, 3vw, 22px);
+      color: var(--text-primary);
+      font-weight: 600;
+      position: relative;
+      z-index: 1;
+      line-height: 1.6;
+      letter-spacing: -0.5px;
+    }
+
+    /* Mobile Responsive */
     @media (max-width: 768px) {
       .container {
-        padding-top: 110px;
+        padding-top: 100px;
+      }
+
+      .header-bar {
+        top: 15px;
+        height: 50px;
       }
 
       .logo {
         padding: 10px 20px;
         font-size: 16px;
+        top: 23px;
+      }
+      
+      .logo::before {
+        left: 10px;
+        font-size: 12px;
       }
 
-      .photo-card {
-        width: 140px;
-        height: 140px;
+      .theme-switcher {
+        top: 31px;
+        width: 400px;
       }
 
-      .modal-close, .nav-button {
-        top: 20px;
-        bottom: auto;
+      .theme-switcher-left,
+      .theme-switcher-right {
+        gap: 10px;
       }
 
-      .nav-button.prev {
-        left: 20px;
+      .theme-btn {
+        width: 30px;
+        height: 30px;
       }
 
-      .nav-button.next {
-        right: 20px;
+      .theme-btn.active::after {
+        font-size: 14px;
+      }
+
+      .city-section {
+        margin-bottom: 20px;
+        border-radius: 15px;
+      }
+
+      .city-header {
+        padding: 15px 18px 14px 18px;
+      }
+
+      .city-title {
+        font-size: 16px;
+      }
+
+      .location-link {
+        padding: 8px 12px;
+        font-size: 14px;
+        gap: 5px;
+      }
+
+      .photo-grid {
+        gap: 10px;
+        padding: 0 18px 18px 18px;
+        max-width: 400px;
+      }
+
+      .photo-grid-item {
+        border-radius: 12px;
+      }
+
+      .promotion-section {
+        padding: 20px;
+        margin: 25px auto;
+      }
+
+      .promo-text {
+        font-size: 16px;
+        margin: 12px 0;
+      }
+
+      .instagram-btn {
+        padding: 10px 20px;
+        font-size: 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding-top: 85px;
+      }
+
+      .header-bar {
+        top: 8px;
+        width: 90%;
+        height: 45px;
+        border-radius: 22px;
+      }
+
+      .logo {
+        padding: 6px 14px;
+        font-size: 13px;
+        top: 16px;
+      }
+
+      .theme-switcher {
+        width: 320px;
+        top: 19px;
+      }
+
+      .theme-switcher-left,
+      .theme-switcher-right {
+        width: 90px;
+      }
+
+      .theme-btn {
+        width: 24px;
+        height: 24px;
+      }
+
+      .photo-grid {
+        gap: 8px;
+        max-width: 320px;
+      }
+
+      .photo-grid-item {
+        border-radius: 10px;
       }
     }
   </style>
 </head>
-<body>
-  <a href="#" class="logo"><span class="gradient-text">${data.title}</span></a>
+<body data-theme="lavender">
+  <div class="header-bar"></div>
+  <a href="#" class="logo"><span class="gradient-text">Benim.art</span></a>
+  
+  <!-- Theme Switcher -->
+  <div class="theme-switcher">
+    <div class="theme-switcher-left">
+      <button class="theme-btn active" data-theme="lavender" onclick="changeTheme('lavender')" title="Lavanta"></button>
+      <button class="theme-btn" data-theme="sage" onclick="changeTheme('sage')" title="Leylak"></button>
+      <button class="theme-btn" data-theme="rose" onclick="changeTheme('rose')" title="Minimal"></button>
+    </div>
+    <div class="theme-switcher-right">
+      <button class="theme-btn" data-theme="sand" onclick="changeTheme('sand')" title="Kum"></button>
+      <button class="theme-btn" data-theme="sky" onclick="changeTheme('sky')" title="Gök"></button>
+      <button class="theme-btn" data-theme="pearl" onclick="changeTheme('pearl')" title="İnci"></button>
+    </div>
+  </div>
   
   <div class="container">
     <div id="locations-container">
-${artistsHTML}
-    </div>
-    
-    <div class="promotion-section">
-      <div class="promo-text">${data.contactText}</div>
-      <a href="https://www.instagram.com/${data.instagram}/" target="_blank" class="instagram-btn">📩 @${data.instagram}</a>
-    </div>
-  </div>
 
-  <!-- Modal -->
+   <!-- Hülya Kalaycıoğlu 1 -->
+    <div class="city-section">
+      <div class="city-header">
+        <h2 class="city-title">
+          <a href="https://www.shopier.com/BenimArt" target="_blank" rel="noopener noreferrer" class="location-link">
+            <span class="click-icon"></span>Hülya Kalaycıoğlu | Shopier
+          </a>
+        </h2>
+      </div>
+      <div class="photo-grid" data-section-id="section-1">
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 1" data-index="0">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" alt="Hülya Kalaycıoğlu - Fotoğraf 1">
+        </div>
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 2" data-index="1">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" alt="Hülya Kalaycıoğlu - Fotoğraf 2">
+        </div>
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 3" data-index="2">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" alt="Hülya Kalaycıoğlu - Fotoğraf 3">
+        </div>
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 4" data-index="3">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" alt="Hülya Kalaycıoğlu - Fotoğraf 4">
+        </div>
+      </div>
+    </div>
+
+    <!-- Hülya Kalaycıoğlu 2 -->
+    <div class="city-section">
+      <div class="city-header">
+        <h2 class="city-title">
+          <a href="https://www.shopier.com/BenimArt" target="_blank" rel="noopener noreferrer" class="location-link">
+            <span class="click-icon"></span>Hülya Kalaycıoğlu | Shopier
+          </a>
+        </h2>
+      </div>
+      <div class="photo-grid" data-section-id="section-2">
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/eabcbf5c-d362-4b13-3601-d37f63eb0c00/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 5" data-index="0">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/eabcbf5c-d362-4b13-3601-d37f63eb0c00/public" alt="Hülya Kalaycıoğlu - Fotoğraf 5">
+        </div>
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 6" data-index="1">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public" alt="Hülya Kalaycıoğlu - Fotoğraf 6">
+        </div>
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 1" data-index="2">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" alt="Hülya Kalaycıoğlu - Fotoğraf 1">
+        </div>
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 2" data-index="3">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" alt="Hülya Kalaycıoğlu - Fotoğraf 2">
+        </div>
+      </div>
+    </div>
+
+    <!-- Hülya Kalaycıoğlu 3 -->
+    <div class="city-section">
+      <div class="city-header">
+        <h2 class="city-title">
+          <a href="https://www.shopier.com/BenimArt" target="_blank" rel="noopener noreferrer" class="location-link">
+            <span class="click-icon"></span>Hülya Kalaycıoğlu | Shopier
+          </a>
+        </h2>
+      </div>
+      <div class="photo-grid" data-section-id="section-3">
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 3" data-index="0">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" alt="Hülya Kalaycıoğlu - Fotoğraf 3">
+        </div>
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 4" data-index="1">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" alt="Hülya Kalaycıoğlu - Fotoğraf 4">
+        </div>
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/eabcbf5c-d362-4b13-3601-d37f63eb0c00/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 5" data-index="2">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/eabcbf5c-d362-4b13-3601-d37f63eb0c00/public" alt="Hülya Kalaycıoğlu - Fotoğraf 5">
+        </div>
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 6" data-index="3">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public" alt="Hülya Kalaycıoğlu - Fotoğraf 6">
+        </div>
+      </div>
+    </div>
+
+  <!-- PHOTO MODAL WITH CAROUSEL -->
   <div class="photo-modal" id="photoModal">
     <div class="modal-content" id="modalContent">
-      <button class="modal-close" onclick="closePhotoModal()">✕</button>
-      <button class="nav-button prev" id="prevBtn" onclick="navigatePhoto('prev')">‹</button>
-      <button class="nav-button next" id="nextBtn" onclick="navigatePhoto('next')">›</button>
+      <button class="modal-close" onclick="closePhotoModal()" title="Kapat (ESC)">✕</button>
+      <button class="nav-button prev" id="prevBtn" onclick="event.stopPropagation(); navigatePhoto('prev')" title="Önceki (←)">‹</button>
+      <button class="nav-button next" id="nextBtn" onclick="event.stopPropagation(); navigatePhoto('next')" title="Sonraki (→)">›</button>
       <img class="modal-image" id="modalImage" src="" alt="">
-      <div class="modal-info" id="modalInfo"></div>
+      <div class="modal-info" id="modalInfo">Sanatçı Adı</div>
     </div>
   </div>
 
   <script>
     let currentSectionPhotos = [];
     let currentPhotoIndex = 0;
+    let currentArtistName = '';
     let touchStartX = 0;
     let touchEndX = 0;
+    let isDragging = false;
 
+    // Theme Switcher Function
+    function changeTheme(theme) {
+      document.body.setAttribute('data-theme', theme);
+      
+      // Update active button
+      document.querySelectorAll('.theme-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      document.querySelector(`.theme-btn[data-theme="${theme}"]`).classList.add('active');
+      
+      // Save preference
+      localStorage.setItem('preferred-theme', theme);
+    }
+
+    // Load saved theme on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedTheme = localStorage.getItem('preferred-theme') || 'lavender';
+      changeTheme(savedTheme);
+    });
+
+    // Photo modal functions
     function openPhotoModal(imageUrl, locationName, sectionId, photoIndex) {
       const modal = document.getElementById('photoModal');
-      const modalImage = document.getElementById('modalImage');
-      const modalInfo = document.getElementById('modalInfo');
       
-      const section = document.querySelector('[data-section-id="' + sectionId + '"]');
-      const photos = section.querySelectorAll('.photo-card');
+      // Get all photos from the same section
+      const sectionElement = document.querySelector(`[data-section-id="${sectionId}"]`);
+      
+      if (!sectionElement) {
+        console.error('Section not found:', sectionId);
+        return;
+      }
+      
+      const photos = sectionElement.querySelectorAll('.photo-grid-item');
       
       currentSectionPhotos = [];
       photos.forEach((card) => {
@@ -938,6 +1067,8 @@ ${artistsHTML}
       });
       
       currentPhotoIndex = parseInt(photoIndex);
+      currentArtistName = locationName;
+      
       updateModalContent();
       
       modal.style.display = 'flex';
@@ -954,6 +1085,12 @@ ${artistsHTML}
       const prevBtn = document.getElementById('prevBtn');
       const nextBtn = document.getElementById('nextBtn');
       
+      if (!currentSectionPhotos[currentPhotoIndex]) {
+        console.error('Invalid photo index:', currentPhotoIndex);
+        return;
+      }
+      
+      // Add transition effect
       modalImage.classList.add('changing');
       
       setTimeout(() => {
@@ -961,6 +1098,7 @@ ${artistsHTML}
         modalImage.alt = currentSectionPhotos[currentPhotoIndex].name;
         modalInfo.textContent = currentSectionPhotos[currentPhotoIndex].name;
         
+        // Update navigation buttons state
         prevBtn.disabled = currentPhotoIndex === 0;
         nextBtn.disabled = currentPhotoIndex === currentSectionPhotos.length - 1;
         
@@ -980,6 +1118,7 @@ ${artistsHTML}
 
     function closePhotoModal() {
       const modal = document.getElementById('photoModal');
+      
       modal.classList.remove('show');
       
       setTimeout(() => {
@@ -990,7 +1129,7 @@ ${artistsHTML}
       }, 300);
     }
 
-    // Event listeners
+    // Keyboard navigation
     document.addEventListener('keydown', function(event) {
       const modal = document.getElementById('photoModal');
       if (modal && modal.style.display === 'flex') {
@@ -1006,87 +1145,75 @@ ${artistsHTML}
       }
     });
 
-    // Touch support
-    document.addEventListener('touchstart', function(e) {
+    // Touch/Swipe support for mobile
+    function handleTouchStart(e) {
       if (document.getElementById('photoModal').style.display === 'flex') {
         touchStartX = e.changedTouches[0].screenX;
+        isDragging = true;
+        document.getElementById('modalContent').classList.add('dragging');
       }
-    });
+    }
 
-    document.addEventListener('touchend', function(e) {
-      if (document.getElementById('photoModal').style.display === 'flex') {
-        touchEndX = e.changedTouches[0].screenX;
-        if (touchEndX < touchStartX - 50) {
+    function handleTouchMove(e) {
+      if (!isDragging) return;
+      touchEndX = e.changedTouches[0].screenX;
+    }
+
+    function handleTouchEnd() {
+      if (!isDragging) return;
+      
+      isDragging = false;
+      document.getElementById('modalContent').classList.remove('dragging');
+      
+      const swipeThreshold = 50;
+      const diff = touchStartX - touchEndX;
+      
+      if (Math.abs(diff) > swipeThreshold) {
+        if (diff > 0) {
+          // Swipe left - next photo
           navigatePhoto('next');
-        }
-        if (touchEndX > touchStartX + 50) {
+        } else {
+          // Swipe right - previous photo
           navigatePhoto('prev');
         }
       }
-    });
+      
+      touchStartX = 0;
+      touchEndX = 0;
+    }
 
-    // Click events
+    // Add touch listeners
+    document.addEventListener('touchstart', handleTouchStart);
+    document.addEventListener('touchmove', handleTouchMove);
+    document.addEventListener('touchend', handleTouchEnd);
+
+    // Click event for photo cards
     document.addEventListener('click', function(e) {
-      if (e.target.closest('.photo-card')) {
-        const card = e.target.closest('.photo-card');
-        const section = card.closest('.city-photos');
-        const sectionId = section.dataset.sectionId;
+      if (e.target.closest('.photo-grid-item')) {
+        const card = e.target.closest('.photo-grid-item');
+        const sectionId = card.parentElement.dataset.sectionId;
         const photoIndex = card.dataset.index;
         const img = card.querySelector('img');
         
         if (img) {
-          openPhotoModal(img.src, img.alt, sectionId, photoIndex);
+          const imageUrl = img.src;
+          const locationName = img.alt;
+          openPhotoModal(imageUrl, locationName, sectionId, photoIndex);
         }
       }
     });
 
+    // Prevent modal close when clicking on image or buttons
+    document.getElementById('modalContent').addEventListener('click', function(e) {
+      e.stopPropagation();
+    });
+
+    // Close modal when clicking outside
     document.getElementById('photoModal').addEventListener('click', function(e) {
       if (e.target === this) {
         closePhotoModal();
       }
     });
-
-    document.getElementById('modalContent').addEventListener('click', function(e) {
-      e.stopPropagation();
-    });
-  <\/script>
-</body>
-</html>`;
-    }
-
-    function copyHTML() {
-      const html = generateHTML();
-      if (!html) return;
-      
-      navigator.clipboard.writeText(html).then(() => {
-        alert('✅ HTML kodu kopyalandı!');
-      }).catch(() => {
-        const textarea = document.createElement('textarea');
-        textarea.value = html;
-        document.body.appendChild(textarea);
-        textarea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textarea);
-        alert('✅ HTML kodu kopyalandı!');
-      });
-    }
-
-    function showPreview() {
-      const html = generateHTML();
-      if (!html) return;
-      
-      const previewSection = document.getElementById('previewSection');
-      const preview = document.getElementById('preview');
-      
-      previewSection.style.display = 'block';
-      
-      const doc = preview.contentDocument || preview.contentWindow.document;
-      doc.open();
-      doc.write(html);
-      doc.close();
-      
-      previewSection.scrollIntoView({ behavior: 'smooth' });
-    }
   </script>
 </body>
 </html>
