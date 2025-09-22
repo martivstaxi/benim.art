@@ -30,90 +30,12 @@
       --text-muted: #A0AEC0;
       --shadow-lg: 0 4px 20px rgba(0, 0, 0, .06);
       --shadow-xl: 0 8px 30px rgba(0, 0, 0, .08);
-    }
-
-    [data-theme="lavender"] {
-      --primary: #9CA3AF;
-      --primary-dark: #6B7280;
-      --secondary: #C7D2FE;
-      --accent: #A78BFA;
-      --bg-grad: linear-gradient(135deg, #FAF9F7 0%, #F3F0EA 100%);
       --theme-overlay: linear-gradient(135deg, 
         rgba(199, 210, 254, 0.1) 0%,
         rgba(167, 139, 250, 0.05) 25%,
         rgba(157, 184, 143, 0.08) 50%,
         rgba(249, 213, 229, 0.1) 75%,
         rgba(254, 246, 228, 0.15) 100%);
-    }
-
-    [data-theme="sage"] {
-      --primary: #B8A5C6;
-      --primary-dark: #9B85AD;
-      --secondary: #DCC9E8;
-      --accent: #C9B2D9;
-      --bg-grad: linear-gradient(135deg, #FAF8FC 0%, #F2EDF7 100%);
-      --theme-overlay: linear-gradient(135deg, 
-        rgba(220, 201, 232, 0.1) 0%,
-        rgba(201, 178, 217, 0.08) 25%,
-        rgba(184, 165, 198, 0.05) 50%,
-        rgba(242, 237, 247, 0.1) 75%,
-        rgba(250, 248, 252, 0.15) 100%);
-    }
-
-    [data-theme="rose"] {
-      --primary: #6B7280;
-      --primary-dark: #4B5563;
-      --secondary: #E5E7EB;
-      --accent: #9CA3AF;
-      --bg-grad: linear-gradient(135deg, #FFFFFF 0%, #F9FAFB 100%);
-      --theme-overlay: linear-gradient(135deg, 
-        rgba(229, 231, 235, 0.08) 0%,
-        rgba(156, 163, 175, 0.05) 25%,
-        rgba(107, 114, 128, 0.03) 50%,
-        rgba(249, 250, 251, 0.1) 75%,
-        rgba(255, 255, 255, 0.12) 100%);
-    }
-
-    [data-theme="sand"] {
-      --primary: #B8A08A;
-      --primary-dark: #9C826A;
-      --secondary: #E8DCC4;
-      --accent: #D4B896;
-      --bg-grad: linear-gradient(135deg, #FDFAF7 0%, #F5EDE4 100%);
-      --theme-overlay: linear-gradient(135deg, 
-        rgba(232, 220, 196, 0.1) 0%,
-        rgba(212, 184, 150, 0.06) 25%,
-        rgba(184, 160, 138, 0.05) 50%,
-        rgba(245, 237, 228, 0.1) 75%,
-        rgba(253, 250, 247, 0.15) 100%);
-    }
-
-    [data-theme="sky"] {
-      --primary: #93B5C6;
-      --primary-dark: #6B8FA3;
-      --secondary: #C9E4F5;
-      --accent: #A8D0E6;
-      --bg-grad: linear-gradient(135deg, #F7FBFE 0%, #E6F3FA 100%);
-      --theme-overlay: linear-gradient(135deg, 
-        rgba(201, 228, 245, 0.1) 0%,
-        rgba(168, 208, 230, 0.08) 25%,
-        rgba(147, 181, 198, 0.05) 50%,
-        rgba(230, 243, 250, 0.1) 75%,
-        rgba(247, 251, 254, 0.15) 100%);
-    }
-
-    [data-theme="pearl"] {
-      --primary: #B3A9B0;
-      --primary-dark: #8C8289;
-      --secondary: #E8E2E7;
-      --accent: #D4C5D0;
-      --bg-grad: linear-gradient(135deg, #FDFCFD 0%, #F5F2F4 100%);
-      --theme-overlay: linear-gradient(135deg, 
-        rgba(232, 226, 231, 0.1) 0%,
-        rgba(212, 197, 208, 0.06) 25%,
-        rgba(179, 169, 176, 0.05) 50%,
-        rgba(245, 242, 244, 0.1) 75%,
-        rgba(253, 252, 253, 0.15) 100%);
     }
 
     * {
@@ -243,8 +165,8 @@
       font-size: 1.1em;
     }
     
-    /* Theme Switcher */
-    .theme-switcher {
+    /* Category Navigation */
+    .category-nav {
       position: fixed;
       top: 29px;
       left: 50%;
@@ -257,25 +179,25 @@
       pointer-events: none;
     }
 
-    .theme-switcher-left,
-    .theme-switcher-right {
+    .category-nav-left,
+    .category-nav-right {
       display: flex;
       justify-content: space-between;
       width: 140px;
       pointer-events: auto;
     }
 
-    .theme-switcher-left {
+    .category-nav-left {
       position: absolute;
       left: 0;
     }
 
-    .theme-switcher-right {
+    .category-nav-right {
       position: absolute;
       right: 0;
     }
 
-    .theme-btn {
+    .category-btn {
       width: 32px;
       height: 32px;
       border-radius: 50%;
@@ -285,22 +207,26 @@
       position: relative;
       overflow: hidden;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .theme-btn:hover {
+    .category-btn:hover {
       transform: scale(1.15) translateY(-2px);
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
       border-color: rgba(255, 255, 255, 0.9);
     }
 
-    .theme-btn.active {
+    .category-btn.active {
       transform: scale(1.1);
       box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.4),
                   0 3px 15px rgba(0, 0, 0, 0.2);
       border-color: rgba(255, 255, 255, 0.95);
     }
 
-    .theme-btn.active::after {
+    .category-btn.active::after {
       content: '✓';
       position: absolute;
       top: 50%;
@@ -312,27 +238,27 @@
       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
     }
 
-    .theme-btn[data-theme="lavender"] {
+    .category-btn.cat-1 {
       background: linear-gradient(135deg, #C7D2FE 0%, #A78BFA 100%);
     }
 
-    .theme-btn[data-theme="sage"] {
+    .category-btn.cat-2 {
       background: linear-gradient(135deg, #DCC9E8 0%, #C9B2D9 100%);
     }
 
-    .theme-btn[data-theme="rose"] {
+    .category-btn.cat-3 {
       background: linear-gradient(135deg, #F3F4F6 0%, #6B7280 100%);
     }
 
-    .theme-btn[data-theme="sand"] {
+    .category-btn.cat-4 {
       background: linear-gradient(135deg, #E8DCC4 0%, #D4B896 100%);
     }
 
-    .theme-btn[data-theme="sky"] {
+    .category-btn.cat-5 {
       background: linear-gradient(135deg, #C9E4F5 0%, #A8D0E6 100%);
     }
 
-    .theme-btn[data-theme="pearl"] {
+    .category-btn.cat-6 {
       background: linear-gradient(135deg, #E8E2E7 0%, #D4C5D0 100%);
     }
     
@@ -623,6 +549,7 @@
     }
 
     .modal-info {
+      display: none; /* Sanatçı ismi artık görünmeyecek */
       position: absolute;
       bottom: -60px;
       left: 50%;
@@ -641,13 +568,13 @@
     .nav-button {
       position: absolute;
       bottom: -60px;
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.95);
       color: var(--text-primary);
       border: none;
       border-radius: 50%;
-      width: 35px;
-      height: 35px;
-      font-size: 18px;
+      width: 42px;
+      height: 42px;
+      font-size: 20px;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -655,20 +582,21 @@
       transition: all 0.3s ease;
       backdrop-filter: blur(10px);
       z-index: 3001;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
     }
 
     .nav-button:hover {
       background: rgba(255, 255, 255, 1);
-      transform: scale(1.1);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transform: scale(1.12);
+      box-shadow: 0 5px 18px rgba(0, 0, 0, 0.2);
     }
 
     .nav-button.prev {
-      left: calc(50% - 120px);
+      left: calc(50% - 80px);
     }
 
     .nav-button.next {
-      right: calc(50% - 120px);
+      right: calc(50% - 80px);
     }
 
     .nav-button:disabled {
@@ -678,8 +606,8 @@
 
     .nav-button:disabled:hover {
       transform: none;
-      background: rgba(255, 255, 255, 0.9);
-      box-shadow: none;
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
     }
 
     /* Promotion Section */
@@ -801,22 +729,22 @@
         font-size: 12px;
       }
 
-      .theme-switcher {
+      .category-nav {
         top: 31px;
         width: 400px;
       }
 
-      .theme-switcher-left,
-      .theme-switcher-right {
+      .category-nav-left,
+      .category-nav-right {
         gap: 10px;
       }
 
-      .theme-btn {
+      .category-btn {
         width: 30px;
         height: 30px;
       }
 
-      .theme-btn.active::after {
+      .category-btn.active::after {
         font-size: 14px;
       }
 
@@ -883,17 +811,17 @@
         top: 16px;
       }
 
-      .theme-switcher {
+      .category-nav {
         width: 320px;
         top: 19px;
       }
 
-      .theme-switcher-left,
-      .theme-switcher-right {
+      .category-nav-left,
+      .category-nav-right {
         width: 90px;
       }
 
-      .theme-btn {
+      .category-btn {
         width: 24px;
         height: 24px;
       }
@@ -909,21 +837,21 @@
     }
   </style>
 </head>
-<body data-theme="lavender">
+<body>
   <div class="header-bar"></div>
   <a href="#" class="logo"><span class="gradient-text">Benim.art</span></a>
   
-  <!-- Theme Switcher -->
-  <div class="theme-switcher">
-    <div class="theme-switcher-left">
-      <button class="theme-btn active" data-theme="lavender" onclick="changeTheme('lavender')" title="Lavanta"></button>
-      <button class="theme-btn" data-theme="sage" onclick="changeTheme('sage')" title="Leylak"></button>
-      <button class="theme-btn" data-theme="rose" onclick="changeTheme('rose')" title="Minimal"></button>
+  <!-- Category Navigation -->
+  <div class="category-nav">
+    <div class="category-nav-left">
+      <a href="index.html" class="category-btn cat-1" title="Kategori 1"></a>
+      <a href="category_2.html" class="category-btn cat-2 active" title="Kategori 2"></a>
+      <a href="category_3.html" class="category-btn cat-3" title="Kategori 3"></a>
     </div>
-    <div class="theme-switcher-right">
-      <button class="theme-btn" data-theme="sand" onclick="changeTheme('sand')" title="Kum"></button>
-      <button class="theme-btn" data-theme="sky" onclick="changeTheme('sky')" title="Gök"></button>
-      <button class="theme-btn" data-theme="pearl" onclick="changeTheme('pearl')" title="İnci"></button>
+    <div class="category-nav-right">
+      <a href="category_4.html" class="category-btn cat-4" title="Kategori 4"></a>
+      <a href="category_5.html" class="category-btn cat-5" title="Kategori 5"></a>
+      <a href="category_6.html" class="category-btn cat-6" title="Kategori 6"></a>
     </div>
   </div>
   
@@ -940,17 +868,17 @@
         </h2>
       </div>
       <div class="photo-grid" data-section-id="section-1">
-        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" data-location="Hülya Kalaycıoğlu" data-index="0">
-          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" alt="Hülya Kalaycıoğlu">
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 1" data-index="0">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" alt="Hülya Kalaycıoğlu - Fotoğraf 1">
         </div>
-        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" data-location="Hülya Kalaycıoğlu" data-index="1">
-          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" alt="Hülya Kalaycıoğlu">
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 2" data-index="1">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" alt="Hülya Kalaycıoğlu - Fotoğraf 2">
         </div>
-        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" data-location="Hülya Kalaycıoğlu" data-index="2">
-          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" alt="Hülya Kalaycıoğlu">
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 3" data-index="2">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" alt="Hülya Kalaycıoğlu - Fotoğraf 3">
         </div>
-        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" data-location="Hülya Kalaycıoğlu" data-index="3">
-          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" alt="Hülya Kalaycıoğlu">
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 4" data-index="3">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" alt="Hülya Kalaycıoğlu - Fotoğraf 4">
         </div>
       </div>
     </div>
@@ -965,17 +893,17 @@
         </h2>
       </div>
       <div class="photo-grid" data-section-id="section-2">
-        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/eabcbf5c-d362-4b13-3601-d37f63eb0c00/public" data-location="Hülya Kalaycıoğlu" data-index="0">
-          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/eabcbf5c-d362-4b13-3601-d37f63eb0c00/public" alt="Hülya Kalaycıoğlu">
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 5" data-index="0">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" alt="Hülya Kalaycıoğlu - Fotoğraf 5">
         </div>
-        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public" data-location="Hülya Kalaycıoğlu" data-index="1">
-          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public" alt="Hülya Kalaycıoğlu">
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 6" data-index="1">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" alt="Hülya Kalaycıoğlu - Fotoğraf 6">
         </div>
-        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" data-location="Hülya Kalaycıoğlu" data-index="2">
-          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" alt="Hülya Kalaycıoğlu">
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 5" data-index="2">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" alt="Hülya Kalaycıoğlu - Fotoğraf 5">
         </div>
-        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" data-location="Hülya Kalaycıoğlu" data-index="3">
-          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" alt="Hülya Kalaycıoğlu">
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 6" data-index="3">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" alt="Hülya Kalaycıoğlu - Fotoğraf 6">
         </div>
       </div>
     </div>
@@ -990,17 +918,167 @@
         </h2>
       </div>
       <div class="photo-grid" data-section-id="section-3">
-        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" data-location="Hülya Kalaycıoğlu" data-index="0">
-          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" alt="Hülya Kalaycıoğlu">
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 3" data-index="0">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" alt="Hülya Kalaycıoğlu - Fotoğraf 3">
         </div>
-        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" data-location="Hülya Kalaycıoğlu" data-index="1">
-          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" alt="Hülya Kalaycıoğlu">
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 4" data-index="1">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" alt="Hülya Kalaycıoğlu - Fotoğraf 4">
         </div>
-        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/eabcbf5c-d362-4b13-3601-d37f63eb0c00/public" data-location="Hülya Kalaycıoğlu" data-index="2">
-          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/eabcbf5c-d362-4b13-3601-d37f63eb0c00/public" alt="Hülya Kalaycıoğlu">
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 1" data-index="2">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" alt="Hülya Kalaycıoğlu - Fotoğraf 1">
         </div>
-        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public" data-location="Hülya Kalaycıoğlu" data-index="3">
-          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/f25802d8-1b1c-4c8c-f14e-ada9ed0b1600/public" alt="Hülya Kalaycıoğlu">
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 2" data-index="3">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" alt="Hülya Kalaycıoğlu - Fotoğraf 2">
+        </div>
+      </div>
+    </div>
+
+    <!-- Hülya Kalaycıoğlu 1 -->
+    <div class="city-section">
+      <div class="city-header">
+        <h2 class="city-title">
+          <a href="https://www.shopier.com/BenimArt" target="_blank" rel="noopener noreferrer" class="location-link">
+            <span class="click-icon"></span>Hülya Kalaycıoğlu | Shopier
+          </a>
+        </h2>
+      </div>
+      <div class="photo-grid" data-section-id="section-4">
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 1" data-index="0">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" alt="Hülya Kalaycıoğlu - Fotoğraf 1">
+        </div>
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 2" data-index="1">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" alt="Hülya Kalaycıoğlu - Fotoğraf 2">
+        </div>
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 3" data-index="2">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" alt="Hülya Kalaycıoğlu - Fotoğraf 3">
+        </div>
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 4" data-index="3">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" alt="Hülya Kalaycıoğlu - Fotoğraf 4">
+        </div>
+      </div>
+    </div>
+
+    <!-- Hülya Kalaycıoğlu 2 -->
+    <div class="city-section">
+      <div class="city-header">
+        <h2 class="city-title">
+          <a href="https://www.shopier.com/BenimArt" target="_blank" rel="noopener noreferrer" class="location-link">
+            <span class="click-icon"></span>Hülya Kalaycıoğlu | Shopier
+          </a>
+        </h2>
+      </div>
+      <div class="photo-grid" data-section-id="section-5">
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 5" data-index="0">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" alt="Hülya Kalaycıoğlu - Fotoğraf 5">
+        </div>
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 6" data-index="1">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" alt="Hülya Kalaycıoğlu - Fotoğraf 6">
+        </div>
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 5" data-index="2">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" alt="Hülya Kalaycıoğlu - Fotoğraf 5">
+        </div>
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 6" data-index="3">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" alt="Hülya Kalaycıoğlu - Fotoğraf 6">
+        </div>
+      </div>
+    </div>
+
+    <!-- Hülya Kalaycıoğlu 3 -->
+    <div class="city-section">
+      <div class="city-header">
+        <h2 class="city-title">
+          <a href="https://www.shopier.com/BenimArt" target="_blank" rel="noopener noreferrer" class="location-link">
+            <span class="click-icon"></span>Hülya Kalaycıoğlu | Shopier
+          </a>
+        </h2>
+      </div>
+      <div class="photo-grid" data-section-id="section-6">
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 3" data-index="0">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" alt="Hülya Kalaycıoğlu - Fotoğraf 3">
+        </div>
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 4" data-index="1">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" alt="Hülya Kalaycıoğlu - Fotoğraf 4">
+        </div>
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 1" data-index="2">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" alt="Hülya Kalaycıoğlu - Fotoğraf 1">
+        </div>
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 2" data-index="3">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" alt="Hülya Kalaycıoğlu - Fotoğraf 2">
+        </div>
+      </div>
+    </div>
+
+    <!-- Hülya Kalaycıoğlu 1 -->
+    <div class="city-section">
+      <div class="city-header">
+        <h2 class="city-title">
+          <a href="https://www.shopier.com/BenimArt" target="_blank" rel="noopener noreferrer" class="location-link">
+            <span class="click-icon"></span>Hülya Kalaycıoğlu | Shopier
+          </a>
+        </h2>
+      </div>
+      <div class="photo-grid" data-section-id="section-7">
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 1" data-index="0">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" alt="Hülya Kalaycıoğlu - Fotoğraf 1">
+        </div>
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 2" data-index="1">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" alt="Hülya Kalaycıoğlu - Fotoğraf 2">
+        </div>
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 3" data-index="2">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" alt="Hülya Kalaycıoğlu - Fotoğraf 3">
+        </div>
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 4" data-index="3">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" alt="Hülya Kalaycıoğlu - Fotoğraf 4">
+        </div>
+      </div>
+    </div>
+
+    <!-- Hülya Kalaycıoğlu 2 -->
+    <div class="city-section">
+      <div class="city-header">
+        <h2 class="city-title">
+          <a href="https://www.shopier.com/BenimArt" target="_blank" rel="noopener noreferrer" class="location-link">
+            <span class="click-icon"></span>Hülya Kalaycıoğlu | Shopier
+          </a>
+        </h2>
+      </div>
+      <div class="photo-grid" data-section-id="section-8">
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 5" data-index="0">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" alt="Hülya Kalaycıoğlu - Fotoğraf 5">
+        </div>
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 6" data-index="1">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" alt="Hülya Kalaycıoğlu - Fotoğraf 6">
+        </div>
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 5" data-index="2">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" alt="Hülya Kalaycıoğlu - Fotoğraf 5">
+        </div>
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 6" data-index="3">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" alt="Hülya Kalaycıoğlu - Fotoğraf 6">
+        </div>
+      </div>
+    </div>
+
+    <!-- Hülya Kalaycıoğlu 3 -->
+    <div class="city-section">
+      <div class="city-header">
+        <h2 class="city-title">
+          <a href="https://www.shopier.com/BenimArt" target="_blank" rel="noopener noreferrer" class="location-link">
+            <span class="click-icon"></span>Hülya Kalaycıoğlu | Shopier
+          </a>
+        </h2>
+      </div>
+      <div class="photo-grid" data-section-id="section-9">
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 3" data-index="0">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/4fcab932-a093-45b3-b20b-1db5fda8f400/public" alt="Hülya Kalaycıoğlu - Fotoğraf 3">
+        </div>
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 4" data-index="1">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/9b53e81b-3607-439d-e56a-b684ffd36500/public" alt="Hülya Kalaycıoğlu - Fotoğraf 4">
+        </div>
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 1" data-index="2">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/17b9ab93-99da-42c5-bf69-95373d9d6000/public" alt="Hülya Kalaycıoğlu - Fotoğraf 1">
+        </div>
+        <div class="photo-grid-item" data-photo="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" data-location="Hülya Kalaycıoğlu - Fotoğraf 2" data-index="3">
+          <img src="https://imagedelivery.net/hvHh954PgWT-gbZ25oXErA/369153f8-d796-4802-b52f-b33e2694d600/public" alt="Hülya Kalaycıoğlu - Fotoğraf 2">
         </div>
       </div>
     </div>
@@ -1018,8 +1096,8 @@
   <div class="photo-modal" id="photoModal">
     <div class="modal-content" id="modalContent">
       <button class="modal-close" onclick="closePhotoModal()" title="Kapat (ESC)">✕</button>
-      <button class="nav-button prev" id="prevBtn" onclick="event.stopPropagation(); navigatePhoto('prev')" title="Önceki (←)">‹</button>
-      <button class="nav-button next" id="nextBtn" onclick="event.stopPropagation(); navigatePhoto('next')" title="Sonraki (→)">›</button>
+      <button class="nav-button prev" id="prevBtn" onclick="navigatePhoto('prev')" title="Önceki (←)">‹</button>
+      <button class="nav-button next" id="nextBtn" onclick="navigatePhoto('next')" title="Sonraki (→)">›</button>
       <img class="modal-image" id="modalImage" src="" alt="">
       <div class="modal-info" id="modalInfo">Sanatçı Adı</div>
     </div>
@@ -1031,27 +1109,41 @@
     let currentArtistName = '';
     let touchStartX = 0;
     let touchEndX = 0;
-    let isDragging = false;
 
-    // Theme Switcher Function
-    function changeTheme(theme) {
-      document.body.setAttribute('data-theme', theme);
-      
-      // Update active button
-      document.querySelectorAll('.theme-btn').forEach(btn => {
-        btn.classList.remove('active');
-      });
-      document.querySelector(`.theme-btn[data-theme="${theme}"]`).classList.add('active');
-      
-      // Save preference
-      localStorage.setItem('preferred-theme', theme);
+    // Get current page name
+    function getCurrentPage() {
+      const path = window.location.pathname;
+      const filename = path.substring(path.lastIndexOf('/') + 1) || 'index.html';
+      return filename;
     }
 
-    // Load saved theme on page load
-    document.addEventListener('DOMContentLoaded', function() {
-      const savedTheme = localStorage.getItem('preferred-theme') || 'lavender';
-      changeTheme(savedTheme);
-    });
+    // Set active category button based on current page
+    function setActiveCategory() {
+      const currentPage = getCurrentPage();
+      const categoryButtons = document.querySelectorAll('.category-btn');
+      
+      // Remove all active classes
+      categoryButtons.forEach(btn => btn.classList.remove('active'));
+      
+      // Map pages to button classes
+      const pageMap = {
+        'index.html': 'cat-1',
+        'category_2.html': 'cat-2',
+        'category_3.html': 'cat-3',
+        'category_4.html': 'cat-4',
+        'category_5.html': 'cat-5',
+        'category_6.html': 'cat-6'
+      };
+      
+      // Set active class for current page
+      const activeClass = pageMap[currentPage];
+      if (activeClass) {
+        const activeBtn = document.querySelector(`.${activeClass}`);
+        if (activeBtn) {
+          activeBtn.classList.add('active');
+        }
+      }
+    }
 
     // Photo modal functions
     function openPhotoModal(imageUrl, locationName, sectionId, photoIndex) {
@@ -1088,14 +1180,27 @@
       }, 10);
     }
 
+    function navigatePhoto(direction) {
+      if (!currentSectionPhotos || currentSectionPhotos.length === 0) {
+        return;
+      }
+      
+      if (direction === 'prev' && currentPhotoIndex > 0) {
+        currentPhotoIndex--;
+        updateModalContent();
+      } else if (direction === 'next' && currentPhotoIndex < currentSectionPhotos.length - 1) {
+        currentPhotoIndex++;
+        updateModalContent();
+      }
+    }
+
     function updateModalContent() {
       const modalImage = document.getElementById('modalImage');
       const modalInfo = document.getElementById('modalInfo');
       const prevBtn = document.getElementById('prevBtn');
       const nextBtn = document.getElementById('nextBtn');
       
-      if (!currentSectionPhotos[currentPhotoIndex]) {
-        console.error('Invalid photo index:', currentPhotoIndex);
+      if (!currentSectionPhotos || !currentSectionPhotos[currentPhotoIndex]) {
         return;
       }
       
@@ -1111,18 +1216,25 @@
         prevBtn.disabled = currentPhotoIndex === 0;
         nextBtn.disabled = currentPhotoIndex === currentSectionPhotos.length - 1;
         
+        // Update button opacity for disabled state
+        if (prevBtn.disabled) {
+          prevBtn.style.opacity = '0.3';
+          prevBtn.style.cursor = 'not-allowed';
+        } else {
+          prevBtn.style.opacity = '1';
+          prevBtn.style.cursor = 'pointer';
+        }
+        
+        if (nextBtn.disabled) {
+          nextBtn.style.opacity = '0.3';
+          nextBtn.style.cursor = 'not-allowed';
+        } else {
+          nextBtn.style.opacity = '1';
+          nextBtn.style.cursor = 'pointer';
+        }
+        
         modalImage.classList.remove('changing');
       }, 150);
-    }
-
-    function navigatePhoto(direction) {
-      if (direction === 'prev' && currentPhotoIndex > 0) {
-        currentPhotoIndex--;
-        updateModalContent();
-      } else if (direction === 'next' && currentPhotoIndex < currentSectionPhotos.length - 1) {
-        currentPhotoIndex++;
-        updateModalContent();
-      }
     }
 
     function closePhotoModal() {
@@ -1155,35 +1267,35 @@
     });
 
     // Touch/Swipe support for mobile
+    let touchStartTime = 0;
+    
     function handleTouchStart(e) {
       if (document.getElementById('photoModal').style.display === 'flex') {
         touchStartX = e.changedTouches[0].screenX;
-        isDragging = true;
-        document.getElementById('modalContent').classList.add('dragging');
+        touchStartTime = Date.now();
       }
     }
 
-    function handleTouchMove(e) {
-      if (!isDragging) return;
+    function handleTouchEnd(e) {
+      if (document.getElementById('photoModal').style.display !== 'flex') return;
+      
       touchEndX = e.changedTouches[0].screenX;
-    }
-
-    function handleTouchEnd() {
-      if (!isDragging) return;
+      const touchEndTime = Date.now();
+      const touchDuration = touchEndTime - touchStartTime;
       
-      isDragging = false;
-      document.getElementById('modalContent').classList.remove('dragging');
-      
-      const swipeThreshold = 50;
-      const diff = touchStartX - touchEndX;
-      
-      if (Math.abs(diff) > swipeThreshold) {
-        if (diff > 0) {
-          // Swipe left - next photo
-          navigatePhoto('next');
-        } else {
-          // Swipe right - previous photo
-          navigatePhoto('prev');
+      // Only process swipe if it's quick (under 500ms) to avoid conflicts with taps
+      if (touchDuration < 500) {
+        const swipeThreshold = 50;
+        const diff = touchStartX - touchEndX;
+        
+        if (Math.abs(diff) > swipeThreshold) {
+          if (diff > 0) {
+            // Swipe left - next photo
+            navigatePhoto('next');
+          } else {
+            // Swipe right - previous photo
+            navigatePhoto('prev');
+          }
         }
       }
       
@@ -1192,35 +1304,64 @@
     }
 
     // Add touch listeners
-    document.addEventListener('touchstart', handleTouchStart);
-    document.addEventListener('touchmove', handleTouchMove);
-    document.addEventListener('touchend', handleTouchEnd);
+    document.addEventListener('touchstart', handleTouchStart, { passive: true });
+    document.addEventListener('touchend', handleTouchEnd, { passive: true });
 
-    // Click event for photo cards
-    document.addEventListener('click', function(e) {
-      if (e.target.closest('.photo-grid-item')) {
-        const card = e.target.closest('.photo-grid-item');
-        const sectionId = card.parentElement.dataset.sectionId;
-        const photoIndex = card.dataset.index;
-        const img = card.querySelector('img');
-        
-        if (img) {
-          const imageUrl = img.src;
-          const locationName = img.alt;
-          openPhotoModal(imageUrl, locationName, sectionId, photoIndex);
-        }
+    // Initialize when DOM is ready
+    document.addEventListener('DOMContentLoaded', function() {
+      setActiveCategory();
+      
+      // Click event for photo cards
+      document.querySelectorAll('.photo-grid-item').forEach(card => {
+        card.addEventListener('click', function() {
+          const sectionId = this.parentElement.dataset.sectionId;
+          const photoIndex = this.dataset.index;
+          const img = this.querySelector('img');
+          
+          if (img) {
+            const imageUrl = img.src;
+            const locationName = img.alt;
+            openPhotoModal(imageUrl, locationName, sectionId, photoIndex);
+          }
+        });
+      });
+      
+      // Prevent modal close when clicking on content
+      const modalContent = document.getElementById('modalContent');
+      if (modalContent) {
+        modalContent.addEventListener('click', function(e) {
+          e.stopPropagation();
+        });
       }
-    });
-
-    // Prevent modal close when clicking on image or buttons
-    document.getElementById('modalContent').addEventListener('click', function(e) {
-      e.stopPropagation();
-    });
-
-    // Close modal when clicking outside
-    document.getElementById('photoModal').addEventListener('click', function(e) {
-      if (e.target === this) {
-        closePhotoModal();
+      
+      // Close modal when clicking outside
+      const photoModal = document.getElementById('photoModal');
+      if (photoModal) {
+        photoModal.addEventListener('click', function(e) {
+          if (e.target === this) {
+            closePhotoModal();
+          }
+        });
+      }
+      
+      // Navigation button event listeners
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      
+      if (prevBtn) {
+        prevBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          navigatePhoto('prev');
+        });
+      }
+      
+      if (nextBtn) {
+        nextBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          navigatePhoto('next');
+        });
       }
     });
   </script>
