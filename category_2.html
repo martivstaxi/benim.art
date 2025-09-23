@@ -168,19 +168,46 @@
     /* Kategoriler Label */
     .categories-label {
       position: fixed;
-      top: 65px;
+      top: 85px;
       left: 50%;
       transform: translateX(-50%);
-      z-index: 98;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       font-size: 11px;
       font-weight: 500;
       color: #C9B2D9;
-      opacity: 0.6;
-      letter-spacing: 18px;
-      text-indent: 18px;
-      width: 500px;
-      text-align: center;
-      pointer-events: none;
+      opacity: 0.5;
+      z-index: 85;
+      width: 100%;
+      max-width: 600px;
+    }
+    
+    .categories-label .text {
+      letter-spacing: 16px;
+      text-indent: 16px;
+      padding: 0 30px;
+    }
+    
+    .categories-label .arrow-left,
+    .categories-label .arrow-right {
+      font-size: 18px;
+      opacity: 0.7;
+      color: #F093FB;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    
+    .categories-label .arrow-left {
+      transform: rotate(-15deg);
+    }
+    
+    .categories-label .arrow-right {
+      transform: rotate(15deg);
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
     }
     
     /* Category Navigation */
@@ -748,11 +775,20 @@
       }
 
       .categories-label {
-        top: 58px;
+        top: 78px;
+        max-width: 450px;
+      }
+      
+      .categories-label .text {
+        letter-spacing: 12px;
+        text-indent: 12px;
+        padding: 0 20px;
         font-size: 10px;
-        letter-spacing: 14px;
-        text-indent: 14px;
-        width: 400px;
+      }
+      
+      .categories-label .arrow-left,
+      .categories-label .arrow-right {
+        font-size: 16px;
       }
 
       .category-nav {
@@ -838,11 +874,20 @@
       }
 
       .categories-label {
-        top: 48px;
+        top: 65px;
+        max-width: 350px;
+      }
+      
+      .categories-label .text {
+        letter-spacing: 8px;
+        text-indent: 8px;
+        padding: 0 15px;
         font-size: 8px;
-        letter-spacing: 10px;
-        text-indent: 10px;
-        width: 320px;
+      }
+      
+      .categories-label .arrow-left,
+      .categories-label .arrow-right {
+        font-size: 14px;
       }
 
       .category-nav {
@@ -887,6 +932,13 @@
       <a href="category_5.html" class="category-btn cat-5" title="Kategori 5"></a>
       <a href="category_6.html" class="category-btn cat-6" title="Kategori 6"></a>
     </div>
+  </div>
+  
+  <!-- Kategoriler Başlığı -->
+  <div class="categories-label">
+    <span class="arrow-left">↖</span>
+    <span class="text">K A T E G O R İ L E R</span>
+    <span class="arrow-right">↗</span>
   </div>
   
   <div class="container">
