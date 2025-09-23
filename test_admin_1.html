@@ -541,19 +541,46 @@ ${fullPhotos.slice(0, 4).map((photo, i) => `        <div class="photo-grid-item"
     /* Kategoriler Label */
     .categories-label {
       position: fixed;
-      top: 65px;
+      top: 85px;
       left: 50%;
       transform: translateX(-50%);
-      z-index: 98;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       font-size: 11px;
       font-weight: 500;
       color: ${theme.primary};
-      opacity: 0.6;
-      letter-spacing: 18px;
-      text-indent: 18px;
-      width: 500px;
-      text-align: center;
-      pointer-events: none;
+      opacity: 0.5;
+      z-index: 85;
+      width: 100%;
+      max-width: 600px;
+    }
+    
+    .categories-label .text {
+      letter-spacing: 16px;
+      text-indent: 16px;
+      padding: 0 30px;
+    }
+    
+    .categories-label .arrow-left,
+    .categories-label .arrow-right {
+      font-size: 18px;
+      opacity: 0.7;
+      color: ${theme.accent};
+      animation: pulse 2s ease-in-out infinite;
+    }
+    
+    .categories-label .arrow-left {
+      transform: rotate(-15deg);
+    }
+    
+    .categories-label .arrow-right {
+      transform: rotate(15deg);
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
     }
     
     /* Category Navigation */
@@ -1101,7 +1128,7 @@ ${fullPhotos.slice(0, 4).map((photo, i) => `        <div class="photo-grid-item"
     /* Mobile Responsive */
     @media (max-width: 768px) {
       .container {
-        padding-top: 100px;
+        padding-top: 85px;
       }
 
       .header-bar {
@@ -1120,12 +1147,26 @@ ${fullPhotos.slice(0, 4).map((photo, i) => `        <div class="photo-grid-item"
         font-size: 12px;
       }
 
+      .categories-section {
+        margin-bottom: 20px;
+        padding: 20px 0;
+      }
+      
       .categories-label {
-        top: 58px;
-        font-size: 10px;
-        letter-spacing: 14px;
-        text-indent: 14px;
-        width: 400px;
+        font-size: 14px;
+        gap: 15px;
+      }
+      
+      .categories-label .text {
+        letter-spacing: 1px;
+      }
+      
+      .decoration-group {
+        gap: 10px;
+      }
+      
+      .decoration {
+        font-size: 11px;
       }
 
       .category-nav {
@@ -1194,7 +1235,7 @@ ${fullPhotos.slice(0, 4).map((photo, i) => `        <div class="photo-grid-item"
 
     @media (max-width: 480px) {
       .container {
-        padding-top: 85px;
+        padding-top: 75px;
       }
 
       .header-bar {
@@ -1210,12 +1251,26 @@ ${fullPhotos.slice(0, 4).map((photo, i) => `        <div class="photo-grid-item"
         top: 16px;
       }
 
+      .categories-section {
+        margin-bottom: 18px;
+        padding: 18px 0;
+      }
+      
       .categories-label {
-        top: 48px;
-        font-size: 8px;
-        letter-spacing: 10px;
-        text-indent: 10px;
-        width: 320px;
+        font-size: 12px;
+        gap: 12px;
+      }
+      
+      .categories-label .text {
+        letter-spacing: 1px;
+      }
+      
+      .decoration-group {
+        gap: 8px;
+      }
+      
+      .decoration {
+        font-size: 10px;
       }
 
       .category-nav {
@@ -1248,9 +1303,6 @@ ${fullPhotos.slice(0, 4).map((photo, i) => `        <div class="photo-grid-item"
   <div class="header-bar"></div>
   <a href="#" class="logo"><span class="gradient-text">${title}</span></a>
   
-  <!-- Kategoriler Başlığı -->
-  <div class="categories-label">K A T E G O R İ L E R</div>
-  
   <!-- Category Navigation -->
   <div class="category-nav">
     <div class="category-nav-left">
@@ -1266,6 +1318,23 @@ ${fullPhotos.slice(0, 4).map((photo, i) => `        <div class="photo-grid-item"
   </div>
   
   <div class="container">
+    <!-- Kategoriler Başlığı -->
+    <div class="categories-section">
+      <div class="categories-label">
+        <div class="decoration-group left">
+          <span class="decoration">◆</span>
+          <span class="decoration">◆</span>
+          <span class="decoration">◆</span>
+        </div>
+        <span class="text">Kategoriler</span>
+        <div class="decoration-group right">
+          <span class="decoration">◆</span>
+          <span class="decoration">◆</span>
+          <span class="decoration">◆</span>
+        </div>
+      </div>
+    </div>
+    
     <div id="locations-container">
 
 ${sections}
