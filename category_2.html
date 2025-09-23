@@ -774,35 +774,35 @@
         font-size: 12px;
       }
 
+      .categories-section {
+        margin-bottom: 25px;
+        padding: 20px 0;
+      }
+      
       .categories-label {
-        margin-bottom: 40px;
-        margin-top: -15px;
-        font-size: 12px;
+        font-size: 14px;
+        letter-spacing: 3px;
       }
       
       .categories-label .text {
-        letter-spacing: 2px;
-        padding: 6px 20px;
+        padding: 0 30px;
+      }
+      
+      .decoration-group {
+        gap: 20px;
+        top: -24px;
+      }
+      
+      .decoration-group.left {
+        left: calc(50% - 190px);
+      }
+      
+      .decoration-group.right {
+        right: calc(50% - 190px);
+      }
+      
+      .decoration {
         font-size: 11px;
-      }
-      
-      .categories-label .decoration-left,
-      .categories-label .decoration-right {
-        font-size: 9px;
-        margin: 0 15px;
-      }
-      
-      .categories-label::before,
-      .categories-label::after {
-        width: 80px;
-      }
-      
-      .categories-label::before {
-        left: calc(50% - 150px);
-      }
-      
-      .categories-label::after {
-        right: calc(50% - 150px);
       }
 
       .category-nav {
@@ -887,36 +887,44 @@
         top: 16px;
       }
 
+      .categories-section {
+        margin-bottom: 20px;
+        padding: 18px 0;
+      }
+      
       .categories-label {
-        margin-bottom: 30px;
-        margin-top: -10px;
-        font-size: 10px;
+        font-size: 12px;
+        letter-spacing: 2px;
       }
       
       .categories-label .text {
-        letter-spacing: 1px;
-        padding: 5px 15px;
-        font-size: 9px;
+        padding: 0 25px;
       }
       
-      .categories-label .decoration-left,
-      .categories-label .decoration-right {
-        font-size: 8px;
-        margin: 0 10px;
+      .decoration-group {
+        gap: 15px;
+        top: -20px;
       }
       
-      .categories-label::before,
-      .categories-label::after {
-        width: 50px;
+      .decoration-group.left {
+        left: calc(50% - 155px);
       }
       
-      .categories-label::before {
-        left: calc(50% - 110px);
+      .decoration-group.right {
+        right: calc(50% - 155px);
       }
       
-      .categories-label::after {
-        right: calc(50% - 110px);
+      .decoration {
+        font-size: 10px;
       }
+      
+      .decoration-group.left .decoration:nth-child(1) { margin-left: 5px; }
+      .decoration-group.left .decoration:nth-child(2) { margin-left: 10px; }
+      .decoration-group.left .decoration:nth-child(3) { margin-left: 10px; }
+      
+      .decoration-group.right .decoration:nth-child(1) { margin-right: 10px; }
+      .decoration-group.right .decoration:nth-child(2) { margin-right: 10px; }
+      .decoration-group.right .decoration:nth-child(3) { margin-right: 5px; }
 
       .category-nav {
         width: 320px;
@@ -964,10 +972,20 @@
   
   <div class="container">
     <!-- Kategoriler Başlığı -->
-    <div class="categories-label">
-      <span class="decoration-left">◆</span>
-      <span class="text">Kategoriler</span>
-      <span class="decoration-right">◆</span>
+    <div class="categories-section">
+      <div class="categories-label">
+        <div class="decoration-group left">
+          <span class="decoration">◆</span>
+          <span class="decoration">◆</span>
+          <span class="decoration">◆</span>
+        </div>
+        <span class="text">Kategoriler</span>
+        <div class="decoration-group right">
+          <span class="decoration">◆</span>
+          <span class="decoration">◆</span>
+          <span class="decoration">◆</span>
+        </div>
+      </div>
     </div>
     
     <div id="locations-container">
