@@ -1128,7 +1128,7 @@ ${fullPhotos.slice(0, 4).map((photo, i) => `        <div class="photo-grid-item"
     /* Mobile Responsive */
     @media (max-width: 768px) {
       .container {
-        padding-top: 85px;
+        padding-top: 75px; /* Azaltıldı */
       }
 
       .header-bar {
@@ -1155,7 +1155,7 @@ ${fullPhotos.slice(0, 4).map((photo, i) => `        <div class="photo-grid-item"
       
       .categories-label {
         font-size: 13px;
-        gap: 8px;
+        gap: 10px;
         flex-wrap: nowrap;
       }
       
@@ -1164,12 +1164,12 @@ ${fullPhotos.slice(0, 4).map((photo, i) => `        <div class="photo-grid-item"
       }
       
       .decoration-group {
-        gap: 5px;
-        display: none; /* Mobilde elmasları gizle sığmıyor */
+        gap: 6px;
+        display: flex; /* Göster */
       }
       
       .decoration {
-        font-size: 9px;
+        font-size: 10px;
       }
 
       .category-nav {
@@ -1238,7 +1238,7 @@ ${fullPhotos.slice(0, 4).map((photo, i) => `        <div class="photo-grid-item"
 
     @media (max-width: 480px) {
       .container {
-        padding-top: 75px;
+        padding-top: 65px; /* Daha da azaltıldı */
       }
 
       .header-bar {
@@ -1262,7 +1262,7 @@ ${fullPhotos.slice(0, 4).map((photo, i) => `        <div class="photo-grid-item"
       
       .categories-label {
         font-size: 11px;
-        gap: 0;
+        gap: 8px;
       }
       
       .categories-label .text {
@@ -1270,7 +1270,12 @@ ${fullPhotos.slice(0, 4).map((photo, i) => `        <div class="photo-grid-item"
       }
       
       .decoration-group {
-        display: none; /* Mobilde elmasları gizle */
+        display: flex; /* Elmasları göster */
+        gap: 4px;
+      }
+      
+      .decoration {
+        font-size: 8px;
       }
 
       .category-nav {
