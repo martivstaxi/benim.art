@@ -295,15 +295,66 @@
       const title = document.getElementById('siteTitle').value || 'Benim.art';
       const instagram = document.getElementById('instagramUser').value || 'benim.arts';
       
-      // Paste 1'deki tam HTML şablonu
+      // Kategoriye göre renk teması
+      const colorThemes = {
+        1: { // Mor-Lila teması (varsayılan)
+          primary: '#9CA3AF',
+          secondary: '#C7D2FE', 
+          accent: '#A78BFA',
+          sage: '#9DB88F',
+          categoryColors: ['#C7D2FE, #A78BFA', '#DCC9E8, #C9B2D9', '#F3F4F6, #6B7280', '#E8DCC4, #D4B896', '#C9E4F5, #A8D0E6', '#E8E2E7, #D4C5D0']
+        },
+        2: { // Pembe-Mor teması
+          primary: '#C9B2D9',
+          secondary: '#DCC9E8',
+          accent: '#F093FB',
+          sage: '#E8B4D2',
+          categoryColors: ['#DCC9E8, #C9B2D9', '#F093FB, #F5576C', '#FFB6C1, #FFC0CB', '#E8B4D2, #D4A5C8', '#FFE4E1, #FFDAB9', '#F0E6F7, #E6D7F0']
+        },
+        3: { // Gri-Mavi teması  
+          primary: '#6B7280',
+          secondary: '#9CA3AF',
+          accent: '#4B5563',
+          sage: '#8B9DC3',
+          categoryColors: ['#F3F4F6, #6B7280', '#9CA3AF, #4B5563', '#CBD5E1, #94A3B8', '#E2E8F0, #A0AEC0', '#8B9DC3, #6B7899', '#D1D5DB, #9CA3AF']
+        },
+        4: { // Krem-Kahve teması
+          primary: '#D4B896',
+          secondary: '#E8DCC4',
+          accent: '#C19A6B',
+          sage: '#DEB887',
+          categoryColors: ['#E8DCC4, #D4B896', '#F5DEB3, #C19A6B', '#FFE4C4, #DEB887', '#FAEBD7, #D2B48C', '#F0E68C, #BDB76B', '#EEE8AA, #CDC673']
+        },
+        5: { // Mavi-Turkuaz teması
+          primary: '#A8D0E6',
+          secondary: '#C9E4F5',
+          accent: '#5DADE2',
+          sage: '#87CEEB',
+          categoryColors: ['#C9E4F5, #A8D0E6', '#87CEEB, #5DADE2', '#B0E0E6, #7EC8E3', '#ADD8E6, #6495ED', '#E0F7FA, #81D4E3', '#AFEEEE, #48D1CC']
+        },
+        6: { // Gül-Pudra teması
+          primary: '#D4C5D0',
+          secondary: '#E8E2E7',
+          accent: '#C8B8DB',
+          sage: '#E6D7E8',
+          categoryColors: ['#E8E2E7, #D4C5D0', '#F4E8F4, #E6D7E8', '#F0D9E7, #E8C9DC', '#C8B8DB, #B19CD9', '#DDA0DD, #D8BFD8', '#F5E6F5, #EDD9ED']
+        }
+      };
+      
+      const theme = colorThemes[selectedCategory] || colorThemes[1];
+      
+      // Her sanatçı için sadece 1 section oluştur
       const sections = artists.map((artist, idx) => {
-        // Her sanatçı için 3 section oluştur (her biri 4 fotoğraf)
-        const allSections = [];
+        if (artist.photos.length === 0) return '';
         
-        // İlk section - ilk 4 fotoğraf
-        if (artist.photos.length > 0) {
-          const photos1 = artist.photos.slice(0, 4);
-          allSections.push(`    <!-- ${artist.name} 1 -->
+        // Fotoğrafları 4'e tamamla (eksikse tekrarla)
+        let fullPhotos = [...artist.photos];
+        while (fullPhotos.length < 4 && artist.photos.length > 0) {
+          fullPhotos.push(artist.photos[fullPhotos.length % artist.photos.length]);
+        }
+        
+        // Sadece 1 section oluştur
+        return `    <!-- ${artist.name} -->
     <div class="city-section">
       <div class="city-header">
         <h2 class="city-title">
@@ -312,56 +363,13 @@
           </a>
         </h2>
       </div>
-      <div class="photo-grid" data-section-id="section-${idx * 3 + 1}">
-${photos1.map((photo, i) => `        <div class="photo-grid-item" data-photo="${photo}" data-location="${artist.name} - Fotoğraf ${i + 1}" data-index="${i}">
+      <div class="photo-grid" data-section-id="section-${idx + 1}">
+${fullPhotos.slice(0, 4).map((photo, i) => `        <div class="photo-grid-item" data-photo="${photo}" data-location="${artist.name} - Fotoğraf ${i + 1}" data-index="${i}">
           <img src="${photo}" alt="${artist.name} - Fotoğraf ${i + 1}">
         </div>`).join('\n')}
       </div>
-    </div>`);
-        }
-        
-        // İkinci section - aynı 4 fotoğraf tekrar
-        if (artist.photos.length > 0) {
-          const photos2 = [...artist.photos.slice(0, 2), ...artist.photos.slice(0, 2)];
-          allSections.push(`    <!-- ${artist.name} 2 -->
-    <div class="city-section">
-      <div class="city-header">
-        <h2 class="city-title">
-          <a href="${artist.link}" target="_blank" rel="noopener noreferrer" class="location-link">
-            <span class="click-icon"></span>${artist.name} | ${artist.category}
-          </a>
-        </h2>
-      </div>
-      <div class="photo-grid" data-section-id="section-${idx * 3 + 2}">
-${photos2.map((photo, i) => `        <div class="photo-grid-item" data-photo="${photo}" data-location="${artist.name} - Fotoğraf ${(i % 2) + 5}" data-index="${i}">
-          <img src="${photo}" alt="${artist.name} - Fotoğraf ${(i % 2) + 5}">
-        </div>`).join('\n')}
-      </div>
-    </div>`);
-        }
-        
-        // Üçüncü section - karışık fotoğraflar
-        if (artist.photos.length > 0) {
-          const photos3 = [...artist.photos.slice(2, 4), ...artist.photos.slice(0, 2)];
-          allSections.push(`    <!-- ${artist.name} 3 -->
-    <div class="city-section">
-      <div class="city-header">
-        <h2 class="city-title">
-          <a href="${artist.link}" target="_blank" rel="noopener noreferrer" class="location-link">
-            <span class="click-icon"></span>${artist.name} | ${artist.category}
-          </a>
-        </h2>
-      </div>
-      <div class="photo-grid" data-section-id="section-${idx * 3 + 3}">
-${photos3.map((photo, i) => `        <div class="photo-grid-item" data-photo="${photo}" data-location="${artist.name} - Fotoğraf ${i < 2 ? i + 3 : i - 1}" data-index="${i}">
-          <img src="${photo}" alt="${artist.name} - Fotoğraf ${i < 2 ? i + 3 : i - 1}">
-        </div>`).join('\n')}
-      </div>
-    </div>`);
-        }
-        
-        return allSections.join('\n\n');
-      }).join('\n\n');
+    </div>`;
+      }).filter(section => section !== '').join('\n\n');
       
       const html = `<!DOCTYPE html>  
 <html lang="tr">
@@ -378,11 +386,11 @@ ${photos3.map((photo, i) => `        <div class="photo-grid-item" data-photo="${
   <style>
     /* Theme Variables */
     :root {
-      --primary: #9CA3AF;
-      --primary-dark: #6B7280;
-      --secondary: #C7D2FE;
-      --accent: #A78BFA;
-      --sage: #9DB88F;
+      --primary: ${theme.primary};
+      --primary-dark: ${theme.primary};
+      --secondary: ${theme.secondary};
+      --accent: ${theme.accent};
+      --sage: ${theme.sage};
       --blush: #F9D5E5;
       --cream: #FEF6E4;
       --sand: #E8DCC4;
@@ -396,11 +404,11 @@ ${photos3.map((photo, i) => `        <div class="photo-grid-item" data-photo="${
       --shadow-lg: 0 4px 20px rgba(0, 0, 0, .06);
       --shadow-xl: 0 8px 30px rgba(0, 0, 0, .08);
       --theme-overlay: linear-gradient(135deg, 
-        rgba(199, 210, 254, 0.1) 0%,
-        rgba(167, 139, 250, 0.05) 25%,
-        rgba(157, 184, 143, 0.08) 50%,
-        rgba(249, 213, 229, 0.1) 75%,
-        rgba(254, 246, 228, 0.15) 100%);
+        ${theme.secondary}33 0%,
+        ${theme.accent}1A 25%,
+        ${theme.sage}29 50%,
+        ${theme.secondary}33 75%,
+        ${theme.primary}40 100%);
     }
 
     * {
@@ -517,7 +525,7 @@ ${photos3.map((photo, i) => `        <div class="photo-grid-item" data-photo="${
     }
     
     .gradient-text {
-      background: linear-gradient(135deg, var(--sage, #9DB88F) 0%, var(--accent) 40%, var(--secondary) 100%);
+      background: linear-gradient(135deg, ${theme.sage} 0%, ${theme.accent} 40%, ${theme.secondary} 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -528,6 +536,24 @@ ${photos3.map((photo, i) => `        <div class="photo-grid-item" data-photo="${
       text-transform: uppercase;
       letter-spacing: 1.5px;
       font-size: 1.1em;
+    }
+    
+    /* Kategoriler Label */
+    .categories-label {
+      position: fixed;
+      top: 65px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 98;
+      font-size: 11px;
+      font-weight: 500;
+      color: ${theme.primary};
+      opacity: 0.6;
+      letter-spacing: 18px;
+      text-indent: 18px;
+      width: 500px;
+      text-align: center;
+      pointer-events: none;
     }
     
     /* Category Navigation */
@@ -604,27 +630,27 @@ ${photos3.map((photo, i) => `        <div class="photo-grid-item" data-photo="${
     }
 
     .category-btn.cat-1 {
-      background: linear-gradient(135deg, #C7D2FE 0%, #A78BFA 100%);
+      background: linear-gradient(135deg, ${theme.categoryColors[0]});
     }
 
     .category-btn.cat-2 {
-      background: linear-gradient(135deg, #DCC9E8 0%, #C9B2D9 100%);
+      background: linear-gradient(135deg, ${theme.categoryColors[1]});
     }
 
     .category-btn.cat-3 {
-      background: linear-gradient(135deg, #F3F4F6 0%, #6B7280 100%);
+      background: linear-gradient(135deg, ${theme.categoryColors[2]});
     }
 
     .category-btn.cat-4 {
-      background: linear-gradient(135deg, #E8DCC4 0%, #D4B896 100%);
+      background: linear-gradient(135deg, ${theme.categoryColors[3]});
     }
 
     .category-btn.cat-5 {
-      background: linear-gradient(135deg, #C9E4F5 0%, #A8D0E6 100%);
+      background: linear-gradient(135deg, ${theme.categoryColors[4]});
     }
 
     .category-btn.cat-6 {
-      background: linear-gradient(135deg, #E8E2E7 0%, #D4C5D0 100%);
+      background: linear-gradient(135deg, ${theme.categoryColors[5]});
     }
     
     .city-section {
@@ -1016,7 +1042,7 @@ ${photos3.map((photo, i) => `        <div class="photo-grid-item" data-photo="${
     }
 
     .instagram-btn {
-      background: linear-gradient(135deg, var(--secondary) 0%, var(--accent) 50%, var(--sage, #9DB88F) 100%);
+      background: linear-gradient(135deg, ${theme.secondary} 0%, ${theme.accent} 50%, ${theme.sage} 100%);
       color: white !important;
       padding: 14px 28px;
       border-radius: 30px;
@@ -1026,7 +1052,7 @@ ${photos3.map((photo, i) => `        <div class="photo-grid-item" data-photo="${
       font-size: clamp(16px, 2.5vw, 18px);
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       margin: 12px 0;
-      box-shadow: 0 6px 25px rgba(167, 139, 250, 0.3),
+      box-shadow: 0 6px 25px ${theme.accent}66,
                   inset 0 1px 0 rgba(255, 255, 255, 0.2);
       position: relative;
       z-index: 1;
@@ -1051,10 +1077,10 @@ ${photos3.map((photo, i) => `        <div class="photo-grid-item" data-photo="${
 
     .instagram-btn:hover {
       transform: translateY(-3px) scale(1.02);
-      box-shadow: 0 10px 35px rgba(167, 139, 250, 0.4),
+      box-shadow: 0 10px 35px ${theme.accent}99,
                   inset 0 1px 0 rgba(255, 255, 255, 0.3);
       color: white !important;
-      background: linear-gradient(135deg, var(--sage, #9DB88F) 0%, var(--accent) 50%, var(--secondary) 100%);
+      background: linear-gradient(135deg, ${theme.sage} 0%, ${theme.accent} 50%, ${theme.secondary} 100%);
     }
     
     .instagram-btn:hover::before {
@@ -1092,6 +1118,14 @@ ${photos3.map((photo, i) => `        <div class="photo-grid-item" data-photo="${
       .logo::before {
         left: 10px;
         font-size: 12px;
+      }
+
+      .categories-label {
+        top: 58px;
+        font-size: 10px;
+        letter-spacing: 14px;
+        text-indent: 14px;
+        width: 400px;
       }
 
       .category-nav {
@@ -1176,6 +1210,14 @@ ${photos3.map((photo, i) => `        <div class="photo-grid-item" data-photo="${
         top: 16px;
       }
 
+      .categories-label {
+        top: 48px;
+        font-size: 8px;
+        letter-spacing: 10px;
+        text-indent: 10px;
+        width: 320px;
+      }
+
       .category-nav {
         width: 320px;
         top: 19px;
@@ -1237,9 +1279,9 @@ ${sections}
   <!-- PHOTO MODAL WITH CAROUSEL -->
   <div class="photo-modal" id="photoModal">
     <div class="modal-content" id="modalContent">
-      <button class="modal-close" onclick="closePhotoModal()" title="Kapat (ESC)">✕</button>
-      <button class="nav-button prev" id="prevBtn" onclick="navigatePhoto('prev')" title="Önceki (←)">‹</button>
-      <button class="nav-button next" id="nextBtn" onclick="navigatePhoto('next')" title="Sonraki (→)">›</button>
+      <button class="modal-close" id="closeBtn" title="Kapat (ESC)">✕</button>
+      <button class="nav-button prev" id="prevBtn" title="Önceki (←)">‹</button>
+      <button class="nav-button next" id="nextBtn" title="Sonraki (→)">›</button>
       <img class="modal-image" id="modalImage" src="" alt="">
       <div class="modal-info" id="modalInfo">Sanatçı Adı</div>
     </div>
@@ -1468,6 +1510,35 @@ ${sections}
         });
       });
       
+      // Modal close button
+      const closeBtn = document.getElementById('closeBtn');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          closePhotoModal();
+        });
+      }
+      
+      // Navigation buttons
+      const prevBtn = document.getElementById('prevBtn');
+      if (prevBtn) {
+        prevBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          navigatePhoto('prev');
+        });
+      }
+      
+      const nextBtn = document.getElementById('nextBtn');
+      if (nextBtn) {
+        nextBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          navigatePhoto('next');
+        });
+      }
+      
       // Prevent modal close when clicking on content
       const modalContent = document.getElementById('modalContent');
       if (modalContent) {
@@ -1483,26 +1554,6 @@ ${sections}
           if (e.target === this) {
             closePhotoModal();
           }
-        });
-      }
-      
-      // Navigation button event listeners
-      const prevBtn = document.getElementById('prevBtn');
-      const nextBtn = document.getElementById('nextBtn');
-      
-      if (prevBtn) {
-        prevBtn.addEventListener('click', function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          navigatePhoto('prev');
-        });
-      }
-      
-      if (nextBtn) {
-        nextBtn.addEventListener('click', function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          navigatePhoto('next');
         });
       }
     });
