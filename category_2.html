@@ -81,15 +81,15 @@
       z-index: 1;
     }
 
-    /* Header Bar - İnce uzun oval */
+    /* Header Bar */
     .header-bar {
       position: fixed;
       top: 15px;
       left: 50%;
       transform: translateX(-50%);
-      width: 280px;
-      max-width: 280px;
-      height: 45px;
+      width: 90%;
+      max-width: 1000px;
+      height: 60px;
       background: linear-gradient(135deg, 
         rgba(255, 255, 255, 0.9) 0%,
         rgba(254, 246, 228, 0.4) 30%,
@@ -100,7 +100,7 @@
       box-shadow: 0 6px 20px rgba(167, 139, 250, 0.08),
                   0 2px 6px rgba(0, 0, 0, 0.04);
       z-index: 90;
-      border-radius: 25px;
+      border-radius: 30px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -108,17 +108,17 @@
 
     .logo {
       position: fixed;
-      top: 20px;
+      top: 25px;
       left: 50%;
       transform: translateX(-50%);
-      padding: 8px 20px;
+      padding: 10px 24px;
       border-radius: 50px;
       background: transparent;
       backdrop-filter: none;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 700;
       text-decoration: none;
       box-shadow: none;
@@ -165,55 +165,41 @@
       font-size: 1.1em;
     }
     
-    /* Kategoriler Label */
-    .categories-label {
+    /* Category Navigation */
+    .category-nav {
       position: fixed;
-      top: 85px;
+      top: 29px;
       left: 50%;
       transform: translateX(-50%);
       display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 11px;
-      font-weight: 500;
-      color: #C9B2D9;
-      opacity: 0.5;
-      z-index: 85;
-      width: 100%;
-      max-width: 600px;
+      justify-content: space-between;
+      z-index: 99;
+      width: 500px;
+      max-width: 500px;
+      pointer-events: none;
     }
-    
-    .categories-label .text {
-      letter-spacing: 16px;
-      text-indent: 16px;
-      padding: 0 30px;
+
+    .category-nav-left,
+    .category-nav-right {
+      display: flex;
+      justify-content: space-between;
+      width: 140px;
+      pointer-events: auto;
     }
-    
-    .categories-label .arrow-left,
-    .categories-label .arrow-right {
-      font-size: 18px;
-      opacity: 0.7;
-      color: #F093FB;
-      animation: pulse 2s ease-in-out infinite;
+
+    .category-nav-left {
+      position: absolute;
+      left: 0;
     }
-    
-    .categories-label .arrow-left {
-      transform: rotate(-15deg);
+
+    .category-nav-right {
+      position: absolute;
+      right: 0;
     }
-    
-    .categories-label .arrow-right {
-      transform: rotate(15deg);
-    }
-    
-    @keyframes pulse {
-      0%, 100% { opacity: 0.5; }
-      50% { opacity: 1; }
-    }
-    
-    /* Inline kategori butonları */
-    .cat-btn-inline {
-      width: 28px;
-      height: 28px;
+
+    .category-btn {
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       border: 2px solid rgba(255, 255, 255, 0.7);
       cursor: pointer;
@@ -222,23 +208,25 @@
       overflow: hidden;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
       text-decoration: none;
-      display: inline-block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .cat-btn-inline:hover {
+    .category-btn:hover {
       transform: scale(1.15) translateY(-2px);
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
       border-color: rgba(255, 255, 255, 0.9);
     }
 
-    .cat-btn-inline.active {
+    .category-btn.active {
       transform: scale(1.1);
       box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.4),
                   0 3px 15px rgba(0, 0, 0, 0.2);
       border-color: rgba(255, 255, 255, 0.95);
     }
 
-    .cat-btn-inline.active::after {
+    .category-btn.active::after {
       content: '✓';
       position: absolute;
       top: 50%;
@@ -246,31 +234,31 @@
       transform: translate(-50%, -50%);
       color: white;
       font-weight: bold;
-      font-size: 12px;
+      font-size: 14px;
       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
     }
 
-    .cat-btn-inline.cat-1 {
+    .category-btn.cat-1 {
       background: linear-gradient(135deg, #DCC9E8, #C9B2D9);
     }
 
-    .cat-btn-inline.cat-2 {
+    .category-btn.cat-2 {
       background: linear-gradient(135deg, #F093FB, #F5576C);
     }
 
-    .cat-btn-inline.cat-3 {
+    .category-btn.cat-3 {
       background: linear-gradient(135deg, #FFB6C1, #FFC0CB);
     }
 
-    .cat-btn-inline.cat-4 {
+    .category-btn.cat-4 {
       background: linear-gradient(135deg, #E8B4D2, #D4A5C8);
     }
 
-    .cat-btn-inline.cat-5 {
+    .category-btn.cat-5 {
       background: linear-gradient(135deg, #FFE4E1, #FFDAB9);
     }
 
-    .cat-btn-inline.cat-6 {
+    .category-btn.cat-6 {
       background: linear-gradient(135deg, #F0E6F7, #E6D7F0);
     }
     
@@ -722,49 +710,23 @@
     /* Mobile Responsive */
     @media (max-width: 768px) {
       .container {
-        padding-top: 70px;
+        padding-top: 100px;
       }
 
       .header-bar {
-        top: 12px;
-        height: 40px;
-        width: 240px;
-        max-width: 240px;
+        top: 15px;
+        height: 50px;
       }
 
       .logo {
-        padding: 8px 18px;
-        font-size: 14px;
-        top: 17px;
+        padding: 10px 20px;
+        font-size: 16px;
+        top: 23px;
       }
       
       .logo::before {
-        left: 8px;
-        font-size: 11px;
-      }
-      
-      /* Mobilde kategoriler header'ı küçült */
-      .categories-header {
-        padding: 10px 0 !important;
-        margin-top: 15px !important;
-      }
-      
-      .categories-header > div {
-        gap: 12px !important;
-      }
-      
-      .categories-header span {
-        font-size: 11px !important;
-        letter-spacing: 0.5px !important;
-      }
-      
-      .cat-btn-inline {
-        width: 24px;
-        height: 24px;
-      }
-      
-      .cat-btn-inline.active::after {
-        font-size: 10px;
+        left: 10px;
+        font-size: 12px;
       }
 
       .category-nav {
@@ -833,49 +795,20 @@
 
     @media (max-width: 480px) {
       .container {
-        padding-top: 60px;
+        padding-top: 85px;
       }
 
       .header-bar {
         top: 8px;
-        width: 200px;
-        max-width: 200px;
-        height: 38px;
-        border-radius: 20px;
+        width: 90%;
+        height: 45px;
+        border-radius: 22px;
       }
 
       .logo {
         padding: 6px 14px;
-        font-size: 12px;
-        top: 14px;
-      }
-      
-      /* Mobilde kategoriler header'ı daha da küçült */
-      .categories-header {
-        padding: 8px 0 !important;
-        margin-top: 10px !important;
-        margin-bottom: 15px !important;
-      }
-      
-      .categories-header > div {
-        gap: 8px !important;
-        flex-wrap: wrap;
-        justify-content: center !important;
-      }
-      
-      .categories-header span {
-        font-size: 10px !important;
-        letter-spacing: 0.5px !important;
-        font-weight: 500 !important;
-      }
-      
-      .cat-btn-inline {
-        width: 22px;
-        height: 22px;
-      }
-      
-      .cat-btn-inline.active::after {
-        font-size: 9px;
+        font-size: 13px;
+        top: 16px;
       }
 
       .category-nav {
@@ -908,36 +841,22 @@
   <div class="header-bar"></div>
   <a href="#" class="logo"><span class="gradient-text">Benim.art</span></a>
   
-  <div class="container">
+  <!-- Category Navigation -->
+  <div class="category-nav">
     <div class="category-nav-left">
       <a href="index.html" class="category-btn cat-1" title="Kategori 1"></a>
       <a href="category_2.html" class="category-btn cat-2 active" title="Kategori 2"></a>
       <a href="category_3.html" class="category-btn cat-3" title="Kategori 3"></a>
     </div>
+    <div class="category-nav-right">
+      <a href="category_4.html" class="category-btn cat-4" title="Kategori 4"></a>
+      <a href="category_5.html" class="category-btn cat-5" title="Kategori 5"></a>
+      <a href="category_6.html" class="category-btn cat-6" title="Kategori 6"></a>
+    </div>
   </div>
   
   <div class="container">
     <div id="locations-container">
-
-    <!-- Kategoriler Başlığı ve Butonlar -->
-    <div class="city-section categories-header" style="padding: 12px 0; margin-top: 10px;">
-      <div style="display: flex; justify-content: center; align-items: center; gap: 20px;">
-        <!-- Sol kategori butonları -->
-        <div style="display: flex; gap: 10px;">
-          <a href="index.html" class="cat-btn-inline cat-1" title="Kategori 1"></a>
-          <a href="category_2.html" class="cat-btn-inline cat-2 active" title="Kategori 2"></a>
-          <a href="category_3.html" class="cat-btn-inline cat-3" title="Kategori 3"></a>
-        </div>
-        <!-- Kategoriler yazısı -->
-        <span style="font-size: 13px; font-weight: 500; color: #F093FB; text-transform: uppercase; letter-spacing: 1px; padding: 0 15px;">Kategoriler</span>
-        <!-- Sağ kategori butonları -->
-        <div style="display: flex; gap: 10px;">
-          <a href="category_4.html" class="cat-btn-inline cat-4" title="Kategori 4"></a>
-          <a href="category_5.html" class="cat-btn-inline cat-5" title="Kategori 5"></a>
-          <a href="category_6.html" class="cat-btn-inline cat-6" title="Kategori 6"></a>
-        </div>
-      </div>
-    </div>
 
     <!-- Artist A -->
     <div class="city-section">
