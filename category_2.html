@@ -755,7 +755,7 @@
     /* Mobile Responsive */
     @media (max-width: 768px) {
       .container {
-        padding-top: 70px; /* Azaltıldı - 75'ten 70'e */
+        padding-top: 75px;
       }
 
       .header-bar {
@@ -773,29 +773,25 @@
         left: 10px;
         font-size: 12px;
       }
-
-      .categories-section {
-        margin-bottom: 18px;
-        padding: 15px 10px;
+      
+      /* Mobilde kategoriler header'ı küçült */
+      .categories-header {
+        padding: 10px 0 !important;
+        margin-top: 15px !important;
       }
       
-      .categories-label {
-        font-size: 13px;
-        gap: 10px;
-        flex-wrap: nowrap;
+      .categories-header div {
+        gap: 10px !important;
       }
       
-      .categories-label .text {
-        letter-spacing: 1px;
+      .categories-header span:nth-child(2) {
+        font-size: 12px !important;
+        letter-spacing: 1px !important;
       }
       
-      .decoration-group {
-        gap: 6px;
-        display: flex;
-      }
-      
-      .decoration {
-        font-size: 10px;
+      .categories-header span:nth-child(1),
+      .categories-header span:nth-child(3) {
+        font-size: 9px !important;
       }
 
       .category-nav {
@@ -864,7 +860,7 @@
 
     @media (max-width: 480px) {
       .container {
-        padding-top: 55px; /* Daha da azaltıldı - 65'ten 55'e */
+        padding-top: 65px;
       }
 
       .header-bar {
@@ -879,28 +875,27 @@
         font-size: 13px;
         top: 16px;
       }
-
-      .categories-section {
-        margin-bottom: 15px;
-        padding: 12px 10px;
+      
+      /* Mobilde kategoriler header'ı daha da küçült */
+      .categories-header {
+        padding: 8px 0 !important;
+        margin-top: 10px !important;
+        margin-bottom: 15px !important;
       }
       
-      .categories-label {
-        font-size: 11px;
-        gap: 8px;
+      .categories-header div {
+        gap: 8px !important;
       }
       
-      .categories-label .text {
-        letter-spacing: 0.5px;
+      .categories-header span:nth-child(2) {
+        font-size: 10px !important;
+        letter-spacing: 0.5px !important;
+        font-weight: 500 !important;
       }
       
-      .decoration-group {
-        display: flex;
-        gap: 4px;
-      }
-      
-      .decoration {
-        font-size: 8px;
+      .categories-header span:nth-child(1),
+      .categories-header span:nth-child(3) {
+        font-size: 8px !important;
       }
 
       .category-nav {
@@ -951,10 +946,10 @@
     <div id="locations-container">
 
     <!-- Kategoriler Başlığı -->
-    <div class="city-section" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, #DCC9E833 50%, #F093FB1A 100%); padding: 20px 0;">
+    <div class="city-section categories-header" style="padding: 15px 0; margin-top: 10px;">
       <div style="display: flex; justify-content: center; align-items: center; gap: 15px;">
         <span style="color: #F093FB; opacity: 0.6; font-size: 11px;">◆ ◆ ◆</span>
-        <span style="font-size: 16px; font-weight: 700; color: #F093FB; text-transform: uppercase; letter-spacing: 2px;">Kategoriler</span>
+        <span style="font-size: 14px; font-weight: 600; color: #F093FB; text-transform: uppercase; letter-spacing: 1.5px;">Kategoriler</span>
         <span style="color: #F093FB; opacity: 0.6; font-size: 11px;">◆ ◆ ◆</span>
       </div>
     </div>
