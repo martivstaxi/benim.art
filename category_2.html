@@ -775,20 +775,34 @@
       }
 
       .categories-label {
-        top: 78px;
-        max-width: 450px;
+        margin-bottom: 40px;
+        margin-top: -15px;
+        font-size: 12px;
       }
       
       .categories-label .text {
-        letter-spacing: 12px;
-        text-indent: 12px;
-        padding: 0 20px;
-        font-size: 10px;
+        letter-spacing: 2px;
+        padding: 6px 20px;
+        font-size: 11px;
       }
       
-      .categories-label .arrow-left,
-      .categories-label .arrow-right {
-        font-size: 16px;
+      .categories-label .decoration-left,
+      .categories-label .decoration-right {
+        font-size: 9px;
+        margin: 0 15px;
+      }
+      
+      .categories-label::before,
+      .categories-label::after {
+        width: 80px;
+      }
+      
+      .categories-label::before {
+        left: calc(50% - 150px);
+      }
+      
+      .categories-label::after {
+        right: calc(50% - 150px);
       }
 
       .category-nav {
@@ -874,20 +888,34 @@
       }
 
       .categories-label {
-        top: 65px;
-        max-width: 350px;
+        margin-bottom: 30px;
+        margin-top: -10px;
+        font-size: 10px;
       }
       
       .categories-label .text {
-        letter-spacing: 8px;
-        text-indent: 8px;
-        padding: 0 15px;
-        font-size: 8px;
+        letter-spacing: 1px;
+        padding: 5px 15px;
+        font-size: 9px;
       }
       
-      .categories-label .arrow-left,
-      .categories-label .arrow-right {
-        font-size: 14px;
+      .categories-label .decoration-left,
+      .categories-label .decoration-right {
+        font-size: 8px;
+        margin: 0 10px;
+      }
+      
+      .categories-label::before,
+      .categories-label::after {
+        width: 50px;
+      }
+      
+      .categories-label::before {
+        left: calc(50% - 110px);
+      }
+      
+      .categories-label::after {
+        right: calc(50% - 110px);
       }
 
       .category-nav {
@@ -934,14 +962,14 @@
     </div>
   </div>
   
-  <!-- Kategoriler Başlığı -->
-  <div class="categories-label">
-    <span class="arrow-left">↖</span>
-    <span class="text">K A T E G O R İ L E R</span>
-    <span class="arrow-right">↗</span>
-  </div>
-  
   <div class="container">
+    <!-- Kategoriler Başlığı -->
+    <div class="categories-label">
+      <span class="decoration-left">◆</span>
+      <span class="text">Kategoriler</span>
+      <span class="decoration-right">◆</span>
+    </div>
+    
     <div id="locations-container">
 
     <!-- Artist A -->
