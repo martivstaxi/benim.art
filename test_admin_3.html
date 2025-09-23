@@ -343,10 +343,9 @@
       
       const theme = colorThemes[selectedCategory] || colorThemes[1];
       
-      // Paste 1'deki tam HTML şablonu
+      // Her sanatçı için sadece 1 section oluştur
       const sections = artists.map((artist, idx) => {
-        // Her sanatçı için 3 section oluştur (her biri 4 fotoğraf)
-        const allSections = [];
+        if (artist.photos.length === 0) return '';
         
         // Fotoğrafları 4'e tamamla (eksikse tekrarla)
         let fullPhotos = [...artist.photos];
@@ -354,9 +353,8 @@
           fullPhotos.push(artist.photos[fullPhotos.length % artist.photos.length]);
         }
         
-        // İlk section - ilk 4 fotoğraf
-        if (artist.photos.length > 0) {
-          allSections.push(`    <!-- ${artist.name} 1 -->
+        // Sadece 1 section oluştur
+        return `    <!-- ${artist.name} -->
     <div class="city-section">
       <div class="city-header">
         <h2 class="city-title">
@@ -365,56 +363,13 @@
           </a>
         </h2>
       </div>
-      <div class="photo-grid" data-section-id="section-${idx * 3 + 1}">
+      <div class="photo-grid" data-section-id="section-${idx + 1}">
 ${fullPhotos.slice(0, 4).map((photo, i) => `        <div class="photo-grid-item" data-photo="${photo}" data-location="${artist.name} - Fotoğraf ${i + 1}" data-index="${i}">
           <img src="${photo}" alt="${artist.name} - Fotoğraf ${i + 1}">
         </div>`).join('\n')}
       </div>
-    </div>`);
-        }
-        
-        // İkinci section - aynı 4 fotoğraf ama farklı sırada
-        if (artist.photos.length > 0) {
-          const photos2 = [fullPhotos[2], fullPhotos[3], fullPhotos[0], fullPhotos[1]];
-          allSections.push(`    <!-- ${artist.name} 2 -->
-    <div class="city-section">
-      <div class="city-header">
-        <h2 class="city-title">
-          <a href="${artist.link}" target="_blank" rel="noopener noreferrer" class="location-link">
-            <span class="click-icon"></span>${artist.name} | ${artist.category}
-          </a>
-        </h2>
-      </div>
-      <div class="photo-grid" data-section-id="section-${idx * 3 + 2}">
-${photos2.map((photo, i) => `        <div class="photo-grid-item" data-photo="${photo}" data-location="${artist.name} - Fotoğraf ${i + 1}" data-index="${i}">
-          <img src="${photo}" alt="${artist.name} - Fotoğraf ${i + 1}">
-        </div>`).join('\n')}
-      </div>
-    </div>`);
-        }
-        
-        // Üçüncü section - karışık sırada
-        if (artist.photos.length > 0) {
-          const photos3 = [fullPhotos[1], fullPhotos[0], fullPhotos[3], fullPhotos[2]];
-          allSections.push(`    <!-- ${artist.name} 3 -->
-    <div class="city-section">
-      <div class="city-header">
-        <h2 class="city-title">
-          <a href="${artist.link}" target="_blank" rel="noopener noreferrer" class="location-link">
-            <span class="click-icon"></span>${artist.name} | ${artist.category}
-          </a>
-        </h2>
-      </div>
-      <div class="photo-grid" data-section-id="section-${idx * 3 + 3}">
-${photos3.map((photo, i) => `        <div class="photo-grid-item" data-photo="${photo}" data-location="${artist.name} - Fotoğraf ${i + 1}" data-index="${i}">
-          <img src="${photo}" alt="${artist.name} - Fotoğraf ${i + 1}">
-        </div>`).join('\n')}
-      </div>
-    </div>`);
-        }
-        
-        return allSections.join('\n\n');
-      }).join('\n\n');
+    </div>`;
+      }).filter(section => section !== '').join('\n\n');
       
       const html = `<!DOCTYPE html>  
 <html lang="tr">
@@ -581,6 +536,51 @@ ${photos3.map((photo, i) => `        <div class="photo-grid-item" data-photo="${
       text-transform: uppercase;
       letter-spacing: 1.5px;
       font-size: 1.1em;
+    }
+    
+    /* Kategoriler Label */
+    .categories-label {
+      position: fixed;
+      top: 85px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 11px;
+      font-weight: 500;
+      color: ${theme.primary};
+      opacity: 0.5;
+      z-index: 85;
+      width: 100%;
+      max-width: 600px;
+    }
+    
+    .categories-label .text {
+      letter-spacing: 16px;
+      text-indent: 16px;
+      padding: 0 30px;
+    }
+    
+    .categories-label .arrow-left,
+    .categories-label .arrow-right {
+      font-size: 18px;
+      opacity: 0.7;
+      color: ${theme.accent};
+      animation: pulse 2s ease-in-out infinite;
+    }
+    
+    .categories-label .arrow-left {
+      transform: rotate(-15deg);
+    }
+    
+    .categories-label .arrow-right {
+      transform: rotate(15deg);
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
     }
     
     /* Category Navigation */
@@ -1147,6 +1147,23 @@ ${photos3.map((photo, i) => `        <div class="photo-grid-item" data-photo="${
         font-size: 12px;
       }
 
+      .categories-label {
+        top: 78px;
+        max-width: 450px;
+      }
+      
+      .categories-label .text {
+        letter-spacing: 12px;
+        text-indent: 12px;
+        padding: 0 20px;
+        font-size: 10px;
+      }
+      
+      .categories-label .arrow-left,
+      .categories-label .arrow-right {
+        font-size: 16px;
+      }
+
       .category-nav {
         top: 31px;
         width: 400px;
@@ -1229,6 +1246,23 @@ ${photos3.map((photo, i) => `        <div class="photo-grid-item" data-photo="${
         top: 16px;
       }
 
+      .categories-label {
+        top: 65px;
+        max-width: 350px;
+      }
+      
+      .categories-label .text {
+        letter-spacing: 8px;
+        text-indent: 8px;
+        padding: 0 15px;
+        font-size: 8px;
+      }
+      
+      .categories-label .arrow-left,
+      .categories-label .arrow-right {
+        font-size: 14px;
+      }
+
       .category-nav {
         width: 320px;
         top: 19px;
@@ -1271,6 +1305,13 @@ ${photos3.map((photo, i) => `        <div class="photo-grid-item" data-photo="${
       <a href="category_5.html" class="category-btn cat-5${selectedCategory === 5 ? ' active' : ''}" title="Kategori 5"></a>
       <a href="category_6.html" class="category-btn cat-6${selectedCategory === 6 ? ' active' : ''}" title="Kategori 6"></a>
     </div>
+  </div>
+  
+  <!-- Kategoriler Başlığı -->
+  <div class="categories-label">
+    <span class="arrow-left">↖</span>
+    <span class="text">K A T E G O R İ L E R</span>
+    <span class="arrow-right">↗</span>
   </div>
   
   <div class="container">
