@@ -371,6 +371,18 @@ ${fullPhotos.slice(0, 4).map((photo, i) => `        <div class="photo-grid-item"
     </div>`;
       }).filter(section => section !== '').join('\n\n');
       
+      // Kategoriler section'ını en başa ekle
+      const categoriesSection = `    <!-- Kategoriler Başlığı -->
+    <div class="city-section categories-header" style="padding: 15px 0; margin-top: 10px;">
+      <div style="display: flex; justify-content: center; align-items: center; gap: 15px;">
+        <span style="color: ${theme.accent}; opacity: 0.6; font-size: 11px;">◆ ◆ ◆</span>
+        <span style="font-size: 14px; font-weight: 600; color: ${theme.accent}; text-transform: uppercase; letter-spacing: 1.5px;">Kategoriler</span>
+        <span style="color: ${theme.accent}; opacity: 0.6; font-size: 11px;">◆ ◆ ◆</span>
+      </div>
+    </div>`;
+      
+      const allSections = categoriesSection + '\n\n' + sections;
+      
       const html = `<!DOCTYPE html>  
 <html lang="tr">
 <head>
@@ -1128,7 +1140,7 @@ ${fullPhotos.slice(0, 4).map((photo, i) => `        <div class="photo-grid-item"
     /* Mobile Responsive */
     @media (max-width: 768px) {
       .container {
-        padding-top: 100px;
+        padding-top: 75px;
       }
 
       .header-bar {
@@ -1146,36 +1158,25 @@ ${fullPhotos.slice(0, 4).map((photo, i) => `        <div class="photo-grid-item"
         left: 10px;
         font-size: 12px;
       }
-
-      .categories-label {
-        margin-bottom: 40px;
-        margin-top: -15px;
-        font-size: 12px;
+      
+      /* Mobilde kategoriler header'ı küçült */
+      .categories-header {
+        padding: 10px 0 !important;
+        margin-top: 15px !important;
       }
       
-      .categories-label .text {
-        letter-spacing: 2px;
-        padding: 6px 20px;
-        font-size: 11px;
+      .categories-header div {
+        gap: 10px !important;
       }
       
-      .categories-label .decoration-left,
-      .categories-label .decoration-right {
-        font-size: 9px;
-        margin: 0 15px;
+      .categories-header span:nth-child(2) {
+        font-size: 12px !important;
+        letter-spacing: 1px !important;
       }
       
-      .categories-label::before,
-      .categories-label::after {
-        width: 80px;
-      }
-      
-      .categories-label::before {
-        left: calc(50% - 150px);
-      }
-      
-      .categories-label::after {
-        right: calc(50% - 150px);
+      .categories-header span:nth-child(1),
+      .categories-header span:nth-child(3) {
+        font-size: 9px !important;
       }
 
       .category-nav {
@@ -1244,7 +1245,7 @@ ${fullPhotos.slice(0, 4).map((photo, i) => `        <div class="photo-grid-item"
 
     @media (max-width: 480px) {
       .container {
-        padding-top: 85px;
+        padding-top: 65px;
       }
 
       .header-bar {
@@ -1259,36 +1260,27 @@ ${fullPhotos.slice(0, 4).map((photo, i) => `        <div class="photo-grid-item"
         font-size: 13px;
         top: 16px;
       }
-
-      .categories-label {
-        margin-bottom: 30px;
-        margin-top: -10px;
-        font-size: 10px;
+      
+      /* Mobilde kategoriler header'ı daha da küçült */
+      .categories-header {
+        padding: 8px 0 !important;
+        margin-top: 10px !important;
+        margin-bottom: 15px !important;
       }
       
-      .categories-label .text {
-        letter-spacing: 1px;
-        padding: 5px 15px;
-        font-size: 9px;
+      .categories-header div {
+        gap: 8px !important;
       }
       
-      .categories-label .decoration-left,
-      .categories-label .decoration-right {
-        font-size: 8px;
-        margin: 0 10px;
+      .categories-header span:nth-child(2) {
+        font-size: 10px !important;
+        letter-spacing: 0.5px !important;
+        font-weight: 500 !important;
       }
       
-      .categories-label::before,
-      .categories-label::after {
-        width: 50px;
-      }
-      
-      .categories-label::before {
-        left: calc(50% - 110px);
-      }
-      
-      .categories-label::after {
-        right: calc(50% - 110px);
+      .categories-header span:nth-child(1),
+      .categories-header span:nth-child(3) {
+        font-size: 8px !important;
       }
 
       .category-nav {
@@ -1336,16 +1328,9 @@ ${fullPhotos.slice(0, 4).map((photo, i) => `        <div class="photo-grid-item"
   </div>
   
   <div class="container">
-    <!-- Kategoriler Başlığı -->
-    <div class="categories-label">
-      <span class="decoration-left">◆</span>
-      <span class="text">Kategoriler</span>
-      <span class="decoration-right">◆</span>
-    </div>
-    
     <div id="locations-container">
 
-${sections}
+${allSections}
 
     </div>
     
