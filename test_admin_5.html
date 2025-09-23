@@ -538,6 +538,51 @@ ${fullPhotos.slice(0, 4).map((photo, i) => `        <div class="photo-grid-item"
       font-size: 1.1em;
     }
     
+    /* Kategoriler Label */
+    .categories-label {
+      position: fixed;
+      top: 85px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 11px;
+      font-weight: 500;
+      color: ${theme.primary};
+      opacity: 0.5;
+      z-index: 85;
+      width: 100%;
+      max-width: 600px;
+    }
+    
+    .categories-label .text {
+      letter-spacing: 16px;
+      text-indent: 16px;
+      padding: 0 30px;
+    }
+    
+    .categories-label .arrow-left,
+    .categories-label .arrow-right {
+      font-size: 18px;
+      opacity: 0.7;
+      color: ${theme.accent};
+      animation: pulse 2s ease-in-out infinite;
+    }
+    
+    .categories-label .arrow-left {
+      transform: rotate(-15deg);
+    }
+    
+    .categories-label .arrow-right {
+      transform: rotate(15deg);
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+    
     /* Category Navigation */
     .category-nav {
       position: fixed;
@@ -1102,6 +1147,37 @@ ${fullPhotos.slice(0, 4).map((photo, i) => `        <div class="photo-grid-item"
         font-size: 12px;
       }
 
+      .categories-section {
+        margin-bottom: 25px;
+        padding: 20px 0;
+      }
+      
+      .categories-label {
+        font-size: 14px;
+        letter-spacing: 3px;
+      }
+      
+      .categories-label .text {
+        padding: 0 30px;
+      }
+      
+      .decoration-group {
+        gap: 20px;
+        top: -24px;
+      }
+      
+      .decoration-group.left {
+        left: calc(50% - 190px);
+      }
+      
+      .decoration-group.right {
+        right: calc(50% - 190px);
+      }
+      
+      .decoration {
+        font-size: 11px;
+      }
+
       .category-nav {
         top: 31px;
         width: 400px;
@@ -1184,6 +1260,45 @@ ${fullPhotos.slice(0, 4).map((photo, i) => `        <div class="photo-grid-item"
         top: 16px;
       }
 
+      .categories-section {
+        margin-bottom: 20px;
+        padding: 18px 0;
+      }
+      
+      .categories-label {
+        font-size: 12px;
+        letter-spacing: 2px;
+      }
+      
+      .categories-label .text {
+        padding: 0 25px;
+      }
+      
+      .decoration-group {
+        gap: 15px;
+        top: -20px;
+      }
+      
+      .decoration-group.left {
+        left: calc(50% - 155px);
+      }
+      
+      .decoration-group.right {
+        right: calc(50% - 155px);
+      }
+      
+      .decoration {
+        font-size: 10px;
+      }
+      
+      .decoration-group.left .decoration:nth-child(1) { margin-left: 5px; }
+      .decoration-group.left .decoration:nth-child(2) { margin-left: 10px; }
+      .decoration-group.left .decoration:nth-child(3) { margin-left: 10px; }
+      
+      .decoration-group.right .decoration:nth-child(1) { margin-right: 10px; }
+      .decoration-group.right .decoration:nth-child(2) { margin-right: 10px; }
+      .decoration-group.right .decoration:nth-child(3) { margin-right: 5px; }
+
       .category-nav {
         width: 320px;
         top: 19px;
@@ -1229,6 +1344,23 @@ ${fullPhotos.slice(0, 4).map((photo, i) => `        <div class="photo-grid-item"
   </div>
   
   <div class="container">
+    <!-- Kategoriler Başlığı -->
+    <div class="categories-section">
+      <div class="categories-label">
+        <div class="decoration-group left">
+          <span class="decoration">◆</span>
+          <span class="decoration">◆</span>
+          <span class="decoration">◆</span>
+        </div>
+        <span class="text">Kategoriler</span>
+        <div class="decoration-group right">
+          <span class="decoration">◆</span>
+          <span class="decoration">◆</span>
+          <span class="decoration">◆</span>
+        </div>
+      </div>
+    </div>
+    
     <div id="locations-container">
 
 ${sections}
