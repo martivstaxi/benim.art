@@ -371,6 +371,29 @@ ${fullPhotos.slice(0, 4).map((photo, i) => `        <div class="photo-grid-item"
     </div>`;
       }).filter(section => section !== '').join('\n\n');
       
+      // Kategoriler section'ını en başa ekle - içinde kategori butonları da olacak
+      const categoriesSection = `    <!-- Kategoriler Başlığı ve Butonlar -->
+    <div class="city-section categories-header" style="padding: 12px 0; margin-top: 10px;">
+      <div style="display: flex; justify-content: center; align-items: center; gap: 20px;">
+        <!-- Sol kategori butonları -->
+        <div style="display: flex; gap: 10px;">
+          <a href="index.html" class="cat-btn-inline cat-1${selectedCategory === 1 ? ' active' : ''}" title="Kategori 1"></a>
+          <a href="category_2.html" class="cat-btn-inline cat-2${selectedCategory === 2 ? ' active' : ''}" title="Kategori 2"></a>
+          <a href="category_3.html" class="cat-btn-inline cat-3${selectedCategory === 3 ? ' active' : ''}" title="Kategori 3"></a>
+        </div>
+        <!-- Kategoriler yazısı -->
+        <span style="font-size: 13px; font-weight: 500; color: ${theme.accent}; text-transform: uppercase; letter-spacing: 1px; padding: 0 15px;">Kategoriler</span>
+        <!-- Sağ kategori butonları -->
+        <div style="display: flex; gap: 10px;">
+          <a href="category_4.html" class="cat-btn-inline cat-4${selectedCategory === 4 ? ' active' : ''}" title="Kategori 4"></a>
+          <a href="category_5.html" class="cat-btn-inline cat-5${selectedCategory === 5 ? ' active' : ''}" title="Kategori 5"></a>
+          <a href="category_6.html" class="cat-btn-inline cat-6${selectedCategory === 6 ? ' active' : ''}" title="Kategori 6"></a>
+        </div>
+      </div>
+    </div>`;
+      
+      const allSections = categoriesSection + '\n\n' + sections;
+      
       const html = `<!DOCTYPE html>  
 <html lang="tr">
 <head>
@@ -454,15 +477,15 @@ ${fullPhotos.slice(0, 4).map((photo, i) => `        <div class="photo-grid-item"
       z-index: 1;
     }
 
-    /* Header Bar */
+    /* Header Bar - İnce uzun oval */
     .header-bar {
       position: fixed;
       top: 15px;
       left: 50%;
       transform: translateX(-50%);
-      width: 90%;
-      max-width: 1000px;
-      height: 60px;
+      width: 280px;
+      max-width: 280px;
+      height: 45px;
       background: linear-gradient(135deg, 
         rgba(255, 255, 255, 0.9) 0%,
         rgba(254, 246, 228, 0.4) 30%,
@@ -473,7 +496,7 @@ ${fullPhotos.slice(0, 4).map((photo, i) => `        <div class="photo-grid-item"
       box-shadow: 0 6px 20px rgba(167, 139, 250, 0.08),
                   0 2px 6px rgba(0, 0, 0, 0.04);
       z-index: 90;
-      border-radius: 30px;
+      border-radius: 25px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -481,17 +504,17 @@ ${fullPhotos.slice(0, 4).map((photo, i) => `        <div class="photo-grid-item"
 
     .logo {
       position: fixed;
-      top: 25px;
+      top: 20px;
       left: 50%;
       transform: translateX(-50%);
-      padding: 10px 24px;
+      padding: 8px 20px;
       border-radius: 50px;
       background: transparent;
       backdrop-filter: none;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 700;
       text-decoration: none;
       box-shadow: none;
@@ -583,41 +606,10 @@ ${fullPhotos.slice(0, 4).map((photo, i) => `        <div class="photo-grid-item"
       50% { opacity: 1; }
     }
     
-    /* Category Navigation */
-    .category-nav {
-      position: fixed;
-      top: 29px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      justify-content: space-between;
-      z-index: 99;
-      width: 500px;
-      max-width: 500px;
-      pointer-events: none;
-    }
-
-    .category-nav-left,
-    .category-nav-right {
-      display: flex;
-      justify-content: space-between;
-      width: 140px;
-      pointer-events: auto;
-    }
-
-    .category-nav-left {
-      position: absolute;
-      left: 0;
-    }
-
-    .category-nav-right {
-      position: absolute;
-      right: 0;
-    }
-
-    .category-btn {
-      width: 32px;
-      height: 32px;
+    /* Inline kategori butonları */
+    .cat-btn-inline {
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
       border: 2px solid rgba(255, 255, 255, 0.7);
       cursor: pointer;
@@ -626,25 +618,23 @@ ${fullPhotos.slice(0, 4).map((photo, i) => `        <div class="photo-grid-item"
       overflow: hidden;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
       text-decoration: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: inline-block;
     }
 
-    .category-btn:hover {
+    .cat-btn-inline:hover {
       transform: scale(1.15) translateY(-2px);
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
       border-color: rgba(255, 255, 255, 0.9);
     }
 
-    .category-btn.active {
+    .cat-btn-inline.active {
       transform: scale(1.1);
       box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.4),
                   0 3px 15px rgba(0, 0, 0, 0.2);
       border-color: rgba(255, 255, 255, 0.95);
     }
 
-    .category-btn.active::after {
+    .cat-btn-inline.active::after {
       content: '✓';
       position: absolute;
       top: 50%;
@@ -652,31 +642,31 @@ ${fullPhotos.slice(0, 4).map((photo, i) => `        <div class="photo-grid-item"
       transform: translate(-50%, -50%);
       color: white;
       font-weight: bold;
-      font-size: 14px;
+      font-size: 12px;
       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
     }
 
-    .category-btn.cat-1 {
+    .cat-btn-inline.cat-1 {
       background: linear-gradient(135deg, ${theme.categoryColors[0]});
     }
 
-    .category-btn.cat-2 {
+    .cat-btn-inline.cat-2 {
       background: linear-gradient(135deg, ${theme.categoryColors[1]});
     }
 
-    .category-btn.cat-3 {
+    .cat-btn-inline.cat-3 {
       background: linear-gradient(135deg, ${theme.categoryColors[2]});
     }
 
-    .category-btn.cat-4 {
+    .cat-btn-inline.cat-4 {
       background: linear-gradient(135deg, ${theme.categoryColors[3]});
     }
 
-    .category-btn.cat-5 {
+    .cat-btn-inline.cat-5 {
       background: linear-gradient(135deg, ${theme.categoryColors[4]});
     }
 
-    .category-btn.cat-6 {
+    .cat-btn-inline.cat-6 {
       background: linear-gradient(135deg, ${theme.categoryColors[5]});
     }
     
@@ -1128,47 +1118,48 @@ ${fullPhotos.slice(0, 4).map((photo, i) => `        <div class="photo-grid-item"
     /* Mobile Responsive */
     @media (max-width: 768px) {
       .container {
-        padding-top: 75px; /* Azaltıldı */
+        padding-top: 70px;
       }
 
       .header-bar {
-        top: 15px;
-        height: 50px;
+        top: 12px;
+        height: 40px;
+        width: 240px;
+        max-width: 240px;
       }
 
       .logo {
-        padding: 10px 20px;
-        font-size: 16px;
-        top: 23px;
+        padding: 8px 18px;
+        font-size: 14px;
+        top: 17px;
       }
       
       .logo::before {
-        left: 10px;
-        font-size: 12px;
-      }
-
-      .categories-section {
-        margin-bottom: 18px;
-        margin-top: 0;
-        padding: 15px 10px;
+        left: 8px;
+        font-size: 11px;
       }
       
-      .categories-label {
-        font-size: 13px;
-        gap: 10px;
-        flex-wrap: nowrap;
+      /* Mobilde kategoriler header'ı küçült */
+      .categories-header {
+        padding: 10px 0 !important;
+        margin-top: 15px !important;
       }
       
-      .categories-label .text {
-        letter-spacing: 1px;
+      .categories-header > div {
+        gap: 12px !important;
       }
       
-      .decoration-group {
-        gap: 6px;
-        display: flex; /* Göster */
+      .categories-header span {
+        font-size: 11px !important;
+        letter-spacing: 0.5px !important;
       }
       
-      .decoration {
+      .cat-btn-inline {
+        width: 24px;
+        height: 24px;
+      }
+      
+      .cat-btn-inline.active::after {
         font-size: 10px;
       }
 
@@ -1238,44 +1229,49 @@ ${fullPhotos.slice(0, 4).map((photo, i) => `        <div class="photo-grid-item"
 
     @media (max-width: 480px) {
       .container {
-        padding-top: 65px; /* Daha da azaltıldı */
+        padding-top: 60px;
       }
 
       .header-bar {
         top: 8px;
-        width: 90%;
-        height: 45px;
-        border-radius: 22px;
+        width: 200px;
+        max-width: 200px;
+        height: 38px;
+        border-radius: 20px;
       }
 
       .logo {
         padding: 6px 14px;
-        font-size: 13px;
-        top: 16px;
-      }
-
-      .categories-section {
-        margin-bottom: 15px;
-        margin-top: 0;
-        padding: 12px 10px;
+        font-size: 12px;
+        top: 14px;
       }
       
-      .categories-label {
-        font-size: 11px;
-        gap: 8px;
+      /* Mobilde kategoriler header'ı daha da küçült */
+      .categories-header {
+        padding: 8px 0 !important;
+        margin-top: 10px !important;
+        margin-bottom: 15px !important;
       }
       
-      .categories-label .text {
-        letter-spacing: 0.5px;
+      .categories-header > div {
+        gap: 8px !important;
+        flex-wrap: wrap;
+        justify-content: center !important;
       }
       
-      .decoration-group {
-        display: flex; /* Elmasları göster */
-        gap: 4px;
+      .categories-header span {
+        font-size: 10px !important;
+        letter-spacing: 0.5px !important;
+        font-weight: 500 !important;
       }
       
-      .decoration {
-        font-size: 8px;
+      .cat-btn-inline {
+        width: 22px;
+        height: 22px;
+      }
+      
+      .cat-btn-inline.active::after {
+        font-size: 9px;
       }
 
       .category-nav {
@@ -1308,41 +1304,18 @@ ${fullPhotos.slice(0, 4).map((photo, i) => `        <div class="photo-grid-item"
   <div class="header-bar"></div>
   <a href="#" class="logo"><span class="gradient-text">${title}</span></a>
   
-  <!-- Category Navigation -->
-  <div class="category-nav">
+  <div class="container">
     <div class="category-nav-left">
       <a href="index.html" class="category-btn cat-1${selectedCategory === 1 ? ' active' : ''}" title="Kategori 1"></a>
       <a href="category_2.html" class="category-btn cat-2${selectedCategory === 2 ? ' active' : ''}" title="Kategori 2"></a>
       <a href="category_3.html" class="category-btn cat-3${selectedCategory === 3 ? ' active' : ''}" title="Kategori 3"></a>
     </div>
-    <div class="category-nav-right">
-      <a href="category_4.html" class="category-btn cat-4${selectedCategory === 4 ? ' active' : ''}" title="Kategori 4"></a>
-      <a href="category_5.html" class="category-btn cat-5${selectedCategory === 5 ? ' active' : ''}" title="Kategori 5"></a>
-      <a href="category_6.html" class="category-btn cat-6${selectedCategory === 6 ? ' active' : ''}" title="Kategori 6"></a>
-    </div>
   </div>
   
   <div class="container">
-    <!-- Kategoriler Başlığı Container İçinde -->
-    <div class="categories-section">
-      <div class="categories-label">
-        <div class="decoration-group left">
-          <span class="decoration">◆</span>
-          <span class="decoration">◆</span>
-          <span class="decoration">◆</span>
-        </div>
-        <span class="text">Kategoriler</span>
-        <div class="decoration-group right">
-          <span class="decoration">◆</span>
-          <span class="decoration">◆</span>
-          <span class="decoration">◆</span>
-        </div>
-      </div>
-    </div>
-    
     <div id="locations-container">
 
-${sections}
+${allSections}
 
     </div>
     
