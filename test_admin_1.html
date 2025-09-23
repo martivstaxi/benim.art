@@ -1242,9 +1242,9 @@ ${sections}
   <!-- PHOTO MODAL WITH CAROUSEL -->
   <div class="photo-modal" id="photoModal">
     <div class="modal-content" id="modalContent">
-      <button class="modal-close" onclick="closePhotoModal()" title="Kapat (ESC)">✕</button>
-      <button class="nav-button prev" id="prevBtn" onclick="navigatePhoto('prev')" title="Önceki (←)">‹</button>
-      <button class="nav-button next" id="nextBtn" onclick="navigatePhoto('next')" title="Sonraki (→)">›</button>
+      <button class="modal-close" id="closeBtn" title="Kapat (ESC)">✕</button>
+      <button class="nav-button prev" id="prevBtn" title="Önceki (←)">‹</button>
+      <button class="nav-button next" id="nextBtn" title="Sonraki (→)">›</button>
       <img class="modal-image" id="modalImage" src="" alt="">
       <div class="modal-info" id="modalInfo">Sanatçı Adı</div>
     </div>
@@ -1473,6 +1473,35 @@ ${sections}
         });
       });
       
+      // Modal close button
+      const closeBtn = document.getElementById('closeBtn');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          closePhotoModal();
+        });
+      }
+      
+      // Navigation buttons
+      const prevBtn = document.getElementById('prevBtn');
+      if (prevBtn) {
+        prevBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          navigatePhoto('prev');
+        });
+      }
+      
+      const nextBtn = document.getElementById('nextBtn');
+      if (nextBtn) {
+        nextBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          navigatePhoto('next');
+        });
+      }
+      
       // Prevent modal close when clicking on content
       const modalContent = document.getElementById('modalContent');
       if (modalContent) {
@@ -1488,26 +1517,6 @@ ${sections}
           if (e.target === this) {
             closePhotoModal();
           }
-        });
-      }
-      
-      // Navigation button event listeners
-      const prevBtn = document.getElementById('prevBtn');
-      const nextBtn = document.getElementById('nextBtn');
-      
-      if (prevBtn) {
-        prevBtn.addEventListener('click', function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          navigatePhoto('prev');
-        });
-      }
-      
-      if (nextBtn) {
-        nextBtn.addEventListener('click', function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          navigatePhoto('next');
         });
       }
     });
